@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:31:00 by toteixei          #+#    #+#             */
-/*   Updated: 2023/11/27 18:40:02 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/01 09:58:00 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,11 @@ void	find_player(t_configuration *config, int *i, int *j)
 		while (*j < config->n_column)
 		{
 			if (config->map[*i][*j] == 3)
+			{
+				config->player_x = *j;
+				config->player_y = *i;
 				return ;
+			}
 			(*j)++;
 		}
 		(*i)++;
