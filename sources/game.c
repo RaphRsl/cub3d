@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 19:35:25 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/01 16:13:08 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/01 16:37:00 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,26 @@ void    ft_render_white_background(t_cub3d *cub3d)
     mlx_put_image_to_window(cub3d->mlx, cub3d->win, cub3d->img.mlx, 0, 0);
 }
 
+void    ft_print_grid(t_cub3d *cub3d)
+{
+    int x;
+    int y;
+
+    x = 0;
+    while (x < SCREEN_WIDTH)
+    {
+        y = 0;
+        while (y < SCREEN_HEIGTH)
+        {
+            if (x % 20 == 0 || y % 20 == 0)
+                img_pixel_put(x, y, 0x00000000, cub3d);
+            y++;
+        }
+        x++;
+    }
+    mlx_put_image_to_window(cub3d->mlx, cub3d->win, cub3d->img.mlx, 0, 0);
+}
+
 void    print_a_square(int screen_x, int screen_y, int size, unsigned int color, t_cub3d *cub3d)
 {
     int x;
@@ -82,13 +102,13 @@ void    print_a_sphere(int screen_x, int screen_y, int size, unsigned int color,
     int y;
     int radius = size / 2;
 
-    x = screen_x;
+    x = screen_x - radius;
     while (x < screen_x + size)
     {
-        y = screen_y;
+        y = screen_y - radius;
         while (y < screen_y + size)
         {
-            if (((x - screen_x - radius) * (x - screen_x - radius) + (y - screen_y - radius) * (y - screen_y - radius)) <= (radius * radius))
+            if (((x - screen_x) * (x - screen_x) + (y - screen_y) * (y - screen_y)) <= (radius * radius))
                 img_pixel_put(x, y, color, cub3d);
             y++;
         }
@@ -140,8 +160,8 @@ void    print_direction_line_of_player(t_cub3d *cub3d)
     t_point player;
     t_point direction;
 
-    player.x = 100 + (cub3d->cam.p_x);
-    player.y = 100 + (cub3d->cam.p_y);
+    player.x = 100 + (cub3d->cam.p_x * 20);
+    player.y = 100 + (cub3d->cam.p_y * 20);
     direction.x = player.x + (cub3d->cam.pd_x * 10);
     direction.y = player.y + (cub3d->cam.pd_y * 10);
     draw_line(cub3d, player, direction);
@@ -149,10 +169,10 @@ void    print_direction_line_of_player(t_cub3d *cub3d)
 
 void    put_player_on_map(t_cub3d *cub3d)
 {
-    int screen_x = 100 + (cub3d->cam.p_x);
-    int screen_y = 100 + (cub3d->cam.p_y);
+    int screen_x = 100 + (cub3d->cam.p_x * 20);
+    int screen_y = 100 + (cub3d->cam.p_y * 20);
 
-    print_a_sphere(screen_x, screen_y, 20, 0x00FF0000, cub3d);
+    print_a_sphere(screen_x, screen_y, 10, 0x00FF0000, cub3d);
     print_direction_line_of_player(cub3d);
 }
 
@@ -186,6 +206,7 @@ void    ft_print_map(t_cub3d *cub3d)
 int    ft_render_game(t_cub3d *cub3d)
 {
     ft_render_white_background(cub3d);
+    ft_print_grid(cub3d);
     ft_print_map(cub3d);
     return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:12:55 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/01 15:15:32 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/01 16:44:52 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,15 @@
 
 void	init_cam_settings(t_cub3d *cub3d)
 {
-	cub3d->cam.p_x = cub3d->config->player_x;
-	cub3d->cam.p_y = cub3d->config->player_y;
-	if (cub3d->config->orientation == 'N')
+	cub3d->cam.p_x = cub3d->config->player_x + 0.5;
+	cub3d->cam.p_y = cub3d->config->player_y + 0.5;
+	if (cub3d->config->orientation == 'E')
 		cub3d->cam.pa = 0;
-	else if (cub3d->config->orientation == 'S')
-		cub3d->cam.pa = M_PI;
-	else if (cub3d->config->orientation == 'E')
-		cub3d->cam.pa = 2 * M_PI - M_PI / 2;
 	else if (cub3d->config->orientation == 'W')
+		cub3d->cam.pa = M_PI;
+	else if (cub3d->config->orientation == 'N')
+		cub3d->cam.pa = 2 * M_PI - M_PI / 2;
+	else if (cub3d->config->orientation == 'S')
 		cub3d->cam.pa = M_PI / 2;
 	cub3d->cam.pd_x = cos(cub3d->cam.pa) * 5;
 	cub3d->cam.pd_y = sin(cub3d->cam.pa) * 5;

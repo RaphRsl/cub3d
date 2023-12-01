@@ -6,11 +6,18 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:03:44 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/01 15:11:52 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/01 16:52:36 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+int is_wall(float x, float y, t_cub3d *cub3d)
+{
+    if (cub3d->config->map[(int)y][(int)x] == 1)
+        return (1);
+    return (0);
+}
 
 void	rotate_left(t_camera *cam)
 {
@@ -30,14 +37,20 @@ void    rotate_right(t_camera *cam)
     cam->pd_y = sin(cam->pa) * 5;
 }
 
-void    move_forward(t_camera *cam)
+void    move_forward(t_cub3d *cub3d)
 {
-    cam->p_x += cam->pd_x;
-    cam->p_y += cam->pd_y;
+    if (!is_wall(cub3d->cam.p_x + (cub3d->cam.pd_x * 0.1), cub3d->cam.p_y + (cub3d->cam.pd_y * 0.1), cub3d))
+    {   
+        cub3d->cam.p_x += (cub3d->cam.pd_x * 0.1);
+        cub3d->cam.p_y += (cub3d->cam.pd_y * 0.1);
+    }
 }
 
-void    move_backward(t_camera *cam)
+void    move_backward(t_cub3d *cub3d)
 {
-    cam->p_x -= cam->pd_x;
-    cam->p_y -= cam->pd_y;
+   if (!is_wall(cub3d->cam.p_x - (cub3d->cam.pd_x * 0.1), cub3d->cam.p_y - (cub3d->cam.pd_y * 0.1), cub3d))
+    {
+        cub3d->cam.p_x -= (cub3d->cam.pd_x * 0.1);
+        cub3d->cam.p_y -= (cub3d->cam.pd_y * 0.1);
+    }
 }
