@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 19:35:25 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/01 10:12:37 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/01 14:51:00 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,14 @@ void    print_a_sphere(int screen_x, int screen_y, int size, unsigned int color,
     }
 }
 
+void    put_player_on_map(t_cub3d *cub3d)
+{
+    int screen_x = 100 + (cub3d->cam.p_x * 20);
+    int screen_y = 100 + (cub3d->cam.p_y * 20);
+
+    print_a_sphere(screen_x, screen_y, 20, 0x00FF0000, cub3d);
+}
+
 void    ft_print_map(t_cub3d *cub3d)
 {
     int x;
@@ -115,14 +123,15 @@ void    ft_print_map(t_cub3d *cub3d)
                 screen_y = 100 + (x * 20);
                 print_a_square(screen_x, screen_y, 20, 0x00000000, cub3d);
             }
-            if (cub3d->config->map[x][y] == 3)
-            {
-                screen_x = 100 + (y * 20);
-                screen_y = 100 + (x * 20);
-                print_a_sphere(screen_x, screen_y, 20, 0x00FF0000, cub3d);
-            }
+            // if (cub3d->config->map[x][y] == 3)
+            // {
+            //     screen_x = 100 + (y * 20);
+            //     screen_y = 100 + (x * 20);
+            //     print_a_sphere(screen_x, screen_y, 20, 0x00FF0000, cub3d);
+            // }
             y++;
         }
+        put_player_on_map(cub3d);
         x++;
     }
     mlx_put_image_to_window(cub3d->mlx, cub3d->win, cub3d->img.mlx, 0, 0);
