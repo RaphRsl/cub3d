@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 09:40:03 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/01 14:59:21 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/01 15:11:37 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ int deal_key(int key, t_cub3d *cub3d)
     if (key == ESC)
         end_program(cub3d);
     else if (key == W_KEY)
-        cub3d->cam.p_y -= 0.2;
+        move_forward(&cub3d->cam);
     else if (key == S_KEY)
-        cub3d->cam.p_y += 0.2;
+        move_backward(&cub3d->cam);
     else if (key == A_KEY)
-        cub3d->cam.p_x -= 0.2;
+        rotate_left(&cub3d->cam);
     else if (key == D_KEY)
-        cub3d->cam.p_x += 0.2;
+        rotate_right(&cub3d->cam);
         printf("D\n");
     return (0);
 }

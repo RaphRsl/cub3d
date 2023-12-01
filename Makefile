@@ -6,13 +6,14 @@
 #    By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/01 16:32:28 by toteixei          #+#    #+#              #
-#    Updated: 2023/12/01 09:40:26 by toteixei         ###   ########.fr        #
+#    Updated: 2023/12/01 15:04:19 by toteixei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 NAME 		= 	cub3d
-SRCS 		=	sources/main.c sources/configuration.c sources/game.c sources/deal_key.c
+SRCS 		=	sources/main.c sources/configuration.c sources/game.c sources/deal_key.c \
+				sources/camera_movement.c
 
 OBJ 		= 	$(SRCS:.c=.o)
 

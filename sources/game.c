@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 19:35:25 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/01 14:51:00 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/01 16:13:08 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,12 +96,64 @@ void    print_a_sphere(int screen_x, int screen_y, int size, unsigned int color,
     }
 }
 
+void	draw_line_bis(t_cub3d *cub3d, t_point p1, t_point p2, t_line line)
+{
+	while (p1.x != p2.x || p1.y != p2.y)
+	{
+		if (p1.x != 0)
+			img_pixel_put(p1.x, p1.y, 0x00FF0000, cub3d);
+		line.e2 = 2 * line.error;
+		if (line.e2 > -line.dy)
+		{
+			line.error -= line.dy;
+			p1.x += line.sx;
+		}
+		if (line.e2 < line.dx)
+		{
+			line.error += line.dx;
+			p1.y += line.sy;
+		}
+	}
+}
+
+void	draw_line(t_cub3d *cub3d, t_point p1, t_point p2)
+{
+	t_line	line;
+
+	line.temp = p1;
+	line.dx = abs(p2.x - p1.x);
+	line.dy = abs(p2.y - p1.y);
+	if (p2.x > p1.x)
+		line.sx = 1;
+	else
+		line.sx = -1;
+	if (p2.y > p1.y)
+		line.sy = 1;
+	else
+		line.sy = -1;
+	line.error = line.dx - line.dy;
+	draw_line_bis(cub3d, p1, p2, line);
+}
+
+void    print_direction_line_of_player(t_cub3d *cub3d)
+{
+    t_point player;
+    t_point direction;
+
+    player.x = 100 + (cub3d->cam.p_x);
+    player.y = 100 + (cub3d->cam.p_y);
+    direction.x = player.x + (cub3d->cam.pd_x * 10);
+    direction.y = player.y + (cub3d->cam.pd_y * 10);
+    draw_line(cub3d, player, direction);
+}
+
 void    put_player_on_map(t_cub3d *cub3d)
 {
-    int screen_x = 100 + (cub3d->cam.p_x * 20);
-    int screen_y = 100 + (cub3d->cam.p_y * 20);
+    int screen_x = 100 + (cub3d->cam.p_x);
+    int screen_y = 100 + (cub3d->cam.p_y);
 
     print_a_sphere(screen_x, screen_y, 20, 0x00FF0000, cub3d);
+    print_direction_line_of_player(cub3d);
 }
 
 void    ft_print_map(t_cub3d *cub3d)
@@ -123,12 +175,6 @@ void    ft_print_map(t_cub3d *cub3d)
                 screen_y = 100 + (x * 20);
                 print_a_square(screen_x, screen_y, 20, 0x00000000, cub3d);
             }
-            // if (cub3d->config->map[x][y] == 3)
-            // {
-            //     screen_x = 100 + (y * 20);
-            //     screen_y = 100 + (x * 20);
-            //     print_a_sphere(screen_x, screen_y, 20, 0x00FF0000, cub3d);
-            // }
             y++;
         }
         put_player_on_map(cub3d);
