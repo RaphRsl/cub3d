@@ -6,14 +6,131 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 19:35:25 by toteixei          #+#    #+#             */
-/*   Updated: 2023/11/27 19:35:55 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/01 09:35:39 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
+void	img_pixel_put(int x, int y, unsigned int color, t_cub3d *cub3d)
+{
+	int	mypixel;
+	int	alpha;
+
+	alpha = 0;
+	if (x >= SCREEN_WIDTH || y >= SCREEN_HEIGTH || x < 0 || y < 0)
+		return ;
+	mypixel = (y * SCREEN_WIDTH * 4) + (x * 4);
+	if (cub3d->img.bpp != 32)
+		color = mlx_get_color_value(cub3d->mlx, color);
+	if (cub3d->img.endian == 1)
+	{
+		cub3d->img.addr[mypixel] = alpha;
+		cub3d->img.addr[mypixel + 1] = (color >> 16) & 0xFF;
+		cub3d->img.addr[mypixel + 2] = (color >> 8) & 0xFF;
+		cub3d->img.addr[mypixel + 3] = (color) & 0xFF;
+	}
+	else
+	{
+		cub3d->img.addr[mypixel] = (color) & 0xFF;
+		cub3d->img.addr[mypixel + 1] = (color >> 8) & 0xFF;
+		cub3d->img.addr[mypixel + 2] = (color >> 16) & 0xFF;
+		cub3d->img.addr[mypixel + 3] = alpha;
+	}
+}
+
+void    ft_render_white_background(t_cub3d *cub3d)
+{
+    int x;
+    int y;
+
+    x = 0;
+    while (x < SCREEN_WIDTH)
+    {
+        y = 0;
+        while (y < SCREEN_HEIGTH)
+        {
+            img_pixel_put(x, y, 0x00FFFFFF, cub3d);
+            y++;
+        }
+        x++;
+    }
+    mlx_put_image_to_window(cub3d->mlx, cub3d->win, cub3d->img.mlx, 0, 0);
+}
+
+void    print_a_square(int screen_x, int screen_y, int size, unsigned int color, t_cub3d *cub3d)
+{
+    int x;
+    int y;
+
+    x = screen_x;
+    while (x < screen_x + size)
+    {
+        y = screen_y;
+        while (y < screen_y + size)
+        {
+            img_pixel_put(x, y, color, cub3d);
+            y++;
+        }
+        x++;
+    }
+}
+
+void    print_a_sphere(int screen_x, int screen_y, int size, unsigned int color, t_cub3d *cub3d)
+{
+    int x;
+    int y;
+    int radius = size / 2;
+
+    x = screen_x;
+    while (x < screen_x + size)
+    {
+        y = screen_y;
+        while (y < screen_y + size)
+        {
+            if (((x - screen_x - radius) * (x - screen_x - radius) + (y - screen_y - radius) * (y - screen_y - radius)) <= (radius * radius))
+                img_pixel_put(x, y, color, cub3d);
+            y++;
+        }
+        x++;
+    }
+}
+
+void    ft_print_map(t_cub3d *cub3d)
+{
+    int x;
+    int y;
+    int screen_x = 100;
+    int screen_y = 100;
+
+    x = 0;
+    while (x < cub3d->config->n_rows)
+    {
+        y = 0;
+        while (y < cub3d->config->n_column)
+        {
+            if (cub3d->config->map[x][y] == 1)
+            {
+                screen_x = 100 + (y * 20);
+                screen_y = 100 + (x * 20);
+                print_a_square(screen_x, screen_y, 20, 0x00000000, cub3d);
+            }
+            if (cub3d->config->map[x][y] == 3)
+            {
+                screen_x = 100 + (y * 20);
+                screen_y = 100 + (x * 20);
+                print_a_sphere(screen_x, screen_y, 20, 0x00FF0000, cub3d);
+            }
+            y++;
+        }
+        x++;
+    }
+    mlx_put_image_to_window(cub3d->mlx, cub3d->win, cub3d->img.mlx, 0, 0);
+}
+
 int    ft_render_game(t_cub3d *cub3d)
 {
-    mlx_put_image_to_window(cub3d->mlx, cub3d->win, cub3d->img.mlx, 0, 0);
+    ft_render_white_background(cub3d);
+    ft_print_map(cub3d);
     return (0);
 }
