@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:56:46 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/02 10:20:57 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/02 11:17:42 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,9 @@ void    draw_rays_3d(t_cub3d *cub3d)
                 hit = 1;
         }
         if (side == 0)
-            perp_wall_dist = (map_x - pos_x + (1 - step_x) / 2) / ray_dir_x;
+            perp_wall_dist = (side_dist_x - delta_dist_x);
         else
-            perp_wall_dist = (map_y - pos_y + (1 - step_y) / 2) / ray_dir_y;
+            perp_wall_dist = (side_dist_y - delta_dist_y);
         int line_height = (int)(SCREEN_HEIGTH / perp_wall_dist);
         int draw_start = -line_height / 2 + SCREEN_HEIGTH / 2;
         if (draw_start < 0)
@@ -117,10 +117,14 @@ void    draw_rays_3d(t_cub3d *cub3d)
         if (draw_end >= SCREEN_HEIGTH)
             draw_end = SCREEN_HEIGTH - 1;
         int color = 0x0000FF000;
-        if (side == 1)
-        {
-            color = find_color(pos_x, pos_y, map_x, map_y);
-        }
+        if (side == 1 && ray_dir_y > 0)
+            color = 0x00FF0000;
+        else if (side == 1 && ray_dir_y < 0)
+            color = 0x000000FF;
+        else if (side == 0 && ray_dir_x > 0)
+            color = 0x0000FF00;
+        else
+            color = 0x00FFFF00;
         draw_line(cub3d, (t_point){x, draw_start, 0, color}, (t_point){x, draw_end, 0, color});
     }
 }

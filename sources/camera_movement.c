@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:03:44 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/01 16:52:36 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/02 11:19:52 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int is_wall(float x, float y, t_cub3d *cub3d)
 
 void	rotate_left(t_camera *cam)
 {
-    cam->pa -= 0.1;
+    cam->pa -= 0.05;
     if (cam->pa < 0)
         cam->pa += 2 * M_PI;
     cam->pd_x = cos(cam->pa) * 5;
@@ -30,7 +30,7 @@ void	rotate_left(t_camera *cam)
 
 void    rotate_right(t_camera *cam)
 {
-    cam->pa += 0.1;
+    cam->pa += 0.05;
     if (cam->pa > 2 * M_PI)
         cam->pa -= 2 * M_PI;
     cam->pd_x = cos(cam->pa) * 5;
