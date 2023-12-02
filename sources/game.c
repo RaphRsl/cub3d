@@ -6,11 +6,23 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 19:35:25 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/01 16:37:00 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/02 10:37:54 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
+int     get_color(int *color)
+{
+    int r;
+    int g;
+    int b;
+
+    r = color[0];
+    g = color[1];
+    b = color[2];
+    return (r << 16 | g << 8 | b);
+}
 
 void	img_pixel_put(int x, int y, unsigned int color, t_cub3d *cub3d)
 {
@@ -48,9 +60,14 @@ void    ft_render_white_background(t_cub3d *cub3d)
     while (x < SCREEN_WIDTH)
     {
         y = 0;
+        while (y < SCREEN_HEIGTH / 2)
+        {
+            img_pixel_put(x, y, get_color(cub3d->config->c_color), cub3d);
+            y++;
+        }
         while (y < SCREEN_HEIGTH)
         {
-            img_pixel_put(x, y, 0x00FFFFFF, cub3d);
+            img_pixel_put(x, y, get_color(cub3d->config->fl_color), cub3d);
             y++;
         }
         x++;
@@ -121,7 +138,7 @@ void	draw_line_bis(t_cub3d *cub3d, t_point p1, t_point p2, t_line line)
 	while (p1.x != p2.x || p1.y != p2.y)
 	{
 		if (p1.x != 0)
-			img_pixel_put(p1.x, p1.y, 0x00FF0000, cub3d);
+			img_pixel_put(p1.x, p1.y, p1.color, cub3d);
 		line.e2 = 2 * line.error;
 		if (line.e2 > -line.dy)
 		{
@@ -160,19 +177,19 @@ void    print_direction_line_of_player(t_cub3d *cub3d)
     t_point player;
     t_point direction;
 
-    player.x = 100 + (cub3d->cam.p_x * 20);
-    player.y = 100 + (cub3d->cam.p_y * 20);
-    direction.x = player.x + (cub3d->cam.pd_x * 10);
-    direction.y = player.y + (cub3d->cam.pd_y * 10);
+    player.x = SCREEN_WIDTH - cub3d->config->n_column * 10 + (cub3d->cam.p_x * 10);
+    player.y = SCREEN_HEIGTH - cub3d->config->n_rows * 10 + (cub3d->cam.p_y * 10);
+    direction.x = player.x + (cub3d->cam.pd_x * 5);
+    direction.y = player.y + (cub3d->cam.pd_y * 5);
     draw_line(cub3d, player, direction);
 }
 
 void    put_player_on_map(t_cub3d *cub3d)
 {
-    int screen_x = 100 + (cub3d->cam.p_x * 20);
-    int screen_y = 100 + (cub3d->cam.p_y * 20);
+    int screen_x = SCREEN_WIDTH - cub3d->config->n_column * 10 + (cub3d->cam.p_x * 10);
+    int screen_y = SCREEN_HEIGTH - cub3d->config->n_rows * 10 + (cub3d->cam.p_y * 10);
 
-    print_a_sphere(screen_x, screen_y, 10, 0x00FF0000, cub3d);
+    print_a_sphere(screen_x, screen_y, 5, 0x00FF0000, cub3d);
     print_direction_line_of_player(cub3d);
 }
 
@@ -180,8 +197,8 @@ void    ft_print_map(t_cub3d *cub3d)
 {
     int x;
     int y;
-    int screen_x = 100;
-    int screen_y = 100;
+    int screen_x = SCREEN_WIDTH - cub3d->config->n_column * 10;
+    int screen_y = SCREEN_HEIGTH - cub3d->config->n_rows * 10;
 
     x = 0;
     while (x < cub3d->config->n_rows)
@@ -191,9 +208,15 @@ void    ft_print_map(t_cub3d *cub3d)
         {
             if (cub3d->config->map[x][y] == 1)
             {
-                screen_x = 100 + (y * 20);
-                screen_y = 100 + (x * 20);
-                print_a_square(screen_x, screen_y, 20, 0x00000000, cub3d);
+                screen_x = SCREEN_WIDTH - cub3d->config->n_column * 10 + (y * 10);
+                screen_y = SCREEN_HEIGTH - cub3d->config->n_rows * 10 + (x * 10);
+                print_a_square(screen_x, screen_y, 10, 0x00000000, cub3d);
+            }
+            if (cub3d->config->map[x][y] == 0 || cub3d->config->map[x][y] == 3)
+            {
+                screen_x = SCREEN_WIDTH - cub3d->config->n_column * 10 + (y * 10);
+                screen_y = SCREEN_HEIGTH - cub3d->config->n_rows * 10 + (x * 10);
+                print_a_square(screen_x, screen_y, 10, 0x00FFFFFF, cub3d);
             }
             y++;
         }
@@ -206,7 +229,8 @@ void    ft_print_map(t_cub3d *cub3d)
 int    ft_render_game(t_cub3d *cub3d)
 {
     ft_render_white_background(cub3d);
-    ft_print_grid(cub3d);
+    draw_rays_3d(cub3d);
+    //ft_print_grid(cub3d);
     ft_print_map(cub3d);
     return (0);
 }

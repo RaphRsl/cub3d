@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:20:26 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/01 16:48:27 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/02 09:59:17 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 
 # define SCREEN_WIDTH 1500
 # define SCREEN_HEIGTH 900
-# define PI 3.14159265359
+# define PI 3.1415926535
 
 enum {
 	ON_DESTROY = 17,
@@ -56,6 +56,7 @@ void	        print_map(t_configuration *config);
 
 //Game functions
 int    ft_render_game(t_cub3d *cub3d);
+void	draw_line(t_cub3d *cub3d, t_point p1, t_point p2);
 
 //Deal key functions
 int     deal_key(int key, t_cub3d *cub3d);
@@ -66,5 +67,8 @@ void    rotate_left(t_camera *cam);
 void    rotate_right(t_camera *cam);
 void    move_forward(t_cub3d *cub3d);
 void    move_backward(t_cub3d *cub3d);
+
+//Raycasting functions
+void    draw_rays_3d(t_cub3d *cub3d);
 
 #endif

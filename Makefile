@@ -6,14 +6,14 @@
 #    By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/01 16:32:28 by toteixei          #+#    #+#              #
-#    Updated: 2023/12/01 15:04:19 by toteixei         ###   ########.fr        #
+#    Updated: 2023/12/01 17:21:25 by toteixei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 NAME 		= 	cub3d
 SRCS 		=	sources/main.c sources/configuration.c sources/game.c sources/deal_key.c \
-				sources/camera_movement.c
+				sources/camera_movement.c sources/raycasting.c
 
 OBJ 		= 	$(SRCS:.c=.o)
 
@@ -22,7 +22,7 @@ LIBFT 		= 	libft
 RM			=	rm -f
 LIB 		= 	libft.a
 MATH_LIB 	= 	-lm -lz
-CFLAGS 		= 	-Wall -Wextra -Werror
+CFLAGS 		= 	-Wall -Wextra
 
 #LINUX
 #INCLUDES	=	-I libft

@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 09:40:03 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/01 16:48:50 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/01 19:57:41 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,5 @@ int deal_key(int key, t_cub3d *cub3d)
         rotate_left(&cub3d->cam);
     else if (key == D_KEY)
         rotate_right(&cub3d->cam);
-        printf("D\n");
     return (0);
 }
