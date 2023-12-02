@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:56:46 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/02 11:17:42 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/02 15:53:20 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ void    draw_rays_3d(t_cub3d *cub3d)
         double side_dist_x;
         double side_dist_y;
         
-        double delta_dist_x = fabs(1 / ray_dir_x);
-        double delta_dist_y = fabs(1 / ray_dir_y);
+        double delta_dist_x = sqrt(1 + (ray_dir_y * ray_dir_y) / (ray_dir_x * ray_dir_x));
+        double delta_dist_y = sqrt(1 + (ray_dir_x * ray_dir_x) / (ray_dir_y * ray_dir_y));
         double perp_wall_dist;
-        double step_x;
-        double step_y;
+        int step_x;
+        int step_y;
         int hit = 0;
         int side;
         if (ray_dir_x < 0)
