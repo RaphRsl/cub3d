@@ -6,41 +6,35 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:56:46 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/04 10:22:35 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/04 17:40:32 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int     chose_depth_color(int color, int line_heigth)
-{   
-    float   assombrissement;
-    int     r;
-    int     g;
-    int     b;
-    
-    r = (color & 0x00FF0000) >> 16;
-    g = (color & 0x0000FF00) >> 8;
-    b = (color & 0x000000FF);
-    assombrissement = (float)line_heigth / (float)SCREEN_HEIGTH;
-    r = (int)((float)r * assombrissement);
-    g = (int)((float)g * assombrissement);
-    b = (int)((float)b * assombrissement);
-    color = (r << 16) + (g << 8) + b;
-
-    return (color);
-}
-
-void    draw_ray(t_cub3d *cub3d, float rx, float ry)
+void    render_texture_line(int draw_start, int draw_end, int x, double tex_pos, double step, t_cub3d *cub3d, void *texture, int tex_x)
 {
-    t_point player;
-    t_point ray;
-    
-    player.x = 100 + (cub3d->cam.p_x * 20);
-    player.y = 100 + (cub3d->cam.p_y * 20);
-    ray.x = 100 + (rx * 20);
-    ray.y = 100 + (ry * 20);
-    draw_line(cub3d, player, ray);
+    int y = 0;
+    int *color = 0;
+    while (y < draw_start)
+    {
+
+        cub3d->img.addr[y * SCREEN_WIDTH + x] = cub3d->config->c_color[0] << 16 | cub3d->config->c_color[1] << 8 | cub3d->config->c_color[2];
+        y++;
+    }
+    while (y < draw_end)
+    {
+        int tex_y = (int)tex_pos & (cub3d->xpm.tex_height - 1);
+        tex_pos += step;
+        color = (int *)texture;
+        cub3d->img.addr[y * SCREEN_WIDTH + x] = color[tex_y * cub3d->xpm.tex_height + tex_x];
+        y++;
+    }
+    while (y < SCREEN_HEIGTH)
+    {
+        cub3d->img.addr[y * SCREEN_WIDTH + x] = cub3d->config->fl_color[0] << 16 | cub3d->config->fl_color[1] << 8 | cub3d->config->fl_color[2];
+        y++;
+    }
 }
 
 void    draw_rays_3d(t_cub3d *cub3d)
@@ -121,73 +115,27 @@ void    draw_rays_3d(t_cub3d *cub3d)
         int draw_end = line_height / 2 + SCREEN_HEIGTH / 2;
         if (draw_end >= SCREEN_HEIGTH)
             draw_end = SCREEN_HEIGTH - 1;
-        int color = chose_depth_color(0x0000FF000, line_height);
-        if (side == 1 && ray_dir_y > 0)
-            color = chose_depth_color(0x00FF0000, line_height);
-        else if (side == 1 && ray_dir_y < 0)
-            color = chose_depth_color(0x000000FF, line_height);
-        else if (side == 0 && ray_dir_x > 0)
-            color = chose_depth_color(0x0000FF00, line_height);
+        
+        double wall_x;
+        if (side == 0)
+            wall_x = pos_y + perp_wall_dist * ray_dir_y;
         else
-            color = 0x00FFFF00;
-        draw_line(cub3d, (t_point){x, draw_start, 0, color}, (t_point){x, draw_end, 0, color});
+            wall_x = pos_x + perp_wall_dist * ray_dir_x;
+        wall_x -= floor(wall_x);
+        int tex_x = (int)(wall_x * (double)cub3d->xpm.tex_width);
+        if (side == 0 && ray_dir_x > 0)
+            tex_x = cub3d->xpm.tex_width - tex_x - 1;
+        if (side == 1 && ray_dir_y < 0)
+            tex_x = cub3d->xpm.tex_width - tex_x - 1;
+        double step = 1.0 * cub3d->xpm.tex_height / line_height;
+        double tex_pos = (draw_start - SCREEN_HEIGTH / 2 + line_height / 2) * step;
+        if (side == 1 && ray_dir_y > 0)
+            render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.s_tex, tex_x);
+        else if (side == 1 && ray_dir_y < 0)
+            render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.n_tex, tex_x);
+        else if (side == 0 && ray_dir_x > 0)
+            render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.e_tex, tex_x);
+        else
+            render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.w_tex, tex_x);
     }
 }
-
-// void    draw_rays_3d(t_cub3d *cub3d)
-// {
-//     int r, mx, my, mp, dof;
-//     float rx, ry, ra, xo, yo, aTan;
-    
-//     ra = cub3d->cam.pa;
-//     r = 0;
-//     while(r++ < 1)
-//     {
-//         //only horizontal line
-//         dof = 0;
-//         aTan = -1 / tan(ra);
-//         if (ra > PI)
-//         {
-//             ry = (((int)cub3d->cam.p_y >> 6) << 6) - 0.0001;
-//             printf("ry: %f\n", ry);
-//             rx = (cub3d->cam.p_y - ry) * aTan + cub3d->cam.p_x;
-//             printf("rx: %f\n", rx);
-//             yo = -64;
-//             xo = -yo * aTan;
-//         }
-//         if (ra < PI)
-//         {
-//             ry = (((int)cub3d->cam.p_y >> 6) << 6) + 64;
-//             rx = (cub3d->cam.p_y - ry) * aTan + cub3d->cam.p_x;
-//             yo = 64;
-//             xo = -yo * aTan;
-//         }
-//         if (ra == 0)
-//         {
-//             rx = cub3d->cam.p_x;
-//             ry = cub3d->cam.p_y;
-//             dof = 8;
-//         }
-//         while (dof < 8)
-//         {
-//             mx = (int)(rx) >> 6;
-//             my = (int)(ry) >> 6;
-            
-//             mp = my * cub3d->config->n_column + mx;
-//             if (mx < 0 || mx >= cub3d->config->n_column || my < 0 || my >= cub3d->config->n_rows)
-//             {
-//                 my = 0;
-//                 mx = 0;
-//             }
-//             if ((mp < cub3d->config->n_column * cub3d->config->n_rows) && cub3d->config->map[my][mx] == 1)
-//                 dof = 8;
-//             else
-//             {
-//                 rx += xo;
-//                 ry += yo;
-//                 dof += 1;
-//             }
-//             draw_ray(cub3d, rx, ry);
-//         }
-//     }
-// }

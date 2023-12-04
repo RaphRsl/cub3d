@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 19:35:25 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/02 10:37:54 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/04 17:29:33 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,9 +228,10 @@ void    ft_print_map(t_cub3d *cub3d)
 
 int    ft_render_game(t_cub3d *cub3d)
 {
-    ft_render_white_background(cub3d);
+    //ft_render_white_background(cub3d);
     draw_rays_3d(cub3d);
     //ft_print_grid(cub3d);
-    ft_print_map(cub3d);
+    //ft_print_map(cub3d);
+    mlx_put_image_to_window(cub3d->mlx, cub3d->win, cub3d->img.mlx, 0, 0);
     return (0);
 }

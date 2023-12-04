@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:25:27 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/01 16:09:55 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/04 16:16:07 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct s_configuration
 typedef struct s_img
 {
 	void	*mlx;
-	char	*addr;
+	int	*addr;
 	int		bpp;
 	int		line_len;
 	int		endian;
@@ -48,11 +48,22 @@ typedef struct s_camera
     float   fov;
 }           t_camera;
 
+typedef struct s_xpm
+{
+    void    *n_tex;
+    void    *s_tex;
+    void    *e_tex;
+    void    *w_tex;
+    int     tex_width;
+    int     tex_height;
+}       t_xpm;
+
 typedef struct s_cub3d
 {
     t_configuration *config;
     t_img           img;
     t_camera        cam;
+    t_xpm           xpm;
     void            *mlx;
     void            *win;
     

@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:20:26 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/04 10:06:58 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/04 15:22:24 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,9 @@ void    move_backward(t_cub3d *cub3d);
 
 //Raycasting functions
 void    draw_rays_3d(t_cub3d *cub3d);
+
+//MLX functions
+void	img_pixel_put(int x, int y, unsigned int color, t_cub3d *cub3d);
+int     get_color(int *color);
 
 #endif
