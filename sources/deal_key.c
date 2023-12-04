@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   deal_key.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 09:40:03 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/01 19:57:41 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/04 11:53:11 by rroussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ int deal_key(int key, t_cub3d *cub3d)
 {
     if (key == ESC)
         end_program(cub3d);
-    else if (key == W_KEY)
+    else if (key == W_KEY || key == KB_UP)
         move_forward(cub3d);
-    else if (key == S_KEY)
+    else if (key == S_KEY || key == KB_DOWN)
         move_backward(cub3d);
-    else if (key == A_KEY)
+    else if (key == A_KEY || key == KB_RIGHT)
         rotate_left(&cub3d->cam);
-    else if (key == D_KEY)
+    else if (key == D_KEY || key == KB_LEFT)
         rotate_right(&cub3d->cam);
     return (0);
 }

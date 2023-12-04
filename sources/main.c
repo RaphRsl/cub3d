@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:12:55 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/01 16:44:52 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/04 11:47:50 by rroussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	init_cam_settings(t_cub3d *cub3d)
 		cub3d->cam.pa = M_PI / 2;
 	cub3d->cam.pd_x = cos(cub3d->cam.pa) * 5;
 	cub3d->cam.pd_y = sin(cub3d->cam.pa) * 5;
-	cub3d->cam.fov = 60;
+	cub3d->cam.fov = 66;
 }
 
 

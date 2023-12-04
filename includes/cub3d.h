@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:20:26 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/04 10:06:58 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/04 11:52:10 by rroussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,14 @@ enum {
 	W_KEY= 119,
 	S_KEY = 115,
 	ESC = 65307,
+	KB_UP = 0xFF52,
+	KB_DOWN = 0xFF54,
+	KB_RIGHT = 0xFF51,
+	KB_LEFT = 0xFF53,
 };
+
+//arrows keys
+
 //MacOS KEYS
 // enum {
 // 	A_KEY = 0,
