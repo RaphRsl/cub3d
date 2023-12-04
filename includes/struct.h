@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:25:27 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/04 16:16:07 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/04 17:42:40 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ typedef struct s_camera
     float   pd_y;
     float   pa;
     float   fov;
+    float   plane_x; //added
+    float   plane_y; //added
 }           t_camera;
 
 typedef struct s_xpm

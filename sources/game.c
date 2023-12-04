@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 19:35:25 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/04 17:29:33 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/04 17:47:03 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,17 +172,85 @@ void	draw_line(t_cub3d *cub3d, t_point p1, t_point p2)
 	draw_line_bis(cub3d, p1, p2, line);
 }
 
+// TOP CODE
+// void    print_direction_line_of_player(t_cub3d *cub3d)
+// {
+//     t_point player;
+//     t_point direction;
+
+//     player.x = SCREEN_WIDTH - cub3d->config->n_column * 10 + (cub3d->cam.p_x * 10);
+//     player.y = SCREEN_HEIGTH - cub3d->config->n_rows * 10 + (cub3d->cam.p_y * 10);
+//     direction.x = player.x + (cub3d->cam.pd_x * 5);
+//     direction.y = player.y + (cub3d->cam.pd_y * 5);
+//     draw_line(cub3d, player, direction);
+// }
+
 void    print_direction_line_of_player(t_cub3d *cub3d)
 {
     t_point player;
     t_point direction;
+    t_point left_fov_line_end;
+    t_point right_fov_line_end;
 
     player.x = SCREEN_WIDTH - cub3d->config->n_column * 10 + (cub3d->cam.p_x * 10);
     player.y = SCREEN_HEIGTH - cub3d->config->n_rows * 10 + (cub3d->cam.p_y * 10);
+
     direction.x = player.x + (cub3d->cam.pd_x * 5);
     direction.y = player.y + (cub3d->cam.pd_y * 5);
+
+    double fov_angle = cub3d->cam.fov * (M_PI / 180.0); // Convert FOV to radians
+    double fixed_angle = M_PI / 6.0; // Adjust this value for the desired fixed angle
+
+    double left_fov_angle = cub3d->cam.pa - fixed_angle;
+    double right_fov_angle = cub3d->cam.pa + fixed_angle;
+
+    // Calculate left FOV line end point
+    left_fov_line_end.x = player.x + ((cub3d->cam.pd_x * cos(left_fov_angle)) * 5);
+    left_fov_line_end.y = player.y + ((cub3d->cam.pd_y * sin(left_fov_angle)) * 5);
+
+    // Calculate right FOV line end point
+    right_fov_line_end.x = player.x + ((cub3d->cam.pd_x * cos(right_fov_angle)) * 5);
+    right_fov_line_end.y = player.y + ((cub3d->cam.pd_y * sin(right_fov_angle)) * 5);
+
     draw_line(cub3d, player, direction);
+    draw_line(cub3d, player, left_fov_line_end);
+    draw_line(cub3d, player, right_fov_line_end);
 }
+
+//wrong end
+// void print_fov_lines_of_player(t_cub3d *cub3d)
+// {
+//     t_point player;
+//     t_point direction;
+//     t_point left_fov_line_end;
+//     t_point right_fov_line_end;
+
+//     player.x = SCREEN_WIDTH - cub3d->config->n_column * 10 + (cub3d->cam.p_x * 10);
+//     player.y = SCREEN_HEIGTH - cub3d->config->n_rows * 10 + (cub3d->cam.p_y * 10);
+
+//     direction.x = player.x + (cub3d->cam.pd_x * 5);
+//     direction.y = player.y + (cub3d->cam.pd_y * 5);
+
+//     // Calculate the angle of the FOV lines relative to the player's direction
+//     double fov_angle = cub3d->cam.fov * (M_PI / 180.0); // Convert FOV to radians
+//     double fixed_angle = M_PI / 6.0; // Adjust this value as per your desired fixed angle
+
+//     double left_fov_angle = cub3d->cam.pa - fixed_angle;
+//     double right_fov_angle = cub3d->cam.pa + fixed_angle;
+
+//     // Calculate left FOV line end point
+//     left_fov_line_end.x = direction.x + ((cub3d->cam.pd_x * cos(left_fov_angle)) * 5);
+//     left_fov_line_end.y = direction.y + ((cub3d->cam.pd_y * sin(left_fov_angle)) * 5);
+
+//     // Calculate right FOV line end point
+//     right_fov_line_end.x = direction.x + ((cub3d->cam.pd_x * cos(right_fov_angle)) * 5);
+//     right_fov_line_end.y = direction.y + ((cub3d->cam.pd_y * sin(right_fov_angle)) * 5);
+
+//     // Draw lines for the left and right FOV edges
+//     draw_line(cub3d, direction, left_fov_line_end);
+//     draw_line(cub3d, direction, right_fov_line_end);
+// }
+
 
 void    put_player_on_map(t_cub3d *cub3d)
 {
@@ -191,6 +259,7 @@ void    put_player_on_map(t_cub3d *cub3d)
 
     print_a_sphere(screen_x, screen_y, 5, 0x00FF0000, cub3d);
     print_direction_line_of_player(cub3d);
+    // print_fov_lines_of_player(cub3d); //added
 }
 
 void    ft_print_map(t_cub3d *cub3d)
@@ -223,7 +292,6 @@ void    ft_print_map(t_cub3d *cub3d)
         put_player_on_map(cub3d);
         x++;
     }
-    mlx_put_image_to_window(cub3d->mlx, cub3d->win, cub3d->img.mlx, 0, 0);
 }
 
 int    ft_render_game(t_cub3d *cub3d)

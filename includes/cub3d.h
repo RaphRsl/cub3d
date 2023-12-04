@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:20:26 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/04 15:22:24 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/04 17:42:43 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 
 # include "../mlx_linux/mlx.h"
 
-# define SCREEN_WIDTH 1500
-# define SCREEN_HEIGTH 900
+# define SCREEN_WIDTH 1024
+# define SCREEN_HEIGTH 512
 # define PI 3.1415926535
 
 enum {
@@ -40,7 +40,14 @@ enum {
 	W_KEY= 119,
 	S_KEY = 115,
 	ESC = 65307,
+	KB_UP = 0xFF52,
+	KB_DOWN = 0xFF54,
+	KB_RIGHT = 0xFF51,
+	KB_LEFT = 0xFF53,
 };
+
+//arrows keys
+
 //MacOS KEYS
 // enum {
 // 	A_KEY = 0,
