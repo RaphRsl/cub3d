@@ -6,7 +6,7 @@
 /*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:20:26 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/04 11:52:10 by rroussel         ###   ########.fr       */
+/*   Updated: 2023/12/04 17:03:22 by rroussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 
 # include "../mlx_linux/mlx.h"
 
-# define SCREEN_WIDTH 1500
-# define SCREEN_HEIGTH 900
+# define SCREEN_WIDTH 1024
+# define SCREEN_HEIGTH 512
 # define PI 3.1415926535
 
 enum {
