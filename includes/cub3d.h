@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:20:26 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/02 09:59:17 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/04 10:06:58 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@
 # include <sys/types.h>
 # include <fcntl.h>
 # include "struct.h"
-# include "../mlx_macos/mlx.h"
+
+# include "../mlx_linux/mlx.h"
 
 # define SCREEN_WIDTH 1500
 # define SCREEN_HEIGTH 900
@@ -32,20 +33,22 @@ enum {
 	ON_DESTROY = 17,
 };
 
-/*LINUX KEYS
+//LINUX KEYS
+enum {
     A_KEY = 97,
     D_KEY = 100,
 	W_KEY= 119,
 	S_KEY = 115,
 	ESC = 65307,
-*/
-enum {
-	A_KEY = 0,
-    D_KEY = 2,
-    W_KEY = 13,
-	S_KEY = 1,
-	ESC = 53,
 };
+//MacOS KEYS
+// enum {
+// 	A_KEY = 0,
+//     D_KEY = 2,
+//     W_KEY = 13,
+// 	S_KEY = 1,
+// 	ESC = 53,
+// };
 
 int             main(int argc, char **argv);
 

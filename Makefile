@@ -6,7 +6,7 @@
 #    By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/01 16:32:28 by toteixei          #+#    #+#              #
-#    Updated: 2023/12/01 17:21:25 by toteixei         ###   ########.fr        #
+#    Updated: 2023/12/04 10:05:02 by toteixei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,14 +25,14 @@ MATH_LIB 	= 	-lm -lz
 CFLAGS 		= 	-Wall -Wextra
 
 #LINUX
-#INCLUDES	=	-I libft
-#MINILIBX	=	mlx_linux
-#XFLAGS		=	-lXext -lX11
+INCLUDES	=	-I libft
+MINILIBX	=	mlx_linux
+XFLAGS		=	-lXext -lX11
 
 #MACOS
-INCLUDES	=	-Imlx_macos -I libft
-MINILIBX	=	mlx_macos
-XFLAGS		=	-framework OpenGL -framework AppKit
+#INCLUDES	=	-Imlx_macos -I libft
+#MINILIBX	=	mlx_macos
+#XFLAGS		=	-framework OpenGL -framework AppKit
 
 all : libs $(NAME)
 

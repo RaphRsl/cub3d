@@ -6,23 +6,28 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:56:46 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/02 15:53:20 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/04 10:22:35 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int     find_color(float pos_x, float pos_y, int map_x, int map_y)
-{
-    int color;
-    if (pos_x > map_x && pos_y > map_y)
-        color = 0x00FF0000;
-    else if (pos_x > map_x && pos_y < map_y)
-        color = 0x0000FF00;
-    else if (pos_x < map_x && pos_y > map_y)
-        color = 0x000000FF;
-    else
-        color = 0x00FFFF00;
+int     chose_depth_color(int color, int line_heigth)
+{   
+    float   assombrissement;
+    int     r;
+    int     g;
+    int     b;
+    
+    r = (color & 0x00FF0000) >> 16;
+    g = (color & 0x0000FF00) >> 8;
+    b = (color & 0x000000FF);
+    assombrissement = (float)line_heigth / (float)SCREEN_HEIGTH;
+    r = (int)((float)r * assombrissement);
+    g = (int)((float)g * assombrissement);
+    b = (int)((float)b * assombrissement);
+    color = (r << 16) + (g << 8) + b;
+
     return (color);
 }
 
@@ -116,13 +121,13 @@ void    draw_rays_3d(t_cub3d *cub3d)
         int draw_end = line_height / 2 + SCREEN_HEIGTH / 2;
         if (draw_end >= SCREEN_HEIGTH)
             draw_end = SCREEN_HEIGTH - 1;
-        int color = 0x0000FF000;
+        int color = chose_depth_color(0x0000FF000, line_height);
         if (side == 1 && ray_dir_y > 0)
-            color = 0x00FF0000;
+            color = chose_depth_color(0x00FF0000, line_height);
         else if (side == 1 && ray_dir_y < 0)
-            color = 0x000000FF;
+            color = chose_depth_color(0x000000FF, line_height);
         else if (side == 0 && ray_dir_x > 0)
-            color = 0x0000FF00;
+            color = chose_depth_color(0x0000FF00, line_height);
         else
             color = 0x00FFFF00;
         draw_line(cub3d, (t_point){x, draw_start, 0, color}, (t_point){x, draw_end, 0, color});
