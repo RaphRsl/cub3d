@@ -17,3 +17,7 @@ int		check_map(t_configuration *config)
 
 void	init_cam_settings(t_cub3d *cub3d)
 	--> positon de depart du player +0,5, mais seulement si start is N non ?
+
+Parsing
+	--> check si une key est mauvaise, doit retourner une erreur
+	--> check s'il y a plusieurs keys identique, doit retourner une erreur

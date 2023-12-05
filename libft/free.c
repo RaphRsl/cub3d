@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomteixeira <tomteixeira@student.42.fr>    +#+  +:+       +#+        */
+/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:38:37 by toteixei          #+#    #+#             */
-/*   Updated: 2023/10/17 16:46:55 by tomteixeira      ###   ########.fr       */
+/*   Updated: 2023/12/05 16:12:18 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ void	ft_free_int_i(int **arrays, int index)
 	i = 0;
 	while (i < index)
 	{
-		free(arrays[i]);
+		if (arrays[i])
+			free(arrays[i]);
 		i++;
 	}
-	free(arrays);
+	if (arrays)
+		free(arrays);
 }
 
 void	ft_free_arrays_i(char **arrays, int index)

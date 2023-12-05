@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:23:31 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/05 15:48:43 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/05 15:52:17 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	print_map(t_configuration *config)
 	}
 }
 
-int	find_player(t_configuration *config, int *i, int *j)
+int	find_player(t_configuration *config)
 {
 	int	player;
 	int	x;
@@ -51,8 +51,6 @@ int	find_player(t_configuration *config, int *i, int *j)
 				player++;
 				config->player_x = x;
 				config->player_y = y;
-				*i = y;
-				*j = x;
 			}
 		}
 	}
