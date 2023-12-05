@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:19:56 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/05 15:21:24 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/05 15:42:53 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ int	check_map(t_configuration *config)
 	i = 0;
 	j = 0;
 	map = duplicate_map(config);
-	find_player(config, &i, &j);
+	if (!find_player(config, &i, &j))
+		return (ft_free_int_i(map, config->n_rows), 0);
 	if (i == config->n_rows)
 		return (ft_free_int_i(map, config->n_rows), 
 			ft_printf("Error\nNo player in the map\n"), 0);

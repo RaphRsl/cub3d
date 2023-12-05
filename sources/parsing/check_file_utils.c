@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:23:31 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/05 15:29:10 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/05 15:48:43 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,33 @@ void	print_map(t_configuration *config)
 	}
 }
 
-void	find_player(t_configuration *config, int *i, int *j)
+int	find_player(t_configuration *config, int *i, int *j)
 {
-	while (*i < config->n_rows)
+	int	player;
+	int	x;
+	int	y;
+
+	x = 0;
+	y = -1;
+	player = 0;
+	while (++y < config->n_rows)
 	{
-		*j = 0;
-		while (*j < config->n_column)
+		x = -1;
+		while (++x < config->n_column)
 		{
-			if (config->map[*i][*j] == 3)
+			if (config->map[y][x] == 3)
 			{
-				config->player_x = *j;
-				config->player_y = *i;
-				return ;
+				player++;
+				config->player_x = x;
+				config->player_y = y;
+				*i = y;
+				*j = x;
 			}
-			(*j)++;
 		}
-		(*i)++;
 	}
+	if (player != 1)
+		return (ft_printf("Error\nThere must be only one player.\n"), 0);
+	return (1);
 }
 
 int	**duplicate_map(t_configuration *config)
