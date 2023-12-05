@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:25:27 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/04 17:42:40 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/05 16:05:13 by rroussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,14 @@ typedef struct s_camera
 {
     float   p_x;
     float   p_y;
-    float   pd_x;
-    float   pd_y;
-    float   pa;
+    float   pd_x; //direction x
+    float   pd_y; //direction y
+    float   pa; //rotation angle
     float   fov;
-    float   plane_x; //added
-    float   plane_y; //added
+    float   plane_x; //added plane x
+    float   plane_y; //added plane y
+    float   move_speed;//added
+    float   rot_speed; //added
 }           t_camera;
 
 typedef struct s_xpm

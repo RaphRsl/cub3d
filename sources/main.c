@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:12:55 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/04 17:44:36 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/05 15:57:05 by rroussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,9 @@ void	init_cam_settings(t_cub3d *cub3d)
 
     cub3d->cam.pd_x = cos(cub3d->cam.pa) * 5; //Calculates the x-component of the camera's direction vector based on the initial angle cub3d->cam.pa. It uses trigonometric functions (cosine) to determine the x-component of the camera's direction and then multiplies it by 5.
     cub3d->cam.pd_y = sin(cub3d->cam.pa) * 5;
+
+	cub3d->cam.move_speed = 0.05;
+	cub3d->cam.rot_speed = 0.05;
 }
 
 

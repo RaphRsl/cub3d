@@ -6,7 +6,7 @@
 /*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 09:40:03 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/04 16:04:51 by rroussel         ###   ########.fr       */
+/*   Updated: 2023/12/05 15:50:04 by rroussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,9 @@ int deal_key(int key, t_cub3d *cub3d)
         rotate_left(&cub3d->cam);
     else if (key == D_KEY || key == KB_LEFT)
         rotate_right(&cub3d->cam);
+    else if (key == Q_KEY)
+        move_to_the_left(cub3d);
+    else if (key == E_KEY)
+        move_to_the_right(cub3d);
     return (0);
 }

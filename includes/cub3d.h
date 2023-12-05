@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:20:26 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/04 17:42:43 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/05 15:50:30 by rroussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ enum {
     D_KEY = 100,
 	W_KEY= 119,
 	S_KEY = 115,
+	Q_KEY = 113,
+	E_KEY = 101,
 	ESC = 65307,
 	KB_UP = 0xFF52,
 	KB_DOWN = 0xFF54,
@@ -75,6 +77,8 @@ int     end_program(t_cub3d *cub3d);
 //Camera functions
 void    rotate_left(t_camera *cam);
 void    rotate_right(t_camera *cam);
+void    move_to_the_right(t_cub3d *cub3d);
+void    move_to_the_left(t_cub3d *cub3d);
 void    move_forward(t_cub3d *cub3d);
 void    move_backward(t_cub3d *cub3d);
 
