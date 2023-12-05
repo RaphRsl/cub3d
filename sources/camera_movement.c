@@ -6,7 +6,7 @@
 /*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:03:44 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/05 16:10:28 by rroussel         ###   ########.fr       */
+/*   Updated: 2023/12/05 16:43:59 by rroussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,18 @@ void rotate_right(t_camera *cam)
 }
 
 
+// void    move_to_the_right(t_cub3d *cub3d)
+// {
+//     if (!is_wall(cub3d->cam.p_x + (cub3d->cam.pd_x * cub3d->cam.move_speed + 0.1), cub3d->cam.p_y + (cub3d->cam.pd_y * cub3d->cam.move_speed + 0.1), cub3d))
+//     {   
+//     cub3d->cam.p_x -= (cub3d->cam.pd_y * cub3d->cam.move_speed);
+//     cub3d->cam.p_y += (cub3d->cam.pd_x * cub3d->cam.move_speed);
+//     }
+// }
+
 void    move_to_the_right(t_cub3d *cub3d)
 {
-    if (!is_wall(cub3d->cam.p_x + (cub3d->cam.pd_x * 0.1), cub3d->cam.p_y + (cub3d->cam.pd_y * 0.1), cub3d))
+    if (!is_wall(cub3d->cam.p_x - (cub3d->cam.pd_y * (cub3d->cam.move_speed + 0.01)), cub3d->cam.p_y += (cub3d->cam.pd_x * (cub3d->cam.move_speed + 0.01)), cub3d))
     {   
     cub3d->cam.p_x -= (cub3d->cam.pd_y * cub3d->cam.move_speed);
     cub3d->cam.p_y += (cub3d->cam.pd_x * cub3d->cam.move_speed);
@@ -88,7 +97,7 @@ void    move_to_the_right(t_cub3d *cub3d)
 
 void    move_to_the_left(t_cub3d *cub3d)
 {
-    if(!is_wall(cub3d->cam.p_x + (cub3d->cam.pd_y * 0.1), cub3d->cam.p_y - (cub3d->cam.pd_x * 0.1), cub3d))
+    if(!is_wall(cub3d->cam.p_x + (cub3d->cam.pd_y * (cub3d->cam.move_speed + 0.01)), cub3d->cam.p_y - (cub3d->cam.pd_x * (cub3d->cam.move_speed + 0.01)), cub3d))
     {
     cub3d->cam.p_x += (cub3d->cam.pd_y * cub3d->cam.move_speed);
     cub3d->cam.p_y -= (cub3d->cam.pd_x * cub3d->cam.move_speed);
@@ -97,7 +106,7 @@ void    move_to_the_left(t_cub3d *cub3d)
 
 void    move_forward(t_cub3d *cub3d)
 {
-    if (!is_wall(cub3d->cam.p_x + (cub3d->cam.pd_x * 0.1), cub3d->cam.p_y + (cub3d->cam.pd_y * 0.1), cub3d))
+    if (!is_wall(cub3d->cam.p_x + (cub3d->cam.pd_x * (cub3d->cam.move_speed + 0.01)), cub3d->cam.p_y + (cub3d->cam.pd_y * (cub3d->cam.move_speed + 0.01)), cub3d))
     {   
         cub3d->cam.p_x += (cub3d->cam.pd_x * cub3d->cam.move_speed);
         cub3d->cam.p_y += (cub3d->cam.pd_y * cub3d->cam.move_speed);
@@ -106,7 +115,7 @@ void    move_forward(t_cub3d *cub3d)
 
 void    move_backward(t_cub3d *cub3d)
 {
-   if (!is_wall(cub3d->cam.p_x - (cub3d->cam.pd_x * 0.1), cub3d->cam.p_y - (cub3d->cam.pd_y * 0.1), cub3d))
+   if (!is_wall(cub3d->cam.p_x - (cub3d->cam.pd_x * cub3d->cam.move_speed), cub3d->cam.p_y - (cub3d->cam.pd_y * cub3d->cam.move_speed), cub3d))
     {
         cub3d->cam.p_x -= (cub3d->cam.pd_x * cub3d->cam.move_speed);
         cub3d->cam.p_y -= (cub3d->cam.pd_y * cub3d->cam.move_speed);
