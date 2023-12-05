@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:38:37 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/05 16:42:37 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/05 19:00:02 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void ft_free_int_i(int **arrays, int index) {
         arrays[i] = NULL;
 		i++;
     }
-	//free(arrays);
-	//arrays = NULL;
+	free(arrays);
+	arrays = NULL;
 }
 
 void	ft_free_arrays_i(char **arrays, int index)

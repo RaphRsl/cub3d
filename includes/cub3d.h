@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:20:26 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/05 16:14:46 by rroussel         ###   ########.fr       */
+/*   Updated: 2023/12/05 19:41:32 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void	draw_line(t_cub3d *cub3d, t_point p1, t_point p2);
 //Deal key functions
 int     deal_key(int key, t_cub3d *cub3d);
 int     end_program(t_cub3d *cub3d);
+void	free_config(t_configuration *config);
 
 //Camera functions
 void    rotate_left(t_camera *cam);
