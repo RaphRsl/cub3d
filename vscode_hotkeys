@@ -1,0 +1,27 @@
+ctrl c / v / x zith no selection						copy / paste / cut line
+ctrl shift k											delete line
+ctrl enter / shift enter								insert line below / above
+alt up / down											move line up / down
+ctrl c up / down										copy line above / below
+ctrl z / y												undo / redo
+ctrl u													undo last cursor operation
+ctrl l													select current line
+home / end												go to begining / end of line
+ctrl home / end											go to beginning / end of file
+ctrl up / down											scroll line up / down
+ctrl f													find
+ctrl h													replace
+ctrl k ctrl u											remove line comment
+ctrl g [5] enter										go to line 5
+ctrl p [myfile]											go to myfile
+ctrl shift p [something]								find something
+ctrl k, then m											change code language of the file
+shift alt up / down										expand cursor up / down
+ctrl /													comment / uncomment
+ctrl k ctrl o											open a directory
+ctrl alt h												add header (extension42 Header)
+ctrl shift e											go to files menu
+
+https://code.visualstudio.com/docs/getstarted/keybindings
+
+valgrind --leak-check=full --show-leak-kinds=all ./a.out
