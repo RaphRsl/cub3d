@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rsl <rsl@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 19:35:25 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/05 17:33:55 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/05 23:20:25 by rsl              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ int     get_color(int *color)
 void	img_pixel_put(int x, int y, unsigned int color, t_cub3d *cub3d)
 {
 	int	mypixel;
-	int	alpha;
+	// int	alpha;//not used
 
-	alpha = 0;
+	// alpha = 0; //not used
 	if (x >= SCREEN_WIDTH || y >= SCREEN_HEIGTH || x < 0 || y < 0)
 		return ;
 	mypixel = (y * SCREEN_WIDTH) + x;
