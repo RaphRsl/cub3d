@@ -6,14 +6,20 @@
 #    By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/01 16:32:28 by toteixei          #+#    #+#              #
-#    Updated: 2023/12/04 10:05:02 by toteixei         ###   ########.fr        #
+#    Updated: 2023/12/05 15:37:28 by toteixei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 
 NAME 		= 	cub3d
-SRCS 		=	sources/main.c sources/configuration.c sources/game.c sources/deal_key.c \
-				sources/camera_movement.c sources/raycasting.c
+SRCS 		=	sources/main.c sources/game.c sources/deal_key.c \
+				sources/camera_movement.c sources/raycasting.c \
+				sources/parsing/parsing.c \
+				sources/parsing/init_config_struct.c \
+				sources/parsing/fill_element.c \
+				sources/parsing/fill_element_utils.c \
+				sources/parsing/check_file.c \
+				sources/parsing/check_file_utils.c \
 
 OBJ 		= 	$(SRCS:.c=.o)
 

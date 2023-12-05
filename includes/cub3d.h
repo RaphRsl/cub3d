@@ -6,7 +6,7 @@
 /*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:20:26 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/05 15:50:30 by rroussel         ###   ########.fr       */
+/*   Updated: 2023/12/05 16:14:46 by rroussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,28 @@ int             main(int argc, char **argv);
 
 //Parsing functions
 t_configuration *ft_configuration(char *file_path);
+t_configuration	*parse_map(int fd);
+t_configuration	*fill_configuration_argument(char **file);
+int				parse_line(char *line, t_configuration **config);
+t_configuration *init_config_struct(void);
+int				fill_map(char *line, t_configuration **config);
+int 			fill_element(char *line, t_configuration **config, int *i);
 void	        skip_whitespaces(char *line, int *i);
 void	        print_map(t_configuration *config);
+int				fill_element_bis(char *line, t_configuration **config, int *i);
+void			fill_floor_ceiling_color(int color[3], char *line, int *i);
+int				is_element(char *line);
+int				is_map(char *line);
+int				check_arguments(t_configuration *config);
+int				check_map(t_configuration *config);
+int 			check_xpm_file(t_configuration *config);
+int				check_floor_ceiling_color(t_configuration *config);
+int				check_missing_argument(t_configuration *config);
+int				ft_check_file_path(char *file);
+int 			flood_fill(t_configuration *config, int **map, int y, int x);
+int				**duplicate_map(t_configuration *config);
+int				find_player(t_configuration *config);
+
 
 //Game functions
 int    ft_render_game(t_cub3d *cub3d);
