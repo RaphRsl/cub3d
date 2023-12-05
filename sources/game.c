@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 19:35:25 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/04 17:47:03 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/05 15:13:00 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,24 @@ void	img_pixel_put(int x, int y, unsigned int color, t_cub3d *cub3d)
 	alpha = 0;
 	if (x >= SCREEN_WIDTH || y >= SCREEN_HEIGTH || x < 0 || y < 0)
 		return ;
-	mypixel = (y * SCREEN_WIDTH * 4) + (x * 4);
+	mypixel = (y * SCREEN_WIDTH) + x;
 	if (cub3d->img.bpp != 32)
 		color = mlx_get_color_value(cub3d->mlx, color);
-	if (cub3d->img.endian == 1)
-	{
-		cub3d->img.addr[mypixel] = alpha;
-		cub3d->img.addr[mypixel + 1] = (color >> 16) & 0xFF;
-		cub3d->img.addr[mypixel + 2] = (color >> 8) & 0xFF;
-		cub3d->img.addr[mypixel + 3] = (color) & 0xFF;
-	}
-	else
-	{
-		cub3d->img.addr[mypixel] = (color) & 0xFF;
-		cub3d->img.addr[mypixel + 1] = (color >> 8) & 0xFF;
-		cub3d->img.addr[mypixel + 2] = (color >> 16) & 0xFF;
-		cub3d->img.addr[mypixel + 3] = alpha;
-	}
+    cub3d->img.addr[mypixel] = color;
+	// if (cub3d->img.endian == 1)
+	// {
+	// 	cub3d->img.addr[mypixel] = alpha;
+	// 	cub3d->img.addr[mypixel + 1] = (color >> 16) & 0xFF;
+	// 	cub3d->img.addr[mypixel + 2] = (color >> 8) & 0xFF;
+	// 	cub3d->img.addr[mypixel + 3] = (color) & 0xFF;
+	// }
+	// else
+	// {
+	// 	cub3d->img.addr[mypixel] = (color) & 0xFF;
+	// 	cub3d->img.addr[mypixel + 1] = (color >> 8) & 0xFF;
+	// 	cub3d->img.addr[mypixel + 2] = (color >> 16) & 0xFF;
+	// 	cub3d->img.addr[mypixel + 3] = alpha;
+	// }
 }
 
 void    ft_render_white_background(t_cub3d *cub3d)
@@ -299,7 +300,7 @@ int    ft_render_game(t_cub3d *cub3d)
     //ft_render_white_background(cub3d);
     draw_rays_3d(cub3d);
     //ft_print_grid(cub3d);
-    //ft_print_map(cub3d);
+    ft_print_map(cub3d);
     mlx_put_image_to_window(cub3d->mlx, cub3d->win, cub3d->img.mlx, 0, 0);
     return (0);
 }
