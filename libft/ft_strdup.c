@@ -6,9 +6,10 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 10:22:14 by toteixei          #+#    #+#             */
-/*   Updated: 2022/11/08 10:40:37 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/05 17:19:23 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "libft.h"
 
 char	*ft_strdup(const char *s)
@@ -17,6 +18,8 @@ char	*ft_strdup(const char *s)
 	char	*dup;
 	int		len;
 
+	if (!s)
+		return (NULL);
 	len = ft_strlen(s) + 1;
 	dup = malloc(len);
 	if (!dup)

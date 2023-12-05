@@ -6,13 +6,13 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:56:46 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/04 17:46:00 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/05 18:42:15 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void    render_texture_line(int draw_start, int draw_end, int x, double tex_pos, double step, t_cub3d *cub3d, void *texture, int tex_x)
+void    render_texture_line(int draw_start, int draw_end, int x, double tex_pos, double step, t_cub3d *cub3d, int *texture, int tex_x)
 {
     int y = 0;
     int *color = 0;
@@ -25,7 +25,7 @@ void    render_texture_line(int draw_start, int draw_end, int x, double tex_pos,
     {
         int tex_y = (int)tex_pos & (cub3d->xpm.tex_height - 1);
         tex_pos += step;
-        color = (int *)texture;
+        color = texture;
         cub3d->img.addr[y * SCREEN_WIDTH + x] = color[tex_y * cub3d->xpm.tex_height + tex_x];
         y++;
     }
@@ -131,13 +131,13 @@ void    draw_rays_3d(t_cub3d *cub3d)
         double step = 1.0 * cub3d->xpm.tex_height / line_height;
         double tex_pos = (draw_start - SCREEN_HEIGTH / 2 + line_height / 2) * step;
         if (side == 1 && ray_dir_y > 0)
-            render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.s_tex, tex_x);
+            render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.s_tex_adrr, tex_x);
         else if (side == 1 && ray_dir_y < 0)
-            render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.n_tex, tex_x);
+            render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.n_tex_adrr, tex_x);
         else if (side == 0 && ray_dir_x > 0)
-            render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.e_tex, tex_x);
+            render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.e_tex_adrr, tex_x);
         else
-            render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.w_tex, tex_x);
+            render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.w_tex_adrr, tex_x);
     }
 }
 
