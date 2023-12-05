@@ -6,7 +6,7 @@
 /*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:12:55 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/05 19:27:36 by rroussel         ###   ########.fr       */
+/*   Updated: 2023/12/05 19:50:38 by rroussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,22 @@ void	init_cam_settings(t_cub3d *cub3d)
 	cub3d->cam.rot_speed = 0.05;
 }
 
+void	init_cub3d(t_cub3d *cub3d)
+{
+	cub3d->config = NULL;
+	cub3d->img.mlx = NULL;
+	cub3d->img.addr = NULL;
+	cub3d->mlx = NULL;
+	cub3d->win = NULL;
+	cub3d->xpm.n_tex = NULL;
+	cub3d->xpm.s_tex = NULL;
+	cub3d->xpm.e_tex = NULL;
+	cub3d->xpm.w_tex = NULL;
+	cub3d->xpm.n_tex_adrr = NULL;
+	cub3d->xpm.s_tex_adrr = NULL;
+	cub3d->xpm.e_tex_adrr = NULL;
+	cub3d->xpm.w_tex_adrr = NULL;
+}
 
 int	main(int argc, char **argv)
 {
@@ -93,9 +109,10 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		return (1);
+	init_cub3d(&cub3d);
 	cub3d.config = ft_configuration(argv[1]);
 	if (!cub3d.config)
-		return (1);
+		return (end_program(&cub3d));
 	init_cam_settings(&cub3d);
 	cub3d.mlx = mlx_init();
 	cub3d.win = mlx_new_window(cub3d.mlx, SCREEN_WIDTH + 5, SCREEN_HEIGTH + 5, "Cub3D");

@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:17:19 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/05 17:21:18 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/05 19:39:52 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,14 @@ t_configuration	*fill_configuration_argument(char **file)
 		i++;
 	}
 	if (!check_arguments(config))
-		return (NULL);
+		return (free_config(config), NULL);
 	return (config);
 }
 
-t_configuration	*parse_map(int fd)
+t_configuration	*parse_map(int fd) // a modifier pour la norme et proteger les mallocs
 {
 	char			*file_in_line;
-	//char			*file_dup;
+	char			*file_buffer;
 	char			**file;
 	char			*buffer;
 	t_configuration	*config;
@@ -71,13 +71,18 @@ t_configuration	*parse_map(int fd)
 	buffer = get_next_line(fd);
 	if (!*buffer)
 		return (0);
+	file_buffer = NULL;
 	while (buffer)
 	{
-		//file_dup = ft_strdup(file_in_line);
-		file_in_line = ft_strjoin(file_in_line, buffer);
+		file_buffer = ft_strdup(file_in_line);
+		if (file_in_line)
+			free(file_in_line);
+		file_in_line = NULL;
+		file_in_line = ft_strjoin(file_buffer, buffer);
 		if (!file_in_line)
 			return (free(buffer), NULL);
 		free(buffer);
+		free(file_buffer);
 		buffer = get_next_line(fd);
 		if (!buffer)
 			break ;
@@ -87,8 +92,9 @@ t_configuration	*parse_map(int fd)
 	file = ft_split(file_in_line, '\n');
 	if (!file)
 		return (close(fd), free(file_in_line), ft_printf("Malloc error\n"), NULL);
+	free(file_in_line);
 	config = fill_configuration_argument(file);
-	return (close(fd), free(file_in_line), ft_free_arrays_i(file, -1), config);
+	return (close(fd), ft_free_arrays_i(file, -1), config);
 }
 
 t_configuration	*ft_configuration(char *file_path)
