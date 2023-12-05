@@ -6,25 +6,28 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:38:37 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/05 16:12:18 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/05 16:42:37 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_free_int_i(int **arrays, int index)
-{
+void ft_free_int_i(int **arrays, int index) {
+    
 	int	i;
 
 	i = 0;
-	while (i < index)
-	{
-		if (arrays[i])
-			free(arrays[i]);
+	if (arrays == NULL || index < 0) {
+        return;
+    }
+    while (i < index)
+{
+        free(arrays[i]);
+        arrays[i] = NULL;
 		i++;
-	}
-	if (arrays)
-		free(arrays);
+    }
+	//free(arrays);
+	//arrays = NULL;
 }
 
 void	ft_free_arrays_i(char **arrays, int index)

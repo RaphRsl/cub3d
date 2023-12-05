@@ -6,7 +6,7 @@
 #    By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/01 16:32:28 by toteixei          #+#    #+#              #
-#    Updated: 2023/12/05 15:37:28 by toteixei         ###   ########.fr        #
+#    Updated: 2023/12/05 17:30:32 by toteixei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRCS 		=	sources/main.c sources/game.c sources/deal_key.c \
 				sources/parsing/fill_element_utils.c \
 				sources/parsing/check_file.c \
 				sources/parsing/check_file_utils.c \
+				sources/end_program.c
 
 OBJ 		= 	$(SRCS:.c=.o)
 
@@ -28,7 +29,7 @@ LIBFT 		= 	libft
 RM			=	rm -f
 LIB 		= 	libft.a
 MATH_LIB 	= 	-lm -lz
-CFLAGS 		= 	-Wall -Wextra
+CFLAGS 		= 	-Wall -Wextra -Werror -g3
 
 #LINUX
 INCLUDES	=	-I libft

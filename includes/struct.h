@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:25:27 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/05 16:05:13 by rroussel         ###   ########.fr       */
+/*   Updated: 2023/12/05 18:41:36 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,10 @@ typedef struct s_xpm
     void    *s_tex;
     void    *e_tex;
     void    *w_tex;
+    int    *n_tex_adrr;
+    int    *s_tex_adrr;
+    int    *e_tex_adrr;
+    int    *w_tex_adrr;
     int     tex_width;
     int     tex_height;
 }       t_xpm;

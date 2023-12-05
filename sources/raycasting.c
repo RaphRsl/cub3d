@@ -6,13 +6,13 @@
 /*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:56:46 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/05 18:53:19 by rroussel         ###   ########.fr       */
+/*   Updated: 2023/12/05 19:01:23 by rroussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void    render_texture_line(int draw_start, int draw_end, int x, double tex_pos, double step, t_cub3d *cub3d, void *texture, int tex_x)
+void    render_texture_line(int draw_start, int draw_end, int x, double tex_pos, double step, t_cub3d *cub3d, int *texture, int tex_x)
 {
     int y = 0;
     int *color = 0;
@@ -25,7 +25,7 @@ void    render_texture_line(int draw_start, int draw_end, int x, double tex_pos,
     {
         int tex_y = (int)tex_pos & (cub3d->xpm.tex_height - 1);
         tex_pos += step;
-        color = (int *)texture;
+        color = texture;
         cub3d->img.addr[y * SCREEN_WIDTH + x] = color[tex_y * cub3d->xpm.tex_height + tex_x];
         y++;
     }
@@ -70,8 +70,8 @@ void    draw_rays_3d(t_cub3d *cub3d)
     float   pos_y = cub3d->cam.p_y;
     float   dir_x = cub3d->cam.pd_x;
     float   dir_y = cub3d->cam.pd_y;
-    float   plane_x = cub3d->cam.plane_x;
-    float   plane_y = cub3d->cam.plane_y;
+    // float   plane_x = cub3d->cam.plane_x;
+    // float   plane_y = cub3d->cam.plane_y;
     int     w = SCREEN_WIDTH;
     int     x = 0;
     double fov = cub3d->cam.fov; //changed
@@ -182,7 +182,7 @@ double wall_height = SCREEN_HEIGTH / perp_wall_dist;
 // Apply perspective correction for wall heights
 // This could involve additional factors like distance, fov (field of view), etc.
 // Experiment with different formulas for better perspective correction
-wall_height *= cos(abs(camera_x)); // Applying a simple correction factor
+wall_height *= cos(fabs(camera_x)); // Applying a simple correction factor
 
 int line_height = (int)wall_height;
 
@@ -214,13 +214,13 @@ int line_height = (int)wall_height;
         double step = 1.0 * cub3d->xpm.tex_height / line_height;
         double tex_pos = (draw_start - SCREEN_HEIGTH / 2 + line_height / 2) * step;
         if (side == 1 && ray_dir_y > 0)
-            render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.s_tex, tex_x);
+            render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.s_tex_adrr, tex_x);
         else if (side == 1 && ray_dir_y < 0)
-            render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.n_tex, tex_x);
+            render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.n_tex_adrr, tex_x);
         else if (side == 0 && ray_dir_x > 0)
-            render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.e_tex, tex_x);
+            render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.e_tex_adrr, tex_x);
         else
-            render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.w_tex, tex_x);
+            render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.w_tex_adrr, tex_x);
         // Update 'x' to proceed to the next column
     }
 }

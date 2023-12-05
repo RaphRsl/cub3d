@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:17:19 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/05 15:18:59 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/05 17:21:18 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ t_configuration	*fill_configuration_argument(char **file)
 t_configuration	*parse_map(int fd)
 {
 	char			*file_in_line;
+	//char			*file_dup;
 	char			**file;
 	char			*buffer;
 	t_configuration	*config;
@@ -72,6 +73,7 @@ t_configuration	*parse_map(int fd)
 		return (0);
 	while (buffer)
 	{
+		//file_dup = ft_strdup(file_in_line);
 		file_in_line = ft_strjoin(file_in_line, buffer);
 		if (!file_in_line)
 			return (free(buffer), NULL);

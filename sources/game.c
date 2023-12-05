@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 19:35:25 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/05 15:13:00 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/05 17:33:55 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ void    print_direction_line_of_player(t_cub3d *cub3d)
     direction.x = player.x + (cub3d->cam.pd_x * 5);
     direction.y = player.y + (cub3d->cam.pd_y * 5);
 
-    double fov_angle = cub3d->cam.fov * (M_PI / 180.0); // Convert FOV to radians
+    //double fov_angle = cub3d->cam.fov * (M_PI / 180.0); // Convert FOV to radians
     double fixed_angle = M_PI / 6.0; // Adjust this value for the desired fixed angle
 
     double left_fov_angle = cub3d->cam.pa - fixed_angle;
