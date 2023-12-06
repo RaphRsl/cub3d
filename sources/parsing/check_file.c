@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:19:56 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/06 13:29:01 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/06 17:48:48 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,9 @@ int	check_floor_ceiling_color(t_configuration *config)
 		i++;
 	}
 	return (1);
-
 }
 
-int check_xpm_file(t_configuration *config)
+int	check_xpm_file(t_configuration *config)
 {
 	int	fd;
 
@@ -100,21 +99,11 @@ int	check_map(t_configuration *config)
 	map = NULL;
 	if (!find_player(config))
 		return (0);
-	if (!(map = duplicate_map(config)))
+	map = duplicate_map(config);
+	if (!map)
 		return (0);
-	while (++i < config->n_rows)
-	{
-		j = -1;
-		while (++j < config->n_column)
-		{
-			if (config->map[i][j] == 0 || config->map[i][j] == 3)
-			{
-				if (!flood_fill(config, map, i, j))
-					return (ft_free_int_i(map, config->n_rows), 
-						ft_printf("Error\nMap is not closed\n"), 0);
-			}
-		}
-	}
+	if (!check_map_limits(config, i, j, map))
+		return (0);
 	ft_free_int_i(map, config->n_rows);
 	return (1);
 }

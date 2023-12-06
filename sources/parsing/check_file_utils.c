@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:23:31 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/06 13:29:48 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/06 17:22:03 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,24 @@ void	print_map(t_configuration *confi, int **map)
 		ft_printf("\n");
 		i++;
 	}
+}
+
+int	check_map_limits(t_configuration *config, int i, int j, int **map)
+{
+	while (++i < config->n_rows)
+	{
+		j = -1;
+		while (++j < config->n_column)
+		{
+			if (config->map[i][j] == 0 || config->map[i][j] == 3)
+			{
+				if (!flood_fill(config, map, i, j))
+					return (ft_free_int_i(map, config->n_rows),
+						ft_printf("Error\nMap is not closed\n"), 0);
+			}
+		}
+	}
+	return (1);
 }
 
 int	find_player(t_configuration *config)
@@ -117,7 +135,7 @@ int	**duplicate_map(t_configuration *config)
 	return (map_buffer);
 }
 
-int flood_fill(t_configuration *config, int **map, int y, int x)
+int	flood_fill(t_configuration *config, int **map, int y, int x)
 {
 	if (y < 0 || y >= config->n_rows || x < 0 || x >= config->n_column)
 		return (0);

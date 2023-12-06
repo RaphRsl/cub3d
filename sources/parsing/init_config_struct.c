@@ -6,16 +6,16 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:22:26 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/05 15:22:40 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/06 16:26:08 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-t_configuration *init_config_struct(void)
+t_configuration	*init_config_struct(void)
 {
-	t_configuration *config;
-	
+	t_configuration	*config;
+
 	config = malloc(sizeof(t_configuration));
 	if (!config)
 		return (NULL);
