@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rsl <rsl@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:12:55 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/05 19:50:38 by rroussel         ###   ########.fr       */
+/*   Updated: 2023/12/06 23:27:12 by rsl              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,35 @@ void	init_cam_settings(t_cub3d *cub3d)
 	cub3d->cam.rot_speed = 0.05;
 }
 
+//proposition de rroussel
+// void init_cam_settings(t_cub3d *cub3d)
+//{
+//     cub3d->cam.p_x = cub3d->config->player_x + 0.5;
+//     cub3d->cam.p_y = cub3d->config->player_y + 0.5;
+//     cub3d->cam.fov = M_PI / 6;
+
+//     // Initialize camera direction based on orientation
+//     if (cub3d->config->orientation == 'E')
+//         cub3d->cam.pa = 0;
+//     else if (cub3d->config->orientation == 'W')
+//         cub3d->cam.pa = M_PI;
+//     else if (cub3d->config->orientation == 'N')
+//         cub3d->cam.pa = 2 * M_PI - M_PI / 2;
+//     else if (cub3d->config->orientation == 'S')
+//         cub3d->cam.pa = M_PI / 2;
+
+//     double fov_rad = cub3d->cam.fov * (M_PI / 180.0);
+//     cub3d->cam.plane_x = cos(fov_rad / 2);
+//     cub3d->cam.plane_y = sin(fov_rad / 2);
+
+//     cub3d->cam.pd_x = cos(cub3d->cam.pa) * 5;
+//     cub3d->cam.pd_y = sin(cub3d->cam.pa) * 5;
+
+//     cub3d->cam.move_speed = 0.05;
+//     cub3d->cam.rot_speed = 0.05;
+// }
+//end of proposition de rroussel
+
 void	init_cub3d(t_cub3d *cub3d)
 {
 	cub3d->config = NULL;
@@ -115,8 +144,8 @@ int	main(int argc, char **argv)
 		return (end_program(&cub3d));
 	init_cam_settings(&cub3d);
 	cub3d.mlx = mlx_init();
-	cub3d.win = mlx_new_window(cub3d.mlx, SCREEN_WIDTH + 5, SCREEN_HEIGTH + 5, "Cub3D");
-	cub3d.img.mlx = mlx_new_image(cub3d.mlx, SCREEN_WIDTH, SCREEN_HEIGTH);
+	cub3d.win = mlx_new_window(cub3d.mlx, SCREEN_WIDTH + 5, SCREEN_HEIGHT + 5, "Cub3D");
+	cub3d.img.mlx = mlx_new_image(cub3d.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	cub3d.img.addr = (int *)mlx_get_data_addr(cub3d.img.mlx, &cub3d.img.bpp, &cub3d.img.line_len, &cub3d.img.endian);
 	if (!init_textures(&cub3d))
 		return (1); // liberer le reste de la memoire

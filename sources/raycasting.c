@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rsl <rsl@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:56:46 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/05 19:41:10 by rroussel         ###   ########.fr       */
+/*   Updated: 2023/12/06 23:27:12 by rsl              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 //         cub3d->img.addr[y * SCREEN_WIDTH + x] = color[tex_y * cub3d->xpm.tex_height + tex_x];
 //         y++;
 //     }
-//     while (y < SCREEN_HEIGTH)
+//     while (y < SCREEN_HEIGHT)
 //     {
 //         cub3d->img.addr[y * SCREEN_WIDTH + x] = cub3d->config->fl_color[0] << 16 | cub3d->config->fl_color[1] << 8 | cub3d->config->fl_color[2];
 //         y++;
@@ -42,10 +42,10 @@ void render_texture_line(int draw_start, int draw_end, int x, double tex_pos, do
     int *color = NULL;
     
     // Clear the entire column before rendering the new frame
-    while (y < SCREEN_HEIGTH)
+    while (y < SCREEN_HEIGHT)
     {
         // Render floor and ceiling colors
-        cub3d->img.addr[y * SCREEN_WIDTH + x] = (y < SCREEN_HEIGTH / 2) ?
+        cub3d->img.addr[y * SCREEN_WIDTH + x] = (y < SCREEN_HEIGHT / 2) ?
             cub3d->config->c_color[0] << 16 | cub3d->config->c_color[1] << 8 | cub3d->config->c_color[2] :
             cub3d->config->fl_color[0] << 16 | cub3d->config->fl_color[1] << 8 | cub3d->config->fl_color[2];
 
@@ -54,7 +54,7 @@ void render_texture_line(int draw_start, int draw_end, int x, double tex_pos, do
 
     y = draw_start;
     
-    while (y < draw_end && y < SCREEN_HEIGTH)
+    while (y < draw_end && y < SCREEN_HEIGHT)
     {
         int tex_y = (int)tex_pos & (cub3d->xpm.tex_height - 1); // Calculate texture Y coordinate
 
@@ -74,6 +74,40 @@ void render_texture_line(int draw_start, int draw_end, int x, double tex_pos, do
     }
 }
 
+//proposition de rroussel
+// void render_texture_line(int draw_start, int draw_end, int x, double tex_pos, double step, t_cub3d *cub3d, void *texture, int tex_x)
+// {
+//     int y = draw_start;
+//     int *color = NULL;
+
+//     while (y < SCREEN_HEIGHT) {
+//         // Render floor and ceiling colors
+//         cub3d->img.addr[y * SCREEN_WIDTH + x] = (y < SCREEN_HEIGHT / 2) ?
+//             cub3d->config->c_color[0] << 16 | cub3d->config->c_color[1] << 8 | cub3d->config->c_color[2] :
+//             cub3d->config->fl_color[0] << 16 | cub3d->config->fl_color[1] << 8 | cub3d->config->fl_color[2];
+
+//         y++;
+//     }
+
+//     y = draw_start;
+
+//     while (y < draw_end && y < SCREEN_HEIGHT) {
+//         int tex_y = (int)tex_pos & (cub3d->xpm.tex_height - 1);
+
+//         if (tex_y < 0)
+//             tex_y = 0;
+//         if (tex_y >= cub3d->xpm.tex_height)
+//             tex_y = cub3d->xpm.tex_height - 1;
+
+//         color = (int *)texture;
+
+//         cub3d->img.addr[y * SCREEN_WIDTH + x] = color[tex_y * cub3d->xpm.tex_width + tex_x];
+
+//         tex_pos += step;
+//         y++;
+//     }
+// }
+//end of proposition de rroussel
 
 
 
@@ -194,7 +228,7 @@ void    draw_rays_3d(t_cub3d *cub3d)
             line_height is calculated as the height of the wall on the screen. It's inversely proportional to perp_wall_dist. Closer walls appear taller, while farther walls appear shorter.
             draw_start and draw_end define the range of the wall's height to be rendered on the screen. These values specify where the wall starts and ends vertically on the screen. */
 
-double wall_height = SCREEN_HEIGTH / perp_wall_dist;
+double wall_height = SCREEN_HEIGHT / perp_wall_dist;
 
 // Apply perspective correction for wall heights
 // This could involve additional factors like distance, fov (field of view), etc.
@@ -203,17 +237,17 @@ wall_height *= cos(fabs(camera_x)); // Applying a simple correction factor
 
 int line_height = (int)wall_height;
 
-        // int line_height = (int)(SCREEN_HEIGTH / perp_wall_dist);
+        // int line_height = (int)(SCREEN_HEIGHT / perp_wall_dist);
         /* Adjusting Render Limits:
-            The code ensures that draw_start and draw_end values fit within the screen's height (SCREEN_HEIGTH). If draw_start is negative (outside the screen), it's adjusted to start at the top of the screen (0). Similarly, if draw_end exceeds the screen's height, it's adjusted to the screen's bottom boundary.
+            The code ensures that draw_start and draw_end values fit within the screen's height (SCREEN_HEIGHT). If draw_start is negative (outside the screen), it's adjusted to start at the top of the screen (0). Similarly, if draw_end exceeds the screen's height, it's adjusted to the screen's bottom boundary.
             After these calculations, the code continues to the texture mapping and rendering phase, using the calculated values (draw_start, draw_end, etc.) to render the wall texture within the specified screen area corresponding to the detected wall.
         */
-        int draw_start = (-line_height / 2) + (SCREEN_HEIGTH / 2);
+        int draw_start = (-line_height / 2) + (SCREEN_HEIGHT / 2);
         if (draw_start < 0)
             draw_start = 0;
-        int draw_end = (line_height / 2) + (SCREEN_HEIGTH / 2);
-        if (draw_end >= SCREEN_HEIGTH)
-            draw_end = SCREEN_HEIGTH - 1;
+        int draw_end = (line_height / 2) + (SCREEN_HEIGHT / 2);
+        if (draw_end >= SCREEN_HEIGHT)
+            draw_end = SCREEN_HEIGHT - 1;
         
         // Calculate texture mapping
         double wall_x;
@@ -229,7 +263,7 @@ int line_height = (int)wall_height;
             tex_x = cub3d->xpm.tex_width - tex_x - 1;
         // Render the textured line on the screen
         double step = 1.0 * cub3d->xpm.tex_height / line_height;
-        double tex_pos = (draw_start - SCREEN_HEIGTH / 2 + line_height / 2) * step;
+        double tex_pos = (draw_start - SCREEN_HEIGHT / 2 + line_height / 2) * step;
         if (side == 1 && ray_dir_y > 0)
             render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.s_tex_adrr, tex_x);
         else if (side == 1 && ray_dir_y < 0)
@@ -242,9 +276,189 @@ int line_height = (int)wall_height;
     }
 }
 
+//proposition de rroussel_1
+// void draw_rays_3d(t_cub3d *cub3d) {
+//     float pos_x = cub3d->cam.p_x;
+//     float pos_y = cub3d->cam.p_y;
+//     float dir_x = cub3d->cam.pd_x;
+//     float dir_y = cub3d->cam.pd_y;
+//     int w = SCREEN_WIDTH;
+//     double fov = cub3d->cam.fov;
 
+//     for (int x = 0; x < w; x++) {
+//         double camera_x = 2 * x / (double)w - 1;
+//         double ray_angle = camera_x * fov;
 
+//         double ray_dir_x = dir_x * cos(ray_angle) - dir_y * sin(ray_angle);
+//         double ray_dir_y = dir_x * sin(ray_angle) + dir_y * cos(ray_angle);
 
+//         int map_x = (int)pos_x;
+//         int map_y = (int)pos_y;
+
+//         double side_dist_x;
+//         double side_dist_y;
+//         double delta_dist_x = sqrt(1 + (ray_dir_y * ray_dir_y) / (ray_dir_x * ray_dir_x));
+//         double delta_dist_y = sqrt(1 + (ray_dir_x * ray_dir_x) / (ray_dir_y * ray_dir_y));
+//         double perp_wall_dist;
+//         int step_x;
+//         int step_y;
+//         int hit = 0;
+//         int side;
+
+//         if (ray_dir_x < 0) {
+//             step_x = -1;
+//             side_dist_x = (pos_x - map_x) * delta_dist_x;
+//         } else {
+//             step_x = 1;
+//             side_dist_x = (map_x + 1.0 - pos_x) * delta_dist_x;
+//         }
+//         if (ray_dir_y < 0) {
+//             step_y = -1;
+//             side_dist_y = (pos_y - map_y) * delta_dist_y;
+//         } else {
+//             step_y = 1;
+//             side_dist_y = (map_y + 1.0 - pos_y) * delta_dist_y;
+//         }
+
+//         while (hit == 0) {
+//             if (side_dist_x < side_dist_y) {
+//                 side_dist_x += delta_dist_x;
+//                 map_x += step_x;
+//                 side = 0;
+//             } else {
+//                 side_dist_y += delta_dist_y;
+//                 map_y += step_y;
+//                 side = 1;
+//             }
+//             if (cub3d->config->map[map_y][map_x] > 0 && cub3d->config->map[map_y][map_x] < 2)
+//                 hit = 1;
+//         }
+
+//         if (side == 0)
+//             perp_wall_dist = (side_dist_x - delta_dist_x);
+//         else
+//             perp_wall_dist = (side_dist_y - delta_dist_y);
+
+//         double wall_height = SCREEN_HEIGHT / perp_wall_dist;
+//         wall_height *= cos(fabs(camera_x));
+//         int line_height = (int)wall_height;
+
+//         int draw_start = (-line_height / 2) + (SCREEN_HEIGHT / 2);
+//         if (draw_start < 0)
+//             draw_start = 0;
+//         int draw_end = (line_height / 2) + (SCREEN_HEIGHT / 2);
+//         if (draw_end >= SCREEN_HEIGHT)
+//             draw_end = SCREEN_HEIGHT - 1;
+
+//         double wall_x;
+//         if (side == 0)
+//             wall_x = pos_y + perp_wall_dist * ray_dir_y;
+//         else
+//             wall_x = pos_x + perp_wall_dist * ray_dir_x;
+//         wall_x -= floor(wall_x);
+//         int tex_x = (int)(wall_x * (double)cub3d->xpm.tex_width);
+//         if (side == 0 && ray_dir_x > 0)
+//             tex_x = cub3d->xpm.tex_width - tex_x - 1;
+//         if (side == 1 && ray_dir_y < 0)
+//             tex_x = cub3d->xpm.tex_width - tex_x - 1;
+
+//         double step = 1.0 * cub3d->xpm.tex_height / line_height;
+//         double tex_pos = (draw_start - SCREEN_HEIGHT / 2 + line_height / 2) * step;
+
+//         if (side == 1 && ray_dir_y > 0)
+//             render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.s_tex_adrr, tex_x);
+//         else if (side == 1 && ray_dir_y < 0)
+//             render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.n_tex_adrr, tex_x);
+//         else if (side == 0 && ray_dir_x > 0)
+//             render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.e_tex_adrr, tex_x);
+//         else
+//             render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.w_tex_adrr, tex_x);
+//     }
+// }
+//end of proposition de rroussel_1
+
+//propo de rroussel_2
+// void draw_rays_3d(t_cub3d *cub3d) {
+//     float pos_x = cub3d->cam.p_x;
+//     float pos_y = cub3d->cam.p_y;
+//     float dir_x = cub3d->cam.pd_x;
+//     float dir_y = cub3d->cam.pd_y;
+//     int w = SCREEN_WIDTH;
+//     double fov = cub3d->cam.fov;
+
+//     for (int x = 0; x < w; x++) {
+//         double camera_x = 2 * x / (double)w - 1;
+//         double ray_angle = atan2(dir_y, dir_x) + fov * (camera_x);
+
+//         double ray_dir_x = cos(ray_angle);
+//         double ray_dir_y = sin(ray_angle);
+
+//         int map_x = (int)pos_x;
+//         int map_y = (int)pos_y;
+
+//         double delta_dist_x = fabs(1 / ray_dir_x);
+//         double delta_dist_y = fabs(1 / ray_dir_y);
+
+//         double side_dist_x;
+//         double side_dist_y;
+
+//         double perp_wall_dist;
+
+//         int step_x;
+//         int step_y;
+//         int hit = 0;
+//         int side;
+
+//         if (ray_dir_x < 0) {
+//             step_x = -1;
+//             side_dist_x = (pos_x - map_x) * delta_dist_x;
+//         } else {
+//             step_x = 1;
+//             side_dist_x = (map_x + 1.0 - pos_x) * delta_dist_x;
+//         }
+//         if (ray_dir_y < 0) {
+//             step_y = -1;
+//             side_dist_y = (pos_y - map_y) * delta_dist_y;
+//         } else {
+//             step_y = 1;
+//             side_dist_y = (map_y + 1.0 - pos_y) * delta_dist_y;
+//         }
+
+//         while (hit == 0) {
+//             if (side_dist_x < side_dist_y) {
+//                 side_dist_x += delta_dist_x;
+//                 map_x += step_x;
+//                 side = 0;
+//             } else {
+//                 side_dist_y += delta_dist_y;
+//                 map_y += step_y;
+//                 side = 1;
+//             }
+//             if (cub3d->config->map[map_y][map_x] > 0 && cub3d->config->map[map_y][map_x] < 2)
+//                 hit = 1;
+//         }
+
+//         if (side == 0)
+//             perp_wall_dist = (map_x - pos_x + (1 - step_x) / 2) / ray_dir_x;
+//         else
+//             perp_wall_dist = (map_y - pos_y + (1 - step_y) / 2) / ray_dir_y;
+
+//         double line_height = SCREEN_HEIGHT / perp_wall_dist;
+//         int draw_start = -line_height / 2 + SCREEN_HEIGHT / 2;
+//         if (draw_start < 0)
+//             draw_start = 0;
+//         int draw_end = line_height / 2 + SCREEN_HEIGHT / 2;
+//         if (draw_end >= SCREEN_HEIGHT)
+//             draw_end = SCREEN_HEIGHT - 1;
+
+//         // Remaining code for texture rendering...
+//         // ...
+
+//         // Render the wall with proper height and texture mapping
+//         // ...
+//     }
+// }
+//end of propo de rroussel_2
 
 //--------------TO KEEP-----------------
 
@@ -364,7 +578,7 @@ int line_height = (int)wall_height;
 //             line_height is calculated as the height of the wall on the screen. It's inversely proportional to perp_wall_dist. Closer walls appear taller, while farther walls appear shorter.
 //             draw_start and draw_end define the range of the wall's height to be rendered on the screen. These values specify where the wall starts and ends vertically on the screen. */
 
-// double wall_height = SCREEN_HEIGTH / perp_wall_dist;
+// double wall_height = SCREEN_HEIGHT / perp_wall_dist;
 
 // // Apply perspective correction for wall heights
 // // This could involve additional factors like distance, fov (field of view), etc.
@@ -373,17 +587,17 @@ int line_height = (int)wall_height;
 
 // int line_height = (int)wall_height;
 
-//         // int line_height = (int)(SCREEN_HEIGTH / perp_wall_dist);
+//         // int line_height = (int)(SCREEN_HEIGHT / perp_wall_dist);
 //         /* Adjusting Render Limits:
-//             The code ensures that draw_start and draw_end values fit within the screen's height (SCREEN_HEIGTH). If draw_start is negative (outside the screen), it's adjusted to start at the top of the screen (0). Similarly, if draw_end exceeds the screen's height, it's adjusted to the screen's bottom boundary.
+//             The code ensures that draw_start and draw_end values fit within the screen's height (SCREEN_HEIGHT). If draw_start is negative (outside the screen), it's adjusted to start at the top of the screen (0). Similarly, if draw_end exceeds the screen's height, it's adjusted to the screen's bottom boundary.
 //             After these calculations, the code continues to the texture mapping and rendering phase, using the calculated values (draw_start, draw_end, etc.) to render the wall texture within the specified screen area corresponding to the detected wall.
 //         */
-//         int draw_start = (-line_height / 2) + (SCREEN_HEIGTH / 2);
+//         int draw_start = (-line_height / 2) + (SCREEN_HEIGHT / 2);
 //         if (draw_start < 0)
 //             draw_start = 0;
-//         int draw_end = (line_height / 2) + (SCREEN_HEIGTH / 2);
-//         if (draw_end >= SCREEN_HEIGTH)
-//             draw_end = SCREEN_HEIGTH - 1;
+//         int draw_end = (line_height / 2) + (SCREEN_HEIGHT / 2);
+//         if (draw_end >= SCREEN_HEIGHT)
+//             draw_end = SCREEN_HEIGHT - 1;
         
 //         // Calculate texture mapping
 //         double wall_x;
@@ -399,7 +613,7 @@ int line_height = (int)wall_height;
 //             tex_x = cub3d->xpm.tex_width - tex_x - 1;
 //         // Render the textured line on the screen
 //         double step = 1.0 * cub3d->xpm.tex_height / line_height;
-//         double tex_pos = (draw_start - SCREEN_HEIGTH / 2 + line_height / 2) * step;
+//         double tex_pos = (draw_start - SCREEN_HEIGHT / 2 + line_height / 2) * step;
 //         if (side == 1 && ray_dir_y > 0)
 //             render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.s_tex_adrr, tex_x);
 //         else if (side == 1 && ray_dir_y < 0)

@@ -6,7 +6,7 @@
 /*   By: rsl <rsl@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 19:35:25 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/05 23:20:25 by rsl              ###   ########.fr       */
+/*   Updated: 2023/12/06 23:27:12 by rsl              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	img_pixel_put(int x, int y, unsigned int color, t_cub3d *cub3d)
 	// int	alpha;//not used
 
 	// alpha = 0; //not used
-	if (x >= SCREEN_WIDTH || y >= SCREEN_HEIGTH || x < 0 || y < 0)
+	if (x >= SCREEN_WIDTH || y >= SCREEN_HEIGHT || x < 0 || y < 0)
 		return ;
 	mypixel = (y * SCREEN_WIDTH) + x;
 	if (cub3d->img.bpp != 32)
@@ -61,12 +61,12 @@ void    ft_render_white_background(t_cub3d *cub3d)
     while (x < SCREEN_WIDTH)
     {
         y = 0;
-        while (y < SCREEN_HEIGTH / 2)
+        while (y < SCREEN_HEIGHT / 2)
         {
             img_pixel_put(x, y, get_color(cub3d->config->c_color), cub3d);
             y++;
         }
-        while (y < SCREEN_HEIGTH)
+        while (y < SCREEN_HEIGHT)
         {
             img_pixel_put(x, y, get_color(cub3d->config->fl_color), cub3d);
             y++;
@@ -85,7 +85,7 @@ void    ft_print_grid(t_cub3d *cub3d)
     while (x < SCREEN_WIDTH)
     {
         y = 0;
-        while (y < SCREEN_HEIGTH)
+        while (y < SCREEN_HEIGHT)
         {
             if (x % 20 == 0 || y % 20 == 0)
                 img_pixel_put(x, y, 0x00000000, cub3d);
@@ -180,7 +180,7 @@ void	draw_line(t_cub3d *cub3d, t_point p1, t_point p2)
 //     t_point direction;
 
 //     player.x = SCREEN_WIDTH - cub3d->config->n_column * 10 + (cub3d->cam.p_x * 10);
-//     player.y = SCREEN_HEIGTH - cub3d->config->n_rows * 10 + (cub3d->cam.p_y * 10);
+//     player.y = SCREEN_HEIGHT - cub3d->config->n_rows * 10 + (cub3d->cam.p_y * 10);
 //     direction.x = player.x + (cub3d->cam.pd_x * 5);
 //     direction.y = player.y + (cub3d->cam.pd_y * 5);
 //     draw_line(cub3d, player, direction);
@@ -194,7 +194,7 @@ void    print_direction_line_of_player(t_cub3d *cub3d)
     t_point right_fov_line_end;
 
     player.x = SCREEN_WIDTH - cub3d->config->n_column * 10 + (cub3d->cam.p_x * 10);
-    player.y = SCREEN_HEIGTH - cub3d->config->n_rows * 10 + (cub3d->cam.p_y * 10);
+    player.y = SCREEN_HEIGHT - cub3d->config->n_rows * 10 + (cub3d->cam.p_y * 10);
 
     direction.x = player.x + (cub3d->cam.pd_x * 5);
     direction.y = player.y + (cub3d->cam.pd_y * 5);
@@ -227,7 +227,7 @@ void    print_direction_line_of_player(t_cub3d *cub3d)
 //     t_point right_fov_line_end;
 
 //     player.x = SCREEN_WIDTH - cub3d->config->n_column * 10 + (cub3d->cam.p_x * 10);
-//     player.y = SCREEN_HEIGTH - cub3d->config->n_rows * 10 + (cub3d->cam.p_y * 10);
+//     player.y = SCREEN_HEIGHT - cub3d->config->n_rows * 10 + (cub3d->cam.p_y * 10);
 
 //     direction.x = player.x + (cub3d->cam.pd_x * 5);
 //     direction.y = player.y + (cub3d->cam.pd_y * 5);
@@ -256,7 +256,7 @@ void    print_direction_line_of_player(t_cub3d *cub3d)
 void    put_player_on_map(t_cub3d *cub3d)
 {
     int screen_x = SCREEN_WIDTH - cub3d->config->n_column * 10 + (cub3d->cam.p_x * 10);
-    int screen_y = SCREEN_HEIGTH - cub3d->config->n_rows * 10 + (cub3d->cam.p_y * 10);
+    int screen_y = SCREEN_HEIGHT - cub3d->config->n_rows * 10 + (cub3d->cam.p_y * 10);
 
     print_a_sphere(screen_x, screen_y, 5, 0x00FF0000, cub3d);
     print_direction_line_of_player(cub3d);
@@ -268,7 +268,7 @@ void    ft_print_map(t_cub3d *cub3d)
     int x;
     int y;
     int screen_x = SCREEN_WIDTH - cub3d->config->n_column * 10;
-    int screen_y = SCREEN_HEIGTH - cub3d->config->n_rows * 10;
+    int screen_y = SCREEN_HEIGHT - cub3d->config->n_rows * 10;
 
     x = 0;
     while (x < cub3d->config->n_rows)
@@ -279,13 +279,13 @@ void    ft_print_map(t_cub3d *cub3d)
             if (cub3d->config->map[x][y] == 1)
             {
                 screen_x = SCREEN_WIDTH - cub3d->config->n_column * 10 + (y * 10);
-                screen_y = SCREEN_HEIGTH - cub3d->config->n_rows * 10 + (x * 10);
+                screen_y = SCREEN_HEIGHT - cub3d->config->n_rows * 10 + (x * 10);
                 print_a_square(screen_x, screen_y, 10, 0x00000000, cub3d);
             }
             if (cub3d->config->map[x][y] == 0 || cub3d->config->map[x][y] == 3)
             {
                 screen_x = SCREEN_WIDTH - cub3d->config->n_column * 10 + (y * 10);
-                screen_y = SCREEN_HEIGTH - cub3d->config->n_rows * 10 + (x * 10);
+                screen_y = SCREEN_HEIGHT - cub3d->config->n_rows * 10 + (x * 10);
                 print_a_square(screen_x, screen_y, 10, 0x00FFFFFF, cub3d);
             }
             y++;

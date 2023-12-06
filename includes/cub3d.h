@@ -6,7 +6,7 @@
 /*   By: rsl <rsl@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:20:26 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/06 23:13:09 by rsl              ###   ########.fr       */
+/*   Updated: 2023/12/06 23:27:12 by rsl              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include "../mlx_macos/mlx.h"
 
 # define SCREEN_WIDTH 1920
-# define SCREEN_HEIGTH 1080
+# define SCREEN_HEIGHT 1080
 # define PI 3.1415926535
 
 enum {
