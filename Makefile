@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+         #
+#    By: rsl <rsl@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/01 16:32:28 by toteixei          #+#    #+#              #
-#    Updated: 2023/12/06 09:01:10 by toteixei         ###   ########.fr        #
+#    Updated: 2023/12/06 14:54:43 by rsl              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,14 +32,14 @@ MATH_LIB 	= 	-lm -lz
 CFLAGS 		= 	-Wall -Wextra -Werror -g3
 
 #LINUX
-#INCLUDES	=	-I libft
-#MINILIBX	=	mlx_linux
-#XFLAGS		=	-lXext -lX11
+INCLUDES	=	-I libft
+MINILIBX	=	mlx_linux
+XFLAGS		=	-lXext -lX11
 
 #MACOS
-INCLUDES	=	-Imlx_macos -I libft
-MINILIBX	=	mlx_macos
-XFLAGS		=	-framework OpenGL -framework AppKit
+# INCLUDES	=	-Imlx_macos -I libft
+# MINILIBX	=	mlx_macos
+# XFLAGS		=	-framework OpenGL -framework AppKit
 
 all : libs $(NAME)
 
