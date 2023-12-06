@@ -6,10 +6,15 @@
 #    By: rsl <rsl@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/01 16:32:28 by toteixei          #+#    #+#              #
-#    Updated: 2023/12/06 14:54:43 by rsl              ###   ########.fr        #
+#    Updated: 2023/12/06 23:52:01 by rsl              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+COLOUR_GREEN=\033[0;32m
+COLOUR_RED=\033[0;31m
+COLOUR_BLUE=\033[0;34m
+COLOUR_CYAN=\033[0;36m
+COLOUR_END=\033[0m
 
 NAME 		= 	cub3d
 SRCS 		=	sources/main.c sources/game.c sources/deal_key.c \
@@ -22,48 +27,101 @@ SRCS 		=	sources/main.c sources/game.c sources/deal_key.c \
 				sources/parsing/check_file_utils.c \
 				sources/end_program.c
 
-OBJ 		= 	$(SRCS:.c=.o)
+# OBJ 		= 	$(SRCS:.c=.o)
 
-CC			= 	cc
-LIBFT 		= 	libft
-RM			=	rm -f
-LIB 		= 	libft.a
-MATH_LIB 	= 	-lm -lz
-CFLAGS 		= 	-Wall -Wextra -Werror -g3
+# CC			= 	cc
+# LIBFT 		= 	libft
+# RM			=	rm -f
+# LIB 		= 	libft.a
+# MATH_LIB 	= 	-lm -lz
+# CFLAGS 		= 	-Wall -Wextra -Werror -g3
 
-#LINUX
-INCLUDES	=	-I libft
-MINILIBX	=	mlx_linux
-XFLAGS		=	-lXext -lX11
+# #LINUX
+# INCLUDES	=	-I libft
+# MINILIBX	=	mlx_linux
+# XFLAGS		=	-lXext -lX11
 
-#MACOS
-# INCLUDES	=	-Imlx_macos -I libft
-# MINILIBX	=	mlx_macos
-# XFLAGS		=	-framework OpenGL -framework AppKit
+# #MACOS
+# # INCLUDES	=	-Imlx_macos -I libft
+# # MINILIBX	=	mlx_macos
+# # XFLAGS		=	-framework OpenGL -framework AppKit
 
-all : libs $(NAME)
+# all : libs $(NAME)
 
-$(NAME) : $(OBJ)
-		$(CC) $(CFLAGS) $(OBJ) $(LIBFT)/libft.a $(MINILIBX)/libmlx.a $(XFLAGS) $(MATH_LIB) -o $(NAME)
+# $(NAME) : $(OBJ)
+# 		$(CC) $(CFLAGS) $(OBJ) $(LIBFT)/libft.a $(MINILIBX)/libmlx.a $(XFLAGS) $(MATH_LIB) -o $(NAME)
 
-%.o : %.c cub3d.h Makefile
-		$(CC) $(INCLUDES) $(CFLAGS) -c $< -o $@
+# %.o : %.c cub3d.h Makefile
+# 		$(CC) $(INCLUDES) $(CFLAGS) -c $< -o $@
 
 
-libs:
-		@$(MAKE) -C $(LIBFT)
-		@$(MAKE) -C $(MINILIBX)
+# libs:
+# 		@$(MAKE) -C $(LIBFT)
+# 		@$(MAKE) -C $(MINILIBX)
+
+# clean:
+# 		@$(RM) $(OBJ)
+# 		@$(MAKE) clean -C $(LIBFT)
+# 		@$(MAKE) clean -C $(MINILIBX)
+
+# fclean:	clean
+# 		@$(RM) $(NAME)
+# 		@$(MAKE) fclean -C $(LIBFT)
+# 		@$(MAKE) fclean -C $(MINILIBX)
+
+# re:		fclean all
+
+# .PHONY: all libs clean fclean re
+
+
+LIBFT := ./libft/libft.a
+MLX := ./mlx_linux//libmlx.a
+CC := cc
+HEADERS := ./includes/cub3d.h
+CFLAGS := -Wall -Wextra -Werror
+UFLAGS := -lX11 -lXext -lm -lz
+OBJS := $(SRCS:.c=.o)
+RM := rm -f
+
+.ONESHELL:
+
+
+$(NAME):	  $(MLX) $(LIBFT) $(OBJS)
+	@$(CC) $(UFLAGS) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX) -o $(NAME)
+	@echo "Cub3d compiled"
+
+$(LIBFT):
+	@echo "Compiling libft"
+	@$(MAKE) -C libft -s
+
+$(MLX):
+	@echo "Compiling mlx_linux"
+	@$(MAKE) -C mlx_linux -s
+
+%.o : %.c $(HEADERS)
+	@echo "Compiling $<"
+	@$(CC) $(CFLAGS) -c $< -I ./includes -o $@
+	@sleep .033
+	@printf "\033[1A"
+	@printf "\033[K"
+
+all:	$(NAME)
 
 clean:
-		@$(RM) $(OBJ)
-		@$(MAKE) clean -C $(LIBFT)
-		@$(MAKE) clean -C $(MINILIBX)
+	@echo "Cleaning files..."
+	@$(RM) $(OBJS)
+	@$(MAKE) -C libft clean -s
+	@$(MAKE) -C mlx_linux clean -s
+	@echo "↪ Finished, $(COLOUR_BLUE)files$(COLOUR_END) $(COLOUR_RED)cleaned$(COLOUR_END)"
 
 fclean:	clean
-		@$(RM) $(NAME)
-		@$(MAKE) fclean -C $(LIBFT)
-		@$(MAKE) fclean -C $(MINILIBX)
+	@echo "Cleaning binaries..."
+	@$(RM) $(NAME)
+	@$(MAKE) -C libft fclean -s
+	@echo "↪ Finished, $(COLOUR_BLUE)binaries$(COLOUR_END) $(COLOUR_RED)cleaned$(COLOUR_END)"
 
-re:		fclean all
+re:	fclean all
+	@echo "↪ Finished, $(COLOUR_BLUE)re-make$(COLOUR_END) $(COLOUR_GREEN)done$(COLOUR_END)"
 
-.PHONY: all libs clean fclean re
+.PHONY: clean fclean re all
+.SILENT: all clean fclean re

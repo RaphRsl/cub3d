@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hebernar <hebernar@student.42.fr>          +#+  +:+       +#+         #
+#    By: rsl <rsl@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/07 16:50:01 by toteixei          #+#    #+#              #
-#    Updated: 2023/10/18 00:57:24 by hebernar         ###   ########.fr        #
+#    Updated: 2023/12/06 23:50:52 by rsl              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,21 +33,22 @@ all: $(NAME)
 
 $(NAME):$(OBJ)
 	@echo "\n\n\033[0;32mCompiling libft..."
-	ar rc $(NAME) $(OBJ)
+	@ar rc $(NAME) $(OBJ)
 	@ranlib $(NAME)
 	@printf "\033[1A\033[K"
 
 .c.o:
 	@printf "\033[0;33mGenerating libft objects... %-33.33s\r" $@
-	gcc -Wall -Wextra -Werror -g3 -c $< -I includes -o $@
+	@gcc -Wall -Wextra -Werror -g3 -c $< -I includes -o $@
 	@printf "\033[1A\033[K"
 
 clean:
-	/bin/rm -f $(OBJ)
+	@/bin/rm -f $(OBJ)
 
 fclean: clean
-	/bin/rm -f $(NAME)
+	@/bin/rm -f $(NAME)
 
 re: fclean all
 
 .PHONY:		all clean fclean re
+.SILENT: clean
