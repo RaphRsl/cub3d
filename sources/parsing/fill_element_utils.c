@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:26:42 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/06 09:14:54 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/06 16:17:08 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,40 @@ int	is_map(char *line, t_configuration *config)
 	return (0);
 }
 
+int	is_key(char *line, int i)
+{
+	if (line[i] && line[i + 1] && (line[i] == 'F' || line[i] == 'C') && line[i + 1] == ' ')
+		return (1);
+	else if (line[i] && line[i + 1] && line[i + 2] && ft_isalpha(line[i]) && ft_isalpha(line[i + 1]) && line[i + 2] == ' ')
+		return (1);
+	return (0);
+}
+
 int	is_element(char *line)
 {
 	int	i;
 
 	i = 0;
 	skip_whitespaces(line, &i);
-	if (ft_strncmp(&line[i], "SO ", 3) == 0)
+	if (line[i] && line[i + 1] && (line[i] == 'F' || line[i] == 'C') && line[i + 1] == ' ')
 		return (1);
-	if (ft_strncmp(&line[i], "WE ", 3) == 0)
-		return (1);
-	if (ft_strncmp(&line[i], "NO ", 3) == 0)
-		return (1);
-	if (ft_strncmp(&line[i], "EA ", 3) == 0)
-		return (1);
-	if (ft_strncmp(&line[i], "F ", 2) == 0)
-		return (1);
-	if (ft_strncmp(&line[i], "C ", 2) == 0)
+	else if (line[i] && line[i + 1] && line[i + 2] && ft_isalpha(line[i]) && ft_isalpha(line[i + 1]) && line[i + 2] == ' ')
 		return (1);
 	return (0);
+	// if (ft_strncmp(&line[i], "SO ", 3) == 0)
+	// 	return (1);
+	// else if (ft_strncmp(&line[i], "WE ", 3) == 0)
+	// 	return (1);
+	// else if (ft_strncmp(&line[i], "NO ", 3) == 0)
+	// 	return (1);
+	// else if (ft_strncmp(&line[i], "EA ", 3) == 0)
+	// 	return (1);
+	// else if (ft_strncmp(&line[i], "F ", 2) == 0)
+	// 	return (1);
+	// else if (ft_strncmp(&line[i], "C ", 2) == 0)
+	// 	return (1);
+	// else
+	// 	ft_printf("Error\nWrong element\n");
 }
 
 void	skip_whitespaces(char *line, int *i)

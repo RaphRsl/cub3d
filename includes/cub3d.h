@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:20:26 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/06 12:30:12 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/06 13:30:39 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 
 # include "../mlx_macos/mlx.h"
 
-# define SCREEN_WIDTH 1920
-# define SCREEN_HEIGTH 1080
+# define SCREEN_WIDTH 1500
+# define SCREEN_HEIGTH 600
 # define PI 3.1415926535
 
 enum {
@@ -89,7 +89,7 @@ int				check_missing_argument(t_configuration *config);
 int				ft_check_file_path(char *file);
 int 			flood_fill(t_configuration *config, int **map, int y, int x);
 int				**duplicate_map(t_configuration *config);
-int				find_player(t_configuration *config, int *i, int *j);
+int				find_player(t_configuration *config);
 
 
 //Game functions

@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:23:31 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/06 12:14:29 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/06 13:29:48 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,34 +34,7 @@ void	print_map(t_configuration *confi, int **map)
 	}
 }
 
-// int	find_player(t_configuration *config)
-// {
-// 	int	player;
-// 	int	x;
-// 	int	y;
-
-// 	x = 0;
-// 	y = -1;
-// 	player = 0;
-// 	while (++y < config->n_rows)
-// 	{
-// 		x = -1;
-// 		while (++x < config->n_column)
-// 		{
-// 			if (config->map[y][x] == 3)
-// 			{
-// 				player++;
-// 				config->player_x = x;
-// 				config->player_y = y;
-// 			}
-// 		}
-// 	}
-// 	if (player != 1)
-// 		return (ft_printf("Error\nThere must be only one player.\n"), 0);
-// 	return (1);
-// }
-
-int	find_player(t_configuration *config, int *i, int *j)
+int	find_player(t_configuration *config)
 {
 	int	player;
 	int	x;
@@ -80,8 +53,6 @@ int	find_player(t_configuration *config, int *i, int *j)
 				player++;
 				config->player_x = x;
 				config->player_y = y;
-				*i = y;
-				*j = x;
 			}
 		}
 	}
@@ -89,6 +60,35 @@ int	find_player(t_configuration *config, int *i, int *j)
 		return (ft_printf("Error\nThere must be only one player.\n"), 0);
 	return (1);
 }
+
+// int	find_player(t_configuration *config, int *i, int *j)
+// {
+// 	int	player;
+// 	int	x;
+// 	int	y;
+
+// 	x = 0;
+// 	y = -1;
+// 	player = 0;
+// 	while (++y < config->n_rows)
+// 	{
+// 		x = -1;
+// 		while (++x < config->n_column)
+// 		{
+// 			if (config->map[y][x] == 3)
+// 			{
+// 				player++;
+// 				config->player_x = x;
+// 				config->player_y = y;
+// 				*i = y;
+// 				*j = x;
+// 			}
+// 		}
+// 	}
+// 	if (player != 1)
+// 		return (ft_printf("Error\nThere must be only one player.\n"), 0);
+// 	return (1);
+// }
 
 int	**duplicate_map(t_configuration *config)
 {
@@ -120,7 +120,7 @@ int	**duplicate_map(t_configuration *config)
 int flood_fill(t_configuration *config, int **map, int y, int x)
 {
 	if (y < 0 || y >= config->n_rows || x < 0 || x >= config->n_column)
-		return (ft_printf("test y : %d x : %d\n", y, x), 0);
+		return (0);
 	if (map[y][x] == 1 || map[y][x] == 2)
 		return (1);
 	map[y][x] = 2;

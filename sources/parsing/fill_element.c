@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:25:49 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/06 12:25:23 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/06 16:14:56 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	fill_element_bis(char *line, t_configuration **config, int *i)
     }
 	else
 	{
-		printf("Error : Wrong key find in map\n");
+		printf("Error : Wrong key find in file\n");
 		return (0);
 	}
 	return (1);
@@ -143,7 +143,7 @@ int	fill_map(char *line, t_configuration **config)
 	j = 0;
 	while(ft_iswhitespace(line[i]))
 	{
-		(*config)->map[(*config)->n_rows][j++] = 9;
+		(*config)->map[(*config)->n_rows][j++] = 1;
 		i++;
 	}
 	while (line[i])
@@ -161,7 +161,7 @@ int	fill_map(char *line, t_configuration **config)
 		}
 		else if (ft_iswhitespace(line[i]))
 		{
-			(*config)->map[(*config)->n_rows][j] = 0;
+			(*config)->map[(*config)->n_rows][j] = 1;
 			j++;
 		}
 		else
