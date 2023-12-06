@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:20:26 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/05 19:41:32 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/06 12:30:12 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@
 # include <fcntl.h>
 # include "struct.h"
 
-# include "../mlx_linux/mlx.h"
+# include "../mlx_macos/mlx.h"
 
-# define SCREEN_WIDTH 1024
-# define SCREEN_HEIGTH 512
+# define SCREEN_WIDTH 1920
+# define SCREEN_HEIGTH 1080
 # define PI 3.1415926535
 
 enum {
@@ -34,30 +34,36 @@ enum {
 };
 
 //LINUX KEYS
-enum {
-    A_KEY = 97,
-    D_KEY = 100,
-	W_KEY= 119,
-	S_KEY = 115,
-	Q_KEY = 113,
-	E_KEY = 101,
-	ESC = 65307,
-	KB_UP = 0xFF52,
-	KB_DOWN = 0xFF54,
-	KB_RIGHT = 0xFF51,
-	KB_LEFT = 0xFF53,
-};
+// enum {
+//     A_KEY = 97,
+//     D_KEY = 100,
+// 	W_KEY= 119,
+// 	S_KEY = 115,
+// 	Q_KEY = 113,
+// 	E_KEY = 101,
+// 	ESC = 65307,
+// 	KB_UP = 0xFF52,
+// 	KB_DOWN = 0xFF54,
+// 	KB_RIGHT = 0xFF51,
+// 	KB_LEFT = 0xFF53,
+// };
 
 //arrows keys
 
 //MacOS KEYS
-// enum {
-// 	A_KEY = 0,
-//     D_KEY = 2,
-//     W_KEY = 13,
-// 	S_KEY = 1,
-// 	ESC = 53,
-// };
+enum {
+	A_KEY = 0,
+    D_KEY = 2,
+    W_KEY = 13,
+	S_KEY = 1,
+	ESC = 53,
+    Q_KEY = 12,
+    E_KEY = 14,
+    KB_UP = 126,
+    KB_DOWN = 125,
+    KB_RIGHT = 124,
+    KB_LEFT = 123,
+};
 
 int             main(int argc, char **argv);
 
@@ -70,11 +76,11 @@ t_configuration *init_config_struct(void);
 int				fill_map(char *line, t_configuration **config);
 int 			fill_element(char *line, t_configuration **config, int *i);
 void	        skip_whitespaces(char *line, int *i);
-void	        print_map(t_configuration *config);
+void	        print_map(t_configuration *confi, int **map);
 int				fill_element_bis(char *line, t_configuration **config, int *i);
 void			fill_floor_ceiling_color(int color[3], char *line, int *i);
 int				is_element(char *line);
-int				is_map(char *line);
+int				is_map(char *line, t_configuration *config);
 int				check_arguments(t_configuration *config);
 int				check_map(t_configuration *config);
 int 			check_xpm_file(t_configuration *config);
@@ -83,7 +89,7 @@ int				check_missing_argument(t_configuration *config);
 int				ft_check_file_path(char *file);
 int 			flood_fill(t_configuration *config, int **map, int y, int x);
 int				**duplicate_map(t_configuration *config);
-int				find_player(t_configuration *config);
+int				find_player(t_configuration *config, int *i, int *j);
 
 
 //Game functions

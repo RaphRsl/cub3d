@@ -6,38 +6,58 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:17:19 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/05 19:39:52 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/06 10:44:46 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-int	parse_line(char *line, t_configuration **config)
+void	find_longest_map_line(char **file, t_configuration **config, int i)
 {
-	int	i;
+	int j;
+	int len;
 	
-	i = -1;
-	while (line[++i])
+	if ((*config)->n_column != 0)
+		return ;
+	len = 0;
+	while (file[i])
 	{
-		while (ft_iswhitespace(line[i]))
-			i++;
-		if (is_element(&line[i]))
-		{
-				if (!fill_element(&line[i], config, &i))
-				return (0);
-			else
-				return (1);
-		}
-		else if (is_map(&line[i]))
-		{
-			if (!fill_map(&line[i], config))
-				return (0);
-			else
-				return (1);
-		}
+		j = 0;
+		while (file[i][j])
+			j++;
+		if (j > len)
+			len = j;
+		i++;
 	}
-	return (1);
+	(*config)->n_column = len;
 }
+
+// int	parse_line(char *line, t_configuration **config)
+// {
+// 	int	i;
+	
+// 	i = -1;
+// 	while (line[++i])
+// 	{
+// 		//while (ft_iswhitespace(line[i]))
+// 		//	i++;
+// 		if (is_element(&line[i]))
+// 		{
+// 				if (!fill_element(&line[i], config, &i))
+// 				return (0);
+// 			else
+// 				return (1);
+// 		}
+// 		else if (is_map(&line[i], *config))
+// 		{
+// 			if (!fill_map(&line[i], config))
+// 				return (0);
+// 			else
+// 				return (1);
+// 		}
+// 	}
+// 	return (1);
+// }
 
 t_configuration	*fill_configuration_argument(char **file)
 {
@@ -50,8 +70,20 @@ t_configuration	*fill_configuration_argument(char **file)
 		return (NULL);
 	while (file[i])
 	{
-		if (!parse_line(file[i], &config))
-			return (ft_printf("error\n"), NULL); // ne pas oublier d'implementer la liberation de memoire de la structure;
+		//if (!parse_line(file[i], &config))
+		//	return (ft_printf("error\n"), NULL); // ne pas oublier d'implementer la liberation de memoire de la structure;
+		int j = 0;
+		if (is_element(file[i]))
+		{
+			if (!fill_element(&file[i][j], &config, &j))
+				return (free_config(config), NULL);
+		}
+		else if (is_map(file[i], config))
+		{
+			find_longest_map_line(file, &config, i);
+			if (!fill_map(&file[i][j], &config))
+				return (free_config(config), NULL);
+		}
 		i++;
 	}
 	if (!check_arguments(config))

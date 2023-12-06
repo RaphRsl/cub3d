@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 17:06:49 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/05 19:45:48 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/06 09:02:09 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ int end_program(t_cub3d *cub3d)
 	{
 		if (cub3d->img.mlx)
 			mlx_destroy_image(cub3d->mlx, cub3d->img.mlx);
-		mlx_destroy_display(cub3d->mlx);
-		mlx_loop_end(cub3d->mlx);
+		//mlx_destroy_display(cub3d->mlx);
+		//mlx_loop_end(cub3d->mlx);
 		free(cub3d->mlx);
 	}
 	exit(0);

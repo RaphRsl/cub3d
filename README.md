@@ -12,9 +12,8 @@ https://harm-smits.github.io/42docs/projects/cub3d
 *TO DO*
 ---
 
-void	init_cam_settings(t_cub3d *cub3d)
-	--> positon de depart du player +0,5, mais seulement si start is N non ?
-
 Parsing
+	--> la map n'est pas forcement un carre, gerer les espaces comme des 0
+
 	--> check si une key est mauvaise, doit retourner une erreur
-	--> check s'il y a plusieurs keys identique, doit retourner une erreur
+	--> check s'il y a plusieurs keys identique, doit retourner une erreur // a moitie corriger, marche uniquement s'il y a plusieurs key differentre autre que 0,0,0

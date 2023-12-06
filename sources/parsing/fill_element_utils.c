@@ -6,17 +6,19 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:26:42 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/05 15:27:33 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/06 09:14:54 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
 
-int	is_map(char *line)
+int	is_map(char *line, t_configuration *config)
 {
 	int	i;
 
 	i = 0;
+	if (!config->ea_tex || !config->we_tex || !config->so_tex || !config->no_tex)
+		return (0);
 	skip_whitespaces(line, &i);
 	if (line[i] == '1' || line[i] == '0' || line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W')
 		return (1);
