@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:22:26 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/06 16:26:08 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/06 19:39:45 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,11 @@ t_configuration	*init_config_struct(void)
 	config->map = NULL;
 	config->n_column = 0;
 	config->n_rows = 0;
+	config->fl_color[0] = -1;
+	config->fl_color[1] = -1;
+	config->fl_color[2] = -1;
+	config->c_color[0] = -1;
+	config->c_color[1] = -1;
+	config->c_color[2] = -1;
 	return (config);
 }

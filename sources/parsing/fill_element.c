@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:25:49 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/06 17:49:00 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/06 19:40:30 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int	fill_element_ter(char *line, t_configuration **config, int *i)
 {
 	if (ft_strncmp(&line[*i], "F ", 2) == 0)
 	{
-		if ((*config)->fl_color[0] != 0 || (*config)->fl_color[1] != 0
-			|| (*config)->fl_color[2] != 0)
+		if ((*config)->fl_color[0] != -1 || (*config)->fl_color[1] != -1
+			|| (*config)->fl_color[2] != -1)
 			return (ft_printf("F key find multiple time\n"), 0);
 		*i += 1;
 		skip_whitespaces(line, i);
@@ -45,8 +45,8 @@ int	fill_element_ter(char *line, t_configuration **config, int *i)
 	}
 	else if (ft_strncmp(&line[*i], "C ", 2) == 0)
 	{
-		if ((*config)->c_color[0] != 0 || (*config)->c_color[1] != 0
-			|| (*config)->c_color[2] != 0)
+		if ((*config)->c_color[0] != -1 || (*config)->c_color[1] != -1
+			|| (*config)->c_color[2] != -1)
 			return (ft_printf("C key find multiple time\n"), 0);
 		*i += 1;
 		skip_whitespaces(line, i);

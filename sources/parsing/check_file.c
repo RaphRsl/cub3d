@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:19:56 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/06 17:48:48 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/06 19:46:09 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,12 @@ int	check_missing_argument(t_configuration *config)
 		return (ft_printf("Missing element: SO\n"), 0);
 	if (!config->we_tex)
 		return (ft_printf("Missing element: WE\n"), 0);
-	if (!config->fl_color[0] && !config->fl_color[1] && !config->fl_color[2])
-		return (ft_printf("Missing element: F\n"), 0);
-	if (!config->c_color[0] && !config->c_color[1] && !config->c_color[2])
-		return (ft_printf("Missing element: C\n"), 0);
+	if (config->fl_color[0] < 0 && config->fl_color[1]  < 0
+		&& config->fl_color[2] < 0)
+		return (ft_printf("F : Missing element or negative value\n"), 0);
+	if (config->c_color[0] < 0 && config->c_color[1] < 0
+		&& config->c_color[2] < 0)
+		return (ft_printf("C : Missing element or negative value\n"), 0);
 	return (1);
 }
 
