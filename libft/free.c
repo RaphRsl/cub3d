@@ -12,20 +12,21 @@
 
 #include "libft.h"
 
-void ft_free_int_i(int **arrays, int index) {
-    
+void	ft_free_int_i(int **arrays, int index)
+{
 	int	i;
 
 	i = 0;
-	if (arrays == NULL || index < 0) {
-        return;
-    }
-    while (i < index)
-{
-        free(arrays[i]);
-        arrays[i] = NULL;
+	if (arrays == NULL || index < 0)
+	{
+		return ;
+	}
+	while (i < index)
+	{
+		free(arrays[i]);
+		arrays[i] = NULL;
 		i++;
-    }
+	}
 	free(arrays);
 	arrays = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:19:56 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/06 12:26:49 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/06 19:46:09 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,12 @@ int	check_missing_argument(t_configuration *config)
 		return (ft_printf("Missing element: SO\n"), 0);
 	if (!config->we_tex)
 		return (ft_printf("Missing element: WE\n"), 0);
-	if (!config->fl_color[0] && !config->fl_color[1] && !config->fl_color[2])
-		return (ft_printf("Missing element: F\n"), 0);
-	if (!config->c_color[0] && !config->c_color[1] && !config->c_color[2])
-		return (ft_printf("Missing element: C\n"), 0);
+	if (config->fl_color[0] < 0 && config->fl_color[1]  < 0
+		&& config->fl_color[2] < 0)
+		return (ft_printf("F : Missing element or negative value\n"), 0);
+	if (config->c_color[0] < 0 && config->c_color[1] < 0
+		&& config->c_color[2] < 0)
+		return (ft_printf("C : Missing element or negative value\n"), 0);
 	return (1);
 }
 
@@ -43,10 +45,9 @@ int	check_floor_ceiling_color(t_configuration *config)
 		i++;
 	}
 	return (1);
-
 }
 
-int check_xpm_file(t_configuration *config)
+int	check_xpm_file(t_configuration *config)
 {
 	int	fd;
 
@@ -69,55 +70,45 @@ int check_xpm_file(t_configuration *config)
 	return (1);
 }
 
-int	check_map(t_configuration *config)
-{
-	int				i;
-	int				j;
-	int				**map;
-
-	i = 0;
-	j = 0;
-	map = NULL;
-	map = duplicate_map(config);
-	if (!find_player(config, &i, &j))
-		return (ft_free_int_i(map, config->n_rows), 0);
-	map[i][j] = 0;
-	if (!flood_fill(config, map, i, j))
-		return (ft_free_int_i(map, config->n_rows), 
-			ft_printf("Error\nMap is not closed\n"), 0);
-	ft_free_int_i(map, config->n_rows);
-	return (1);
-}
-
 // int	check_map(t_configuration *config)
 // {
 // 	int				i;
 // 	int				j;
 // 	int				**map;
 
-// 	i = -1;
+// 	i = 0;
 // 	j = 0;
 // 	map = NULL;
-// 	if (!find_player(config))
-// 		return (0);
-// 	if (!(map = duplicate_map(config)))
-// 		return (0);
-// 	while (++i < config->n_rows)
-// 	{
-// 		j = -1;
-// 		while (++j < config->n_column)
-// 		{
-// 			if (config->map[i][j] == 0 || config->map[i][j] == 3)
-// 			{
-// 				if (!flood_fill(config, map, i, j))
-// 					return (ft_free_int_i(map, config->n_rows), 
-// 						ft_printf("Error\nMap is not closed\n"), 0);
-// 			}
-// 		}
-// 	}
+// 	map = duplicate_map(config);
+// 	if (!find_player(config, &i, &j))
+// 		return (ft_free_int_i(map, config->n_rows), 0);
+// 	map[i][j] = 0;
+// 	if (!flood_fill(config, map, i, j))
+// 		return (ft_free_int_i(map, config->n_rows), 
+// 			ft_printf("Error\nMap is not closed\n"), 0);
 // 	ft_free_int_i(map, config->n_rows);
 // 	return (1);
 // }
+
+int	check_map(t_configuration *config)
+{
+	int				i;
+	int				j;
+	int				**map;
+
+	i = -1;
+	j = 0;
+	map = NULL;
+	if (!find_player(config))
+		return (0);
+	map = duplicate_map(config);
+	if (!map)
+		return (0);
+	if (!check_map_limits(config, i, j, map))
+		return (0);
+	ft_free_int_i(map, config->n_rows);
+	return (1);
+}
 
 int	check_arguments(t_configuration *config)
 {

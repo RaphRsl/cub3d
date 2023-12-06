@@ -6,9 +6,10 @@
 /*   By: rsl <rsl@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:20:26 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/06 15:19:58 by rsl              ###   ########.fr       */
+/*   Updated: 2023/12/06 23:13:09 by rsl              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -25,8 +26,8 @@
 
 # include "../mlx_macos/mlx.h"
 
-# define SCREEN_WIDTH 1900
-# define SCREEN_HEIGTH 1000
+# define SCREEN_WIDTH 1920
+# define SCREEN_HEIGTH 1080
 # define PI 3.1415926535
 
 enum {
@@ -70,11 +71,11 @@ int             main(int argc, char **argv);
 //Parsing functions
 t_configuration *ft_configuration(char *file_path);
 t_configuration	*parse_map(int fd);
-t_configuration	*fill_configuration_argument(char **file);
+t_configuration	*fill_config_arg(char **file);
 int				parse_line(char *line, t_configuration **config);
 t_configuration *init_config_struct(void);
 int				fill_map(char *line, t_configuration **config);
-int 			fill_element(char *line, t_configuration **config, int *i);
+int 			fill_element(char *line, t_configuration **config);
 void	        skip_whitespaces(char *line, int *i);
 void	        print_map(t_configuration *confi, int **map);
 int				fill_element_bis(char *line, t_configuration **config, int *i);
@@ -89,7 +90,9 @@ int				check_missing_argument(t_configuration *config);
 int				ft_check_file_path(char *file);
 int 			flood_fill(t_configuration *config, int **map, int y, int x);
 int				**duplicate_map(t_configuration *config);
-int				find_player(t_configuration *config, int *i, int *j);
+int				find_player(t_configuration *config);
+int				realloc_map(t_configuration **config);
+int				check_map_limits(t_configuration *config, int i, int j, int **map);
 
 
 //Game functions

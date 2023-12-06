@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:26:42 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/06 09:14:54 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/06 17:15:49 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,65 @@ int	is_map(char *line, t_configuration *config)
 	int	i;
 
 	i = 0;
-	if (!config->ea_tex || !config->we_tex || !config->so_tex || !config->no_tex)
+	if (!config->ea_tex || !config->we_tex
+		|| !config->so_tex || !config->no_tex)
 		return (0);
 	skip_whitespaces(line, &i);
-	if (line[i] == '1' || line[i] == '0' || line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W')
+	if (line[i] == '1' || line[i] == '0'
+		|| line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W')
 		return (1);
 	return (0);
+}
+
+void	fill_floor_ceiling_color(int color[3], char *line, int *i)
+{
+	int	j;
+
+	j = 0;
+	while (line[*i] && j < 3)
+	{
+		if (ft_isdigit(line[*i]))
+		{
+			color[j] = ft_atoi(&line[*i]);
+			j++;
+			while (ft_isdigit(line[*i]))
+				(*i)++;
+		}
+		else if (line[*i] == ',')
+			(*i)++;
+		else if (ft_iswhitespace(line[*i]))
+			(*i)++;
+		else
+			return ;
+	}
+}
+
+int	realloc_map(t_configuration **config)
+{
+	int	j;
+	int	**map;
+
+	j = 0;
+	if (!(*config)->map)
+	{
+		(*config)->map = malloc(sizeof(int *) * 1);
+		if (!(*config)->map)
+			return (0);
+	}
+	else
+	{
+		map = malloc(sizeof(int *) * ((*config)->n_rows + 1));
+		if (!map)
+			return (0);
+		while (j < (*config)->n_rows)
+		{
+			map[j] = (*config)->map[j];
+			j++;
+		}
+		free((*config)->map);
+		(*config)->map = map;
+	}
+	return (1);
 }
 
 int	is_element(char *line)
@@ -31,17 +84,11 @@ int	is_element(char *line)
 
 	i = 0;
 	skip_whitespaces(line, &i);
-	if (ft_strncmp(&line[i], "SO ", 3) == 0)
+	if (line[i] && line[i + 1]
+		&& (line[i] == 'F' || line[i] == 'C') && line[i + 1] == ' ')
 		return (1);
-	if (ft_strncmp(&line[i], "WE ", 3) == 0)
-		return (1);
-	if (ft_strncmp(&line[i], "NO ", 3) == 0)
-		return (1);
-	if (ft_strncmp(&line[i], "EA ", 3) == 0)
-		return (1);
-	if (ft_strncmp(&line[i], "F ", 2) == 0)
-		return (1);
-	if (ft_strncmp(&line[i], "C ", 2) == 0)
+	else if (line[i] && line[i + 1] && line[i + 2]
+		&& ft_isalpha(line[i]) && ft_isalpha(line[i + 1]) && line[i + 2] == ' ')
 		return (1);
 	return (0);
 }

@@ -12,8 +12,22 @@ https://harm-smits.github.io/42docs/projects/cub3d
 *TO DO*
 ---
 
-Parsing
-	--> la map n'est pas forcement un carre, gerer les espaces comme des 0
 
-	--> check si une key est mauvaise, doit retourner une erreur
-	--> check s'il y a plusieurs keys identique, doit retourner une erreur // a moitie corriger, marche uniquement s'il y a plusieurs key differentre autre que 0,0,0
+--> Trouver nos propres textures
+
+--> ajouter le mouvement de la sourie
+
+--> Optionnel : rendre le jeu plus fluide
+
+--> enlever le fisheye
+
+--> Les textures doivent etre fixes
+
+
+Une fois tout le reste fait :
+
+--> Re-tester avec pleins de maps : Le parsing + leaks de memoire
+
+--> Re-tester avec pleins de mauvaises maps ou de mauvais fichier : Parsing + leak de memoire
+
+--> In game : bien verifier que l'on ait pas de bugs visuels, notamment proche des murs, dans les angles etc...
