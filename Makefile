@@ -6,7 +6,7 @@
 #    By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/01 16:32:28 by toteixei          #+#    #+#              #
-#    Updated: 2023/12/07 16:20:11 by toteixei         ###   ########.fr        #
+#    Updated: 2023/12/07 16:35:47 by toteixei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,7 +81,7 @@ SRCS 		=	sources/main.c sources/game.c sources/deal_key.c \
 
 #MACOS
 MLX		:=	./mlx_macos/libmlx.a
-UFLAGS	:=	-framework OpenGL -framework AppKit
+UFLAGS	:=	-lm -lz -framework OpenGL -framework AppKit
 MLX_NAME := mlx_macos
 
 CC := cc
@@ -106,7 +106,7 @@ $(MLX):
 	@echo "Compiling $(MLX_NAME)"
 	@$(MAKE) -C $(MLX_NAME) -s
 
-%.o : %.c $(HEADERS)
+%.o : %.c $(HEADERS) Makefile
 	@echo "Compiling $<"
 	@$(CC) $(CFLAGS) -c $< -I ./includes -o $@
 	@sleep .033
