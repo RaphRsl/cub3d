@@ -23,6 +23,8 @@ https://harm-smits.github.io/42docs/projects/cub3d
 
 --> Les textures doivent etre fixes
 
+--> pouvoir gerer plusieurs inputs du clavier en meme temps
+
 
 Une fois tout le reste fait :
 
