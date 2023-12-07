@@ -15,7 +15,7 @@ https://harm-smits.github.io/42docs/projects/cub3d
 
 --> Trouver nos propres textures
 
---> ajouter le mouvement de la sourie
+--> ajouter le mouvement de la souris
 
 --> Optionnel : rendre le jeu plus fluide
 
