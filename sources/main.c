@@ -6,7 +6,7 @@
 /*   By: rsl <rsl@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:12:55 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/06 23:27:12 by rsl              ###   ########.fr       */
+/*   Updated: 2023/12/07 17:18:18 by rsl              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	init_cam_settings(t_cub3d *cub3d)
     cub3d->cam.p_x = cub3d->config->player_x + 0.5; // position vector of the player
     cub3d->cam.p_y = cub3d->config->player_y + 0.5;
 	//M_PI / 3.0 = 60 degres ; M_PI / 4.0 = 45 degres ; M_PI / 6.0 = 30 degres
-	cub3d->cam.fov = M_PI / 6; // Field of view (FOV) is the angle between the left and right sides of your game window (measured in degrees). A larger FOV means that the player will see more on the screen, but the game will appear more distorted. A smaller FOV means that the player will see less, but the game will appear closer to real life.
+	cub3d->cam.fov = M_PI / 4; // Field of view (FOV) is the angle between the left and right sides of your game window (measured in degrees). A larger FOV means that the player will see more on the screen, but the game will appear more distorted. A smaller FOV means that the player will see less, but the game will appear closer to real life.
     if (cub3d->config->orientation == 'E')
         cub3d->cam.pa = 0;	//camera direction vector = 0 rad = 0 degres (East)
     else if (cub3d->config->orientation == 'W')
