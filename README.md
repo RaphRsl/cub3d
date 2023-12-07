@@ -29,5 +29,6 @@ Une fois tout le reste fait :
 --> Re-tester avec pleins de maps : Le parsing + leaks de memoire
 
 --> Re-tester avec pleins de mauvaises maps ou de mauvais fichier : Parsing + leak de memoire
+	-> faire un dossier de test mauvais
 
 --> In game : bien verifier que l'on ait pas de bugs visuels, notamment proche des murs, dans les angles etc...
