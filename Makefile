@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+         #
+#    By: rsl <rsl@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/01 16:32:28 by toteixei          #+#    #+#              #
-#    Updated: 2023/12/07 16:20:11 by toteixei         ###   ########.fr        #
+#    Updated: 2023/12/07 16:36:22 by rsl              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,14 +75,14 @@ SRCS 		=	sources/main.c sources/game.c sources/deal_key.c \
 
 
 #LINUX
-#MLX := ./mlx_linux//libmlx.a
-#UFLAGS := -lX11 -lXext -lm -lz
-#MLX_NAME := mlx_linux
+MLX := ./mlx_linux//libmlx.a
+UFLAGS := -lX11 -lXext -lm -lz
+MLX_NAME := mlx_linux
 
 #MACOS
-MLX		:=	./mlx_macos/libmlx.a
-UFLAGS	:=	-framework OpenGL -framework AppKit
-MLX_NAME := mlx_macos
+# MLX		:=	./mlx_macos/libmlx.a
+# UFLAGS	:=	-framework OpenGL -framework AppKit
+# MLX_NAME := mlx_macos
 
 CC := cc
 LIBFT := ./libft/libft.a
@@ -100,11 +100,11 @@ $(NAME):	  $(MLX) $(LIBFT) $(OBJS)
 
 $(LIBFT):
 	@echo "Compiling libft"
-	@$(MAKE) -C libft -s
+	@$(MAKE) -C libft
 
 $(MLX):
 	@echo "Compiling $(MLX_NAME)"
-	@$(MAKE) -C $(MLX_NAME) -s
+	@$(MAKE) -C $(MLX_NAME)
 
 %.o : %.c $(HEADERS)
 	@echo "Compiling $<"
@@ -118,14 +118,14 @@ all:	$(NAME)
 clean:
 	@echo "Cleaning files..."
 	@$(RM) $(OBJS)
-	@$(MAKE) -C libft clean -s
-	@$(MAKE) -C $(MLX_NAME) clean -s
+	@$(MAKE) -C libft clean
+	@$(MAKE) -C $(MLX_NAME) clean
 	@echo "↪ Finished, $(COLOUR_BLUE)files$(COLOUR_END) $(COLOUR_RED)cleaned$(COLOUR_END)"
 
 fclean:	clean
 	@echo "Cleaning binaries..."
 	@$(RM) $(NAME)
-	@$(MAKE) -C libft fclean -s
+	@$(MAKE) -C libft fclean
 	@echo "↪ Finished, $(COLOUR_BLUE)binaries$(COLOUR_END) $(COLOUR_RED)cleaned$(COLOUR_END)"
 
 re:	fclean all

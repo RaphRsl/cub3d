@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rsl <rsl@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:20:26 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/07 16:14:42 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:30:23 by rsl              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@
 # include <fcntl.h>
 # include "struct.h"
 
-# include "../mlx_macos/mlx.h"
+// # include "../mlx_macos/mlx.h"
+# include "../mlx_linux/mlx.h"
 
 # define SCREEN_WIDTH 1920
 # define SCREEN_HEIGHT 1080
@@ -34,37 +35,37 @@ enum {
 	ON_DESTROY = 17,
 };
 
-//LINUX KEYS
-// enum {
-//     A_KEY = 97,
-//     D_KEY = 100,
-// 	W_KEY= 119,
-// 	S_KEY = 115,
-// 	Q_KEY = 113,
-// 	E_KEY = 101,
-// 	ESC = 65307,
-// 	KB_UP = 0xFF52,
-// 	KB_DOWN = 0xFF54,
-// 	KB_RIGHT = 0xFF51,
-// 	KB_LEFT = 0xFF53,
-// };
+// LINUX KEYS
+enum {
+    A_KEY = 97,
+    D_KEY = 100,
+	W_KEY= 119,
+	S_KEY = 115,
+	Q_KEY = 113,
+	E_KEY = 101,
+	ESC = 65307,
+	KB_UP = 0xFF52,
+	KB_DOWN = 0xFF54,
+	KB_RIGHT = 0xFF51,
+	KB_LEFT = 0xFF53,
+};
 
 //arrows keys
 
 //MacOS KEYS
-enum {
-	A_KEY = 0,
-    D_KEY = 2,
-    W_KEY = 13,
-	S_KEY = 1,
-	ESC = 53,
-    Q_KEY = 12,
-    E_KEY = 14,
-    KB_UP = 126,
-    KB_DOWN = 125,
-    KB_RIGHT = 124,
-    KB_LEFT = 123,
-};
+// enum {
+// 	A_KEY = 0,
+//     D_KEY = 2,
+//     W_KEY = 13,
+// 	S_KEY = 1,
+// 	ESC = 53,
+//     Q_KEY = 12,
+//     E_KEY = 14,
+//     KB_UP = 126,
+//     KB_DOWN = 125,
+//     KB_RIGHT = 124,
+//     KB_LEFT = 123,
+// };
 
 int             main(int argc, char **argv);
 
