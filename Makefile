@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rsl <rsl@student.42.fr>                    +#+  +:+       +#+         #
+#    By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/01 16:32:28 by toteixei          #+#    #+#              #
-#    Updated: 2023/12/06 23:52:01 by rsl              ###   ########.fr        #
+#    Updated: 2023/12/07 16:20:11 by toteixei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -74,12 +74,20 @@ SRCS 		=	sources/main.c sources/game.c sources/deal_key.c \
 # .PHONY: all libs clean fclean re
 
 
-LIBFT := ./libft/libft.a
-MLX := ./mlx_linux//libmlx.a
+#LINUX
+#MLX := ./mlx_linux//libmlx.a
+#UFLAGS := -lX11 -lXext -lm -lz
+#MLX_NAME := mlx_linux
+
+#MACOS
+MLX		:=	./mlx_macos/libmlx.a
+UFLAGS	:=	-framework OpenGL -framework AppKit
+MLX_NAME := mlx_macos
+
 CC := cc
+LIBFT := ./libft/libft.a
 HEADERS := ./includes/cub3d.h
 CFLAGS := -Wall -Wextra -Werror
-UFLAGS := -lX11 -lXext -lm -lz
 OBJS := $(SRCS:.c=.o)
 RM := rm -f
 
@@ -95,8 +103,8 @@ $(LIBFT):
 	@$(MAKE) -C libft -s
 
 $(MLX):
-	@echo "Compiling mlx_linux"
-	@$(MAKE) -C mlx_linux -s
+	@echo "Compiling $(MLX_NAME)"
+	@$(MAKE) -C $(MLX_NAME) -s
 
 %.o : %.c $(HEADERS)
 	@echo "Compiling $<"
@@ -111,7 +119,7 @@ clean:
 	@echo "Cleaning files..."
 	@$(RM) $(OBJS)
 	@$(MAKE) -C libft clean -s
-	@$(MAKE) -C mlx_linux clean -s
+	@$(MAKE) -C $(MLX_NAME) clean -s
 	@echo "↪ Finished, $(COLOUR_BLUE)files$(COLOUR_END) $(COLOUR_RED)cleaned$(COLOUR_END)"
 
 fclean:	clean
