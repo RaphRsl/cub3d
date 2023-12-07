@@ -1,7 +1,7 @@
-NO textures/wall_11_pillar.xpm
-SO textures/wall_12_greystone.xpm
-WE textures/wall_13_wood.xpm
-EA textures/wall_14_metal.xpm
+NO textures/white_wall.xpm
+SO textures/white_wall.xpm
+WE textures/003_height.xpm
+EA textures/003_height.xpm
 F 184,134,39
 C 51,198,227
 11111111111111111111111111111

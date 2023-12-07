@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:20:26 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/07 16:52:55 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/07 17:04:54 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@
 # include "../mlx_macos/mlx.h"
 //# include "../mlx_linux/mlx.h"
 
-# define SCREEN_WIDTH 1920
-# define SCREEN_HEIGHT 1080
+# define SCREEN_WIDTH 1500
+# define SCREEN_HEIGHT 900
 # define PI 3.1415926535
 
 enum {

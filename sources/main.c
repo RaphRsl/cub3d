@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsl <rsl@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:12:55 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/06 23:27:12 by rsl              ###   ########.fr       */
+/*   Updated: 2023/12/07 17:18:26 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	init_textures(t_cub3d *cub3d)
 {
-	cub3d->xpm.tex_width = 64;
-	cub3d->xpm.tex_height = 64;
+	cub3d->xpm.tex_width = 1024;
+	cub3d->xpm.tex_height = 1024;
 	if (!(cub3d->xpm.n_tex = mlx_xpm_file_to_image(cub3d->mlx, cub3d->config->no_tex, &(cub3d->xpm.tex_width), &(cub3d->xpm.tex_height))))
 	{
 		printf("Error : Wrong north path texture\n");
