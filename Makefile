@@ -6,7 +6,7 @@
 #    By: rsl <rsl@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/01 16:32:28 by toteixei          #+#    #+#              #
-#    Updated: 2023/12/07 16:36:22 by rsl              ###   ########.fr        #
+#    Updated: 2023/12/07 16:39:11 by rsl              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -80,9 +80,9 @@ UFLAGS := -lX11 -lXext -lm -lz
 MLX_NAME := mlx_linux
 
 #MACOS
-# MLX		:=	./mlx_macos/libmlx.a
-# UFLAGS	:=	-framework OpenGL -framework AppKit
-# MLX_NAME := mlx_macos
+MLX		:=	./mlx_macos/libmlx.a
+UFLAGS	:=	-lm -lz -framework OpenGL -framework AppKit
+MLX_NAME := mlx_macos
 
 CC := cc
 LIBFT := ./libft/libft.a
@@ -106,7 +106,7 @@ $(MLX):
 	@echo "Compiling $(MLX_NAME)"
 	@$(MAKE) -C $(MLX_NAME)
 
-%.o : %.c $(HEADERS)
+%.o : %.c $(HEADERS) Makefile
 	@echo "Compiling $<"
 	@$(CC) $(CFLAGS) -c $< -I ./includes -o $@
 	@sleep .033
