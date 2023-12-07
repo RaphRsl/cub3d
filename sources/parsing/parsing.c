@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:17:19 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/06 17:50:16 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:58:28 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ char	*file_in_line(int fd)
 	char	*file_buffer;
 	char	*l_file;
 
+	l_file = NULL;
 	buffer = get_next_line(fd);
 	if (!buffer)
 		return (NULL);
@@ -122,7 +123,6 @@ t_configuration	*parse_map(int fd)
 	char			**file;
 	t_configuration	*config;
 
-	l_file = NULL;
 	l_file = file_in_line(fd);
 	if (!l_file)
 		return (close(fd), ft_printf("Error\nMalloc error\n"), NULL);
