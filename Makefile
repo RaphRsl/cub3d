@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: rsl <rsl@student.42.fr>                    +#+  +:+       +#+         #
+#    By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/01 16:32:28 by toteixei          #+#    #+#              #
-#    Updated: 2023/12/07 17:32:38 by rsl              ###   ########.fr        #
+#    Updated: 2023/12/08 16:29:17 by toteixei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,9 @@ SRCS 		=	sources/main.c sources/game.c sources/deal_key.c \
 				sources/parsing/fill_element_utils.c \
 				sources/parsing/check_file.c \
 				sources/parsing/check_file_utils.c \
-				sources/end_program.c
+				sources/end_program.c \
+				sources/minimap.c \
+				sources/camera_movement_bis.c
 
 OBJ 		= 	$(SRCS:.c=.o)
 
@@ -37,14 +39,14 @@ MATH_LIB 	= 	-lm -lz
 CFLAGS 		= 	-Wall -Wextra -Werror -g3
 
 #LINUX
-INCLUDES	=	-I libft
-MINILIBX	=	mlx_linux
-XFLAGS		=	-lXext -lX11
+# INCLUDES	=	-I libft
+# MINILIBX	=	mlx_linux
+# XFLAGS		=	-lXext -lX11
 
 #MACOS
-# INCLUDES	=	-Imlx_macos -I libft
-# MINILIBX	=	mlx_macos
-# XFLAGS		=	-framework OpenGL -framework AppKit
+INCLUDES	=	-Imlx_macos -I libft
+MINILIBX	=	mlx_macos
+XFLAGS		=	-framework OpenGL -framework AppKit
 
 all : libs $(NAME)
 

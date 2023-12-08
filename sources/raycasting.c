@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsl <rsl@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:56:46 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/08 01:06:30 by rsl              ###   ########.fr       */
+/*   Updated: 2023/12/08 16:50:50 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@
 //     }
 //     while (y < draw_end)
 //     {
-//         int tex_y = (int)tex_pos & (cub3d->xpm.tex_height - 1);
+//         int tex_y = (int)tex_pos & (cub3d->xpm.tex_h - 1);
 //         tex_pos += step;
 //         color = texture;
-//         cub3d->img.addr[y * SCREEN_WIDTH + x] = color[tex_y * cub3d->xpm.tex_height + tex_x];
+//         cub3d->img.addr[y * SCREEN_WIDTH + x] = color[tex_y * cub3d->xpm.tex_h + tex_x];
 //         y++;
 //     }
 //     while (y < SCREEN_HEIGHT)
@@ -57,18 +57,18 @@ void render_texture_line(int draw_start, int draw_end, int x, double tex_pos, do
     
     while (y < draw_end && y < SCREEN_HEIGHT)
     {
-        int tex_y = (int)tex_pos & (cub3d->xpm.tex_height - 1); // Calculate texture Y coordinate
+        int tex_y = (int)tex_pos & (cub3d->xpm.tex_h - 1); // Calculate texture Y coordinate
 
         // Ensure texture coordinates are within the texture boundaries
         if (tex_y < 0)
             tex_y = 0;
-        if (tex_y >= cub3d->xpm.tex_height)
-            tex_y = cub3d->xpm.tex_height - 1;
+        if (tex_y >= cub3d->xpm.tex_h)
+            tex_y = cub3d->xpm.tex_h - 1;
 
         color = (int *)texture; // Cast texture to an int pointer
 
         // Render the texture pixel onto the screen
-        cub3d->img.addr[y * SCREEN_WIDTH + x] = color[tex_y * cub3d->xpm.tex_width + tex_x];
+        cub3d->img.addr[y * SCREEN_WIDTH + x] = color[tex_y * cub3d->xpm.tex_w + tex_x];
 
         tex_pos += step; // Move to the next texture position
         y++;
@@ -93,16 +93,16 @@ void render_texture_line(int draw_start, int draw_end, int x, double tex_pos, do
 //     y = draw_start;
 
 //     while (y < draw_end && y < SCREEN_HEIGHT) {
-//         int tex_y = (int)tex_pos & (cub3d->xpm.tex_height - 1);
+//         int tex_y = (int)tex_pos & (cub3d->xpm.tex_h - 1);
 
 //         if (tex_y < 0)
 //             tex_y = 0;
-//         if (tex_y >= cub3d->xpm.tex_height)
-//             tex_y = cub3d->xpm.tex_height - 1;
+//         if (tex_y >= cub3d->xpm.tex_h)
+//             tex_y = cub3d->xpm.tex_h - 1;
 
 //         color = (int *)texture;
 
-//         cub3d->img.addr[y * SCREEN_WIDTH + x] = color[tex_y * cub3d->xpm.tex_width + tex_x];
+//         cub3d->img.addr[y * SCREEN_WIDTH + x] = color[tex_y * cub3d->xpm.tex_w + tex_x];
 
 //         tex_pos += step;
 //         y++;
@@ -257,13 +257,13 @@ void render_texture_line(int draw_start, int draw_end, int x, double tex_pos, do
 //         else
 //             wall_x = pos_x + perp_wall_dist * ray_dir_x;
 //         wall_x -= floor(wall_x);
-//         int tex_x = (int)(wall_x * (double)cub3d->xpm.tex_width);
+//         int tex_x = (int)(wall_x * (double)cub3d->xpm.tex_w);
 //         if (side == 0 && ray_dir_x > 0)
-//             tex_x = cub3d->xpm.tex_width - tex_x - 1;
+//             tex_x = cub3d->xpm.tex_w - tex_x - 1;
 //         if (side == 1 && ray_dir_y < 0)
-//             tex_x = cub3d->xpm.tex_width - tex_x - 1;
+//             tex_x = cub3d->xpm.tex_w - tex_x - 1;
 //         // Render the textured line on the screen
-//         double step = 1.0 * cub3d->xpm.tex_height / line_height;
+//         double step = 1.0 * cub3d->xpm.tex_h / line_height;
 //         double tex_pos = (draw_start - SCREEN_HEIGHT / 2 + line_height / 2) * step;
 //         if (side == 1 && ray_dir_y > 0)
 //             render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.s_tex_adrr, tex_x);
@@ -358,13 +358,13 @@ void render_texture_line(int draw_start, int draw_end, int x, double tex_pos, do
 //         else
 //             wall_x = pos_x + perp_wall_dist * ray_dir_x;
 //         wall_x -= floor(wall_x);
-//         int tex_x = (int)(wall_x * (double)cub3d->xpm.tex_width);
+//         int tex_x = (int)(wall_x * (double)cub3d->xpm.tex_w);
 //         if (side == 0 && ray_dir_x > 0)
-//             tex_x = cub3d->xpm.tex_width - tex_x - 1;
+//             tex_x = cub3d->xpm.tex_w - tex_x - 1;
 //         if (side == 1 && ray_dir_y < 0)
-//             tex_x = cub3d->xpm.tex_width - tex_x - 1;
+//             tex_x = cub3d->xpm.tex_w - tex_x - 1;
 
-//         double step = 1.0 * cub3d->xpm.tex_height / line_height;
+//         double step = 1.0 * cub3d->xpm.tex_h / line_height;
 //         double tex_pos = (draw_start - SCREEN_HEIGHT / 2 + line_height / 2) * step;
 
 //         if (side == 1 && ray_dir_y > 0)
@@ -461,13 +461,13 @@ void draw_rays_3d(t_cub3d *cub3d) {
         else
             wall_x = pos_x + perp_wall_dist * ray_dir_x;
         wall_x -= floor(wall_x);
-        int tex_x = (int)(wall_x * (double)cub3d->xpm.tex_width);
+        int tex_x = (int)(wall_x * (double)cub3d->xpm.tex_w);
         if (side == 0 && ray_dir_x > 0)
-            tex_x = cub3d->xpm.tex_width - tex_x - 1;
+            tex_x = cub3d->xpm.tex_w - tex_x - 1;
         if (side == 1 && ray_dir_y < 0)
-            tex_x = cub3d->xpm.tex_width - tex_x - 1;
+            tex_x = cub3d->xpm.tex_w - tex_x - 1;
 
-        double step = 1.0 * cub3d->xpm.tex_height / line_height;
+        double step = 1.0 * cub3d->xpm.tex_h / line_height;
         double tex_pos = (draw_start - SCREEN_HEIGHT / 2 + line_height / 2) * step;
 
         if (side == 1 && ray_dir_y > 0)
@@ -629,13 +629,13 @@ void draw_rays_3d(t_cub3d *cub3d) {
 //         else
 //             wall_x = pos_x + perp_wall_dist * ray_dir_x;
 //         wall_x -= floor(wall_x);
-//         int tex_x = (int)(wall_x * (double)cub3d->xpm.tex_width);
+//         int tex_x = (int)(wall_x * (double)cub3d->xpm.tex_w);
 //         if (side == 0 && ray_dir_x > 0)
-//             tex_x = cub3d->xpm.tex_width - tex_x - 1;
+//             tex_x = cub3d->xpm.tex_w - tex_x - 1;
 //         if (side == 1 && ray_dir_y < 0)
-//             tex_x = cub3d->xpm.tex_width - tex_x - 1;
+//             tex_x = cub3d->xpm.tex_w - tex_x - 1;
 //         // Render the textured line on the screen
-//         double step = 1.0 * cub3d->xpm.tex_height / line_height;
+//         double step = 1.0 * cub3d->xpm.tex_h / line_height;
 //         double tex_pos = (draw_start - SCREEN_HEIGHT / 2 + line_height / 2) * step;
 //         if (side == 1 && ray_dir_y > 0)
 //             render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.s_tex_adrr, tex_x);

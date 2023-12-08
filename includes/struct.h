@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:25:27 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/05 18:41:36 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/08 17:15:53 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct s_configuration
 typedef struct s_img
 {
 	void	*mlx;
-	int	*addr;
+	int	    *addr;
 	int		bpp;
 	int		line_len;
 	int		endian;
@@ -50,6 +50,7 @@ typedef struct s_camera
     float   plane_y; //added plane y
     float   move_speed;//added
     float   rot_speed; //added
+    int     x_mouse;
 }           t_camera;
 
 typedef struct s_xpm
@@ -62,8 +63,8 @@ typedef struct s_xpm
     int    *s_tex_adrr;
     int    *e_tex_adrr;
     int    *w_tex_adrr;
-    int     tex_width;
-    int     tex_height;
+    int     tex_w;
+    int     tex_h;
 }       t_xpm;
 
 typedef struct s_cub3d
@@ -84,6 +85,25 @@ typedef struct s_point
 	int	z;
 	int	color;
 }				t_point;
+
+typedef struct s_minimap
+{
+    int bs;
+    int player_screen_x;
+    int player_screen_y;
+    int start_x;
+    int end_x;
+    int start_y;
+    int end_y;
+    int player_map_x;
+    int player_map_y;
+    int scr_y;
+    int scr_x;
+    int x;
+    int y;
+    int n_col;
+    int n_row;
+}            t_minimap;
 
 typedef struct s_line
 {

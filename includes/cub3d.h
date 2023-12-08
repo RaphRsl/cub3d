@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsl <rsl@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:20:26 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/08 01:06:55 by rsl              ###   ########.fr       */
+/*   Updated: 2023/12/08 17:24:01 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,47 +24,53 @@
 # include <fcntl.h>
 # include "struct.h"
 
-// # include "../mlx_macos/mlx.h"
-# include "../mlx_linux/mlx.h"
+# include "../mlx_macos/mlx.h"
+// # include "../mlx_linux/mlx.h"
 
 # define SCREEN_WIDTH 1500
 # define SCREEN_HEIGHT 900
 # define PI 3.1415926535
+# define MOTIONNOTIFY 6
+# define POINTERMOTIONMASK (1L<<6)
+# define KEYPRESSMASK (1L<<0)
+# define KEYRELEASEMASK (1L<<1)
+# define KEYPRESS 2
+# define KEYRELEASE 3
 
 enum {
 	ON_DESTROY = 17,
 };
 
 // LINUX KEYS
-enum {
-    A_KEY = 97,
-    D_KEY = 100,
-	W_KEY= 119,
-	S_KEY = 115,
-	Q_KEY = 113,
-	E_KEY = 101,
-	ESC = 65307,
-	KB_UP = 0xFF52,
-	KB_DOWN = 0xFF54,
-	KB_RIGHT = 0xFF51,
-	KB_LEFT = 0xFF53,
-};
+// enum {
+//     A_KEY = 97,
+//     D_KEY = 100,
+// 	W_KEY= 119,
+// 	S_KEY = 115,
+// 	Q_KEY = 113,
+// 	E_KEY = 101,
+// 	ESC = 65307,
+// 	KB_UP = 0xFF52,
+// 	KB_DOWN = 0xFF54,
+// 	KB_RIGHT = 0xFF51,
+// 	KB_LEFT = 0xFF53,
+// };
 
 
 //MacOS KEYS
-// enum {
-// 	A_KEY = 0,
-//     D_KEY = 2,
-//     W_KEY = 13,
-// 	S_KEY = 1,
-// 	ESC = 53,
-//     Q_KEY = 12,
-//     E_KEY = 14,
-//     KB_UP = 126,
-//     KB_DOWN = 125,
-//     KB_RIGHT = 124,
-//     KB_LEFT = 123,
-// };
+enum {
+	A_KEY = 0,
+    D_KEY = 2,
+    W_KEY = 13,
+	S_KEY = 1,
+	ESC = 53,
+    Q_KEY = 12,
+    E_KEY = 14,
+    KB_UP = 126,
+    KB_DOWN = 125,
+    KB_RIGHT = 124,
+    KB_LEFT = 123,
+};
 
 int             main(int argc, char **argv);
 
@@ -96,27 +102,32 @@ int				check_map_limits(t_configuration *config, int i, int j, int **map);
 
 
 //Game functions
-int    ft_render_game(t_cub3d *cub3d);
-void	draw_line(t_cub3d *cub3d, t_point p1, t_point p2);
+int             ft_render_game(t_cub3d *cub3d);
+void	        draw_line(t_cub3d *cub3d, t_point p1, t_point p2);
+
+//Minimap functions
+void            ft_print_map(t_cub3d *cub3d);
 
 //Deal key functions
-int     deal_key(int key, t_cub3d *cub3d);
-int     end_program(t_cub3d *cub3d);
-void	free_config(t_configuration *config);
+int             deal_key(int key, t_cub3d *cub3d);
+int             end_program(t_cub3d *cub3d);
+int				deal_mouse(int x, int y, t_cub3d *cub3d);
+void			free_config(t_configuration *config);
 
 //Camera functions
-void    rotate_left(t_camera *cam);
-void    rotate_right(t_camera *cam);
-void    move_to_the_right(t_cub3d *cub3d);
-void    move_to_the_left(t_cub3d *cub3d);
-void    move_forward(t_cub3d *cub3d);
-void    move_backward(t_cub3d *cub3d);
+void			rotate_left(t_camera *cam);
+void			rotate_right(t_camera *cam);
+void			move_to_the_right(t_cub3d *cub3d);
+void			move_to_the_left(t_cub3d *cub3d);
+void			move_forward(t_cub3d *cub3d);
+void			move_backward(t_cub3d *cub3d);
+int				is_wall(float x, float y, t_cub3d *cub3d);
 
 //Raycasting functions
-void    draw_rays_3d(t_cub3d *cub3d);
+void			draw_rays_3d(t_cub3d *cub3d);
 
 //MLX functions
-void	img_pixel_put(int x, int y, unsigned int color, t_cub3d *cub3d);
-int     get_color(int *color);
+void			img_pixel_put(int x, int y, unsigned int color, t_cub3d *cub3d);
+int				get_color(int *color);
 
 #endif

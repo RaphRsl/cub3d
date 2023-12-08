@@ -6,26 +6,26 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 17:06:49 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/06 09:02:09 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/08 16:37:50 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void free_texture(t_cub3d *cub3d, void *tex)
+void	free_texture(t_cub3d *cub3d, void *tex)
 {
-    if (tex)
+	if (tex)
 	{
-        mlx_destroy_image(cub3d->mlx, tex);
-    }
+		mlx_destroy_image(cub3d->mlx, tex);
+	}
 }
 
-void free_textures(t_cub3d *cub3d)
+void	free_textures(t_cub3d *cub3d)
 {
-    free_texture(cub3d, cub3d->xpm.n_tex);
-    free_texture(cub3d, cub3d->xpm.s_tex);
-    free_texture(cub3d, cub3d->xpm.e_tex);
-    free_texture(cub3d, cub3d->xpm.w_tex);
+	free_texture(cub3d, cub3d->xpm.n_tex);
+	free_texture(cub3d, cub3d->xpm.s_tex);
+	free_texture(cub3d, cub3d->xpm.e_tex);
+	free_texture(cub3d, cub3d->xpm.w_tex);
 }
 
 void	free_config(t_configuration *config)
@@ -43,7 +43,7 @@ void	free_config(t_configuration *config)
 	free(config);
 }
 
-int end_program(t_cub3d *cub3d)
+int	end_program(t_cub3d *cub3d)
 {
 	if (cub3d->win && cub3d->mlx)
 		mlx_destroy_window(cub3d->mlx, cub3d->win);
@@ -56,8 +56,8 @@ int end_program(t_cub3d *cub3d)
 	{
 		if (cub3d->img.mlx)
 			mlx_destroy_image(cub3d->mlx, cub3d->img.mlx);
-		//mlx_destroy_display(cub3d->mlx);
-		//mlx_loop_end(cub3d->mlx);
+		// mlx_destroy_display(cub3d->mlx);
+		// mlx_loop_end(cub3d->mlx);
 		free(cub3d->mlx);
 	}
 	exit(0);
