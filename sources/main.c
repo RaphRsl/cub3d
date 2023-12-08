@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rsl <rsl@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:12:55 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/07 17:27:13 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/08 01:06:45 by rsl              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
 
 int	init_textures(t_cub3d *cub3d)
 {
@@ -61,6 +62,7 @@ int	init_textures(t_cub3d *cub3d)
 // 	cub3d->cam.fov = 66;
 // }
 
+
 void	init_cam_settings(t_cub3d *cub3d)
 {
     cub3d->cam.p_x = cub3d->config->player_x + 0.5; // position vector of the player
@@ -85,6 +87,8 @@ void	init_cam_settings(t_cub3d *cub3d)
 	cub3d->cam.move_speed = 0.05;
 	cub3d->cam.rot_speed = 0.05;
 }
+
+
 
 //proposition de rroussel
 // void init_cam_settings(t_cub3d *cub3d)
