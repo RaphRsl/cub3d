@@ -6,7 +6,7 @@
 /*   By: tomteixeira <tomteixeira@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:20:26 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/10 17:39:05 by tomteixeira      ###   ########.fr       */
+/*   Updated: 2023/12/10 19:00:20 by tomteixeira      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int             main(int argc, char **argv);
 
 //Parsing functions
 t_configuration *ft_configuration(char *file_path);
-t_configuration	*parse_map(int fd);
+t_configuration	*parse_map(int fd, int len);
 t_configuration	*fill_config_arg(char **file);
 int				parse_line(char *line, t_configuration **config);
 t_configuration *init_config_struct(void);

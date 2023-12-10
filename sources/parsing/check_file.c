@@ -6,7 +6,7 @@
 /*   By: tomteixeira <tomteixeira@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:19:56 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/10 17:00:17 by tomteixeira      ###   ########.fr       */
+/*   Updated: 2023/12/10 19:59:56 by tomteixeira      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 int	check_missing_argument(t_configuration *config)
 {
 	if (!config->ea_tex)
-		return (ft_printf("Error\nMissing element: EA\n"), 0);
+		return (ft_printf("Error\nMissing texture element\n"), 0);
 	if (!config->no_tex)
-		return (ft_printf("Error\nMissing element: NO\n"), 0);
+		return (ft_printf("Error\nMissing texture element\n"), 0);
 	if (!config->so_tex)
-		return (ft_printf("Error\nMissing element: SO\n"), 0);
+		return (ft_printf("Error\nMissing texture element\n"), 0);
 	if (!config->we_tex)
-		return (ft_printf("Error\nMissing element: WE\n"), 0);
+		return (ft_printf("Error\nMissing texture element\n"), 0);
 	if (config->fl_color[0] < 0 && config->fl_color[1]  < 0
 		&& config->fl_color[2] < 0)
 		return (ft_printf("Error\nF : Missing element or negative value\n"), 0);

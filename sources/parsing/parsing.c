@@ -6,7 +6,7 @@
 /*   By: tomteixeira <tomteixeira@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:17:19 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/10 18:37:05 by tomteixeira      ###   ########.fr       */
+/*   Updated: 2023/12/10 20:03:36 by tomteixeira      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ t_configuration	*fill_config_arg(char **file)
 			find_longest_map_line(file, &config, i);
 			if (!fill_map(file[i], &config))
 				return (free_config(config), NULL);
+			if (file[i + 1] && file[i + 1][0] == '\n')
+				break ;
 		}
 	}
 	if (!check_arguments(config))
@@ -89,12 +91,15 @@ char	*file_in_line(int fd)
 	return (free(buffer), l_file);
 }
 
-char	**create_tab(int fd)
+int	find_file_len(char *path)
 {
 	char	*line;
-	char	**tab;
 	int		line_count;
+	int		fd;
 
+	fd = open(path, O_RDONLY);
+	if (fd < 0)
+		return (0);
 	line = get_next_line(fd);
 	line_count = 0;
 	while (line != NULL)
@@ -103,105 +108,107 @@ char	**create_tab(int fd)
 		free(line);
 		line = get_next_line(fd);
 	}
-	tab = malloc((line_count + 1) * sizeof(char *));
-	if (!tab)
-		return (NULL);
-	else
-		return (tab);
+	return (close(fd), line_count);
 }
 
-char *malloc_good_size(char *line)
+char *malloc_good_size(char *line, int i, int column)
 {
 	char *ret;
-
-	if (!ft_strchr(line, '\n'))
+	
+	if (line[0] == '\n')
 	{
-		ret = malloc((ft_strlen(line) + 1) * sizeof(char));
+		ret = malloc(2 * sizeof(char));
 		if (!ret)
 			return (NULL);
+		ret[0] = line[0];
+		ret[1] = '\0';
 		return (ret);
 	}
-	ret = malloc(ft_strlen(line) * sizeof(char));
+	if (!ft_strchr(line, '\n'))
+		ret = malloc((ft_strlen(line) + 1) * sizeof(char));
+	else
+		ret = malloc(ft_strlen(line) * sizeof(char));
+	if (!ret)
+		return (NULL);
+	while (line[i] && line[i] != '\n')
+		ret[column++] = line[i++];
+	ret[column] = '\0';
 	return (ret);
 }
 
-char	**file_in_tab(int fd, int row, int column, int i)
+char	**file_in_tab(int fd, int row, int column, int i, int len)
 {
 	char	*line;
 	char	**tab;
 
-	tab = create_tab(fd);
+	tab = malloc((len + 1) * sizeof(char *));
 	if (!tab)
 		return (ft_printf("Error\nMalloc\n"), NULL);
-	line = get_next_line(3);
-	if (!line)
-		return (free(tab), ft_printf("Error\nMalloc\n"), NULL);
+	line = get_next_line(fd);
 	while (line != NULL)
 	{
-		tab[row] = malloc_good_size(line);
+		tab[row] = malloc_good_size(line, i, column);
 		if (!tab[row])
 			return (ft_free_arrays_i(tab, row), ("Error\nMalloc\n"), NULL);
-		while (line[i] != '\0' && line[i] != '\n')
-			tab[row++][column] = line[i++];
 		i = 0;
 		column = 0;
+		row++;
 		free(line);
 		line = get_next_line(fd);
 	}
-	printf("test %d\n", row);
 	tab[row] = NULL;
-	int j = 0;
-	while (j < row)
-		printf("%s\n", tab[j++]);
 	return (tab);
 }
 
-// t_configuration	*parse_map(int fd)
-// {
-// 	char			**file;
-// 	int				i;
-// 	int				row;
-// 	int				column;
-// 	t_configuration	*config;
-
-// 	i = 0;
-// 	row = 0;
-// 	column = 0;
-// 	file = file_in_tab(fd, row, column, i);
-// 	if (!file)
-// 		return (close(fd), ft_printf("Error\nFile empty\n"), NULL);
-// 	close(fd);
-// 	config = fill_config_arg(file);
-// 	return (ft_free_arrays_i(file, -1), config);
-// }
-
-t_configuration	*parse_map(int fd)
+t_configuration	*parse_map(int fd, int len)
 {
-	char			*l_file;
 	char			**file;
+	int				i;
+	int				row;
+	int				column;
 	t_configuration	*config;
 
-	l_file = file_in_line(fd);
-	if (!l_file)
-		return (close(fd), ft_printf("Error\nFile empty\n"), NULL);
-	close(fd);
-	file = ft_split(l_file, '\n');
+	i = 0;
+	row = 0;
+	column = 0;
+	file = file_in_tab(fd, row, column, i, len);
 	if (!file)
-		return (free(l_file), ft_printf("Error\nMalloc"), NULL);
-	free(l_file);
+		return (close(fd), NULL);
+	close(fd);
 	config = fill_config_arg(file);
 	return (ft_free_arrays_i(file, -1), config);
 }
 
+// t_configuration	*parse_map(int fd)
+// {
+// 	char			*l_file;
+// 	char			**file;
+// 	t_configuration	*config;
+
+// 	l_file = file_in_line(fd);
+// 	if (!l_file)
+// 		return (close(fd), ft_printf("Error\nFile empty\n"), NULL);
+// 	close(fd);
+// 	file = ft_split(l_file, '\n');
+// 	if (!file)
+// 		return (free(l_file), ft_printf("Error\nMalloc"), NULL);
+// 	free(l_file);
+// 	config = fill_config_arg(file);
+// 	return (ft_free_arrays_i(file, -1), config);
+// }
+
 t_configuration	*ft_configuration(char *file_path)
 {
 	int	fd_ptr;
+	int	file_len;
 
 	if (!ft_check_file_path(file_path))
 		return (NULL);
+	file_len = 0;
+	file_len = find_file_len(file_path);
 	fd_ptr = open(file_path, O_RDONLY);
 	if (fd_ptr < 0)
 		return (ft_printf("Error\n%s : file does not exist\n", file_path),
 			NULL);
-	return (parse_map(fd_ptr));
+	return (parse_map(fd_ptr, file_len));
 }
