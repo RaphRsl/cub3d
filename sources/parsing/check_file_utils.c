@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_file_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tomteixeira <tomteixeira@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:23:31 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/06 17:22:03 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/10 17:02:04 by tomteixeira      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	print_map(t_configuration *confi, int **map)
 
 	i = 0;
 	j = 0;
-	printf("n_rows: %d\n", confi->n_rows);
-	printf("n_column: %d\n", confi->n_column);
+	ft_printf("n_rows: %d\n", confi->n_rows);
+	ft_printf("n_column: %d\n", confi->n_column);
 	while (i < confi->n_rows)
 	{
 		j = 0;
@@ -74,6 +74,8 @@ int	find_player(t_configuration *config)
 			}
 		}
 	}
+	if (player == 0)
+		return (ft_printf("Error\nPlayer is Missing.\n"), 0);
 	if (player != 1)
 		return (ft_printf("Error\nThere must be only one player.\n"), 0);
 	return (1);

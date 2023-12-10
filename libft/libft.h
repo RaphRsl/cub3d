@@ -6,7 +6,7 @@
 /*   By: tomteixeira <tomteixeira@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 17:26:25 by toteixei          #+#    #+#             */
-/*   Updated: 2023/10/18 16:36:18 by tomteixeira      ###   ########.fr       */
+/*   Updated: 2023/12/08 18:22:10 by tomteixeira      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_list
 }				t_list;
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 50000
+#  define BUFFER_SIZE 500000
 # endif
 
 int				ft_iswhitespace(int c);

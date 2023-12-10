@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tomteixeira <tomteixeira@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:12:55 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/08 17:28:46 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/08 18:27:02 by tomteixeira      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ int	main(int argc, char **argv)
 	cub3d.img.mlx = mlx_new_image(cub3d.mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
 	cub3d.img.addr = (int *)mlx_get_data_addr(cub3d.img.mlx, &cub3d.img.bpp, &cub3d.img.line_len, &cub3d.img.endian);
 	if (!init_textures(&cub3d))
-		return (1); // liberer le reste de la memoire
+		return (end_program(&cub3d)); // liberer le reste de la memoire
 	mlx_loop_hook(cub3d.mlx, &ft_render_game, &cub3d);
 	mlx_hook(cub3d.win, ON_DESTROY, ON_DESTROY, end_program, &cub3d);
 	mlx_hook(cub3d.win, KEYPRESS, KEYPRESSMASK, deal_key, &cub3d);

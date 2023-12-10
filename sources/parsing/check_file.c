@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tomteixeira <tomteixeira@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:19:56 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/06 19:46:09 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/10 17:00:17 by tomteixeira      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,21 @@
 int	check_missing_argument(t_configuration *config)
 {
 	if (!config->ea_tex)
-		return (ft_printf("Missing element: EA\n"), 0);
+		return (ft_printf("Error\nMissing element: EA\n"), 0);
 	if (!config->no_tex)
-		return (ft_printf("Missing element: NO\n"), 0);
+		return (ft_printf("Error\nMissing element: NO\n"), 0);
 	if (!config->so_tex)
-		return (ft_printf("Missing element: SO\n"), 0);
+		return (ft_printf("Error\nMissing element: SO\n"), 0);
 	if (!config->we_tex)
-		return (ft_printf("Missing element: WE\n"), 0);
+		return (ft_printf("Error\nMissing element: WE\n"), 0);
 	if (config->fl_color[0] < 0 && config->fl_color[1]  < 0
 		&& config->fl_color[2] < 0)
-		return (ft_printf("F : Missing element or negative value\n"), 0);
+		return (ft_printf("Error\nF : Missing element or negative value\n"), 0);
 	if (config->c_color[0] < 0 && config->c_color[1] < 0
 		&& config->c_color[2] < 0)
-		return (ft_printf("C : Missing element or negative value\n"), 0);
+		return (ft_printf("Error\nC : Missing element or negative value\n"), 0);
+	if (!config->map)
+		return (ft_printf("Error\nMap Missing\n"), 0);
 	return (1);
 }
 
@@ -39,9 +41,9 @@ int	check_floor_ceiling_color(t_configuration *config)
 	while (i < 3)
 	{
 		if (config->fl_color[i] < 0 || config->fl_color[i] > 255)
-			return (ft_printf("Wrong floor color format\n"), 0);
+			return (ft_printf("Error\nWrong floor color format\n"), 0);
 		if (config->c_color[i] < 0 || config->c_color[i] > 255)
-			return (ft_printf("Wrong ceiling color format\n"), 0);
+			return (ft_printf("Error\nWrong ceiling color format\n"), 0);
 		i++;
 	}
 	return (1);
@@ -69,26 +71,6 @@ int	check_xpm_file(t_configuration *config)
 	close(fd);
 	return (1);
 }
-
-// int	check_map(t_configuration *config)
-// {
-// 	int				i;
-// 	int				j;
-// 	int				**map;
-
-// 	i = 0;
-// 	j = 0;
-// 	map = NULL;
-// 	map = duplicate_map(config);
-// 	if (!find_player(config, &i, &j))
-// 		return (ft_free_int_i(map, config->n_rows), 0);
-// 	map[i][j] = 0;
-// 	if (!flood_fill(config, map, i, j))
-// 		return (ft_free_int_i(map, config->n_rows), 
-// 			ft_printf("Error\nMap is not closed\n"), 0);
-// 	ft_free_int_i(map, config->n_rows);
-// 	return (1);
-// }
 
 int	check_map(t_configuration *config)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tomteixeira <tomteixeira@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:56:46 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/08 16:50:50 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/10 16:34:53 by tomteixeira      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void render_texture_line(int draw_start, int draw_end, int x, double tex_pos, do
     }
 
     y = draw_start;
-    
+
     while (y < draw_end && y < SCREEN_HEIGHT)
     {
         int tex_y = (int)tex_pos & (cub3d->xpm.tex_h - 1); // Calculate texture Y coordinate

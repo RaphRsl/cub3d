@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tomteixeira <tomteixeira@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:17:19 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/07 16:58:28 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/10 18:37:05 by tomteixeira      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,33 +31,6 @@ void	find_longest_map_line(char **file, t_configuration **config, int i)
 	}
 	(*config)->n_column = len;
 }
-
-// int	parse_line(char *line, t_configuration **config)
-// {
-// 	int	i;
-
-// 	i = -1;
-// 	while (line[++i])
-// 	{
-// 		//while (ft_iswhitespace(line[i]))
-// 		//	i++;
-// 		if (is_element(&line[i]))
-// 		{
-// 				if (!fill_element(&line[i], config, &i))
-// 				return (0);
-// 			else
-// 				return (1);
-// 		}
-// 		else if (is_map(&line[i], *config))
-// 		{
-// 			if (!fill_map(&line[i], config))
-// 				return (0);
-// 			else
-// 				return (1);
-// 		}
-// 	}
-// 	return (1);
-// }
 
 t_configuration	*fill_config_arg(char **file)
 {
@@ -87,7 +60,6 @@ t_configuration	*fill_config_arg(char **file)
 	return (config);
 }
 
-//Un malloc mal protege ici avec le strdup, mais je ne sais pas comment faire
 char	*file_in_line(int fd)
 {
 	char	*buffer;
@@ -98,9 +70,9 @@ char	*file_in_line(int fd)
 	buffer = get_next_line(fd);
 	if (!buffer)
 		return (NULL);
-	file_buffer = NULL;
 	while (buffer)
 	{
+		file_buffer = NULL;
 		file_buffer = ft_strdup(l_file);
 		if (l_file)
 			free(l_file);
@@ -108,7 +80,8 @@ char	*file_in_line(int fd)
 		l_file = ft_strjoin(file_buffer, buffer);
 		if (!l_file)
 			return (free(buffer), NULL);
-		(free(buffer), free(file_buffer));
+		free(buffer);
+		free(file_buffer);
 		buffer = get_next_line(fd);
 		if (!buffer)
 			break ;
@@ -116,7 +89,92 @@ char	*file_in_line(int fd)
 	return (free(buffer), l_file);
 }
 
-// Norme et proteger les mallocs + verifier pour les fd
+char	**create_tab(int fd)
+{
+	char	*line;
+	char	**tab;
+	int		line_count;
+
+	line = get_next_line(fd);
+	line_count = 0;
+	while (line != NULL)
+	{
+		line_count++;
+		free(line);
+		line = get_next_line(fd);
+	}
+	tab = malloc((line_count + 1) * sizeof(char *));
+	if (!tab)
+		return (NULL);
+	else
+		return (tab);
+}
+
+char *malloc_good_size(char *line)
+{
+	char *ret;
+
+	if (!ft_strchr(line, '\n'))
+	{
+		ret = malloc((ft_strlen(line) + 1) * sizeof(char));
+		if (!ret)
+			return (NULL);
+		return (ret);
+	}
+	ret = malloc(ft_strlen(line) * sizeof(char));
+	return (ret);
+}
+
+char	**file_in_tab(int fd, int row, int column, int i)
+{
+	char	*line;
+	char	**tab;
+
+	tab = create_tab(fd);
+	if (!tab)
+		return (ft_printf("Error\nMalloc\n"), NULL);
+	line = get_next_line(3);
+	if (!line)
+		return (free(tab), ft_printf("Error\nMalloc\n"), NULL);
+	while (line != NULL)
+	{
+		tab[row] = malloc_good_size(line);
+		if (!tab[row])
+			return (ft_free_arrays_i(tab, row), ("Error\nMalloc\n"), NULL);
+		while (line[i] != '\0' && line[i] != '\n')
+			tab[row++][column] = line[i++];
+		i = 0;
+		column = 0;
+		free(line);
+		line = get_next_line(fd);
+	}
+	printf("test %d\n", row);
+	tab[row] = NULL;
+	int j = 0;
+	while (j < row)
+		printf("%s\n", tab[j++]);
+	return (tab);
+}
+
+// t_configuration	*parse_map(int fd)
+// {
+// 	char			**file;
+// 	int				i;
+// 	int				row;
+// 	int				column;
+// 	t_configuration	*config;
+
+// 	i = 0;
+// 	row = 0;
+// 	column = 0;
+// 	file = file_in_tab(fd, row, column, i);
+// 	if (!file)
+// 		return (close(fd), ft_printf("Error\nFile empty\n"), NULL);
+// 	close(fd);
+// 	config = fill_config_arg(file);
+// 	return (ft_free_arrays_i(file, -1), config);
+// }
+
 t_configuration	*parse_map(int fd)
 {
 	char			*l_file;
@@ -125,11 +183,11 @@ t_configuration	*parse_map(int fd)
 
 	l_file = file_in_line(fd);
 	if (!l_file)
-		return (close(fd), ft_printf("Error\nMalloc error\n"), NULL);
+		return (close(fd), ft_printf("Error\nFile empty\n"), NULL);
 	close(fd);
 	file = ft_split(l_file, '\n');
 	if (!file)
-		return (free(l_file), ft_printf("Malloc error\n"), NULL);
+		return (free(l_file), ft_printf("Error\nMalloc"), NULL);
 	free(l_file);
 	config = fill_config_arg(file);
 	return (ft_free_arrays_i(file, -1), config);
