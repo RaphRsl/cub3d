@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomteixeira <tomteixeira@student.42.fr>    +#+  +:+       +#+        */
+/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:19:56 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/10 19:59:56 by tomteixeira      ###   ########.fr       */
+/*   Updated: 2023/12/11 09:36:29 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	check_missing_argument(t_configuration *config)
 		return (ft_printf("Error\nMissing texture element\n"), 0);
 	if (!config->we_tex)
 		return (ft_printf("Error\nMissing texture element\n"), 0);
-	if (config->fl_color[0] < 0 && config->fl_color[1]  < 0
+	if (config->fl_color[0] < 0 && config->fl_color[1] < 0
 		&& config->fl_color[2] < 0)
 		return (ft_printf("Error\nF : Missing element or negative value\n"), 0);
 	if (config->c_color[0] < 0 && config->c_color[1] < 0

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: tomteixeira <tomteixeira@student.42.fr>    +#+  +:+       +#+         #
+#    By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/01 16:32:28 by toteixei          #+#    #+#              #
-#    Updated: 2023/12/08 17:57:26 by tomteixeira      ###   ########.fr        #
+#    Updated: 2023/12/11 09:49:02 by toteixei         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,9 @@ SRCS 		=	sources/main.c sources/game.c sources/deal_key.c \
 				sources/parsing/check_file_utils.c \
 				sources/end_program.c \
 				sources/minimap.c \
-				sources/camera_movement_bis.c
+				sources/camera_movement_bis.c \
+				sources/parsing/parsing_utils.c \
+				sources/init_data.c
 
 OBJ 		= 	$(SRCS:.c=.o)
 

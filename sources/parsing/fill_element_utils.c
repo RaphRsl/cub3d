@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_element_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomteixeira <tomteixeira@student.42.fr>    +#+  +:+       +#+        */
+/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:26:42 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/10 17:39:44 by tomteixeira      ###   ########.fr       */
+/*   Updated: 2023/12/11 09:28:06 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,6 @@ int	is_map(char *line, t_configuration *config)
 
 	i = 0;
 	(void)config;
-	//if (!config->ea_tex || !config->we_tex
-	//	|| !config->so_tex || !config->no_tex)
-	//	return (0);
 	skip_whitespaces(line, &i);
 	if (line[i] == '1' || line[i] == '0'
 		|| line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W')
@@ -89,12 +86,6 @@ int	is_element(char *line)
 	{
 		return (1);
 	}
-	// if (line[i] && line[i + 1]
-	// 	&& (line[i] == 'F' || line[i] == 'C') && line[i + 1] == ' ')
-	// 	return (1);
-	// else if (line[i] && line[i + 1] && line[i + 2]
-	// 	&& ft_isalpha(line[i]) && ft_isalpha(line[i + 1]) && line[i + 2] == ' ')
-	// 	return (1);
 	return (0);
 }
 
