@@ -6,11 +6,12 @@
 /*   By: rsl <rsl@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:56:46 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/11 13:23:25 by rsl              ###   ########.fr       */
+/*   Updated: 2023/12/11 14:11:11 by rsl              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
+
 
 void render_texture_line(int draw_start, int draw_end, int x, double tex_pos, double step, t_cub3d *cub3d, void *texture, int tex_x)
 {
@@ -40,94 +41,111 @@ void render_texture_line(int draw_start, int draw_end, int x, double tex_pos, do
     }
 }
 
+
+void    init_ray(t_ray *ray, t_cub3d *cub3d, int x)
+{
+    ray->ray_dir_x = cos(atan2(cub3d->cam.pd_y, cub3d->cam.pd_x) + cub3d->cam.fov * (2 * x / (double)SCREEN_WIDTH - 1));
+    ray->ray_dir_y = sin(atan2(cub3d->cam.pd_y, cub3d->cam.pd_x) + cub3d->cam.fov * (2 * x / (double)SCREEN_WIDTH - 1));
+    ray->map_x = cub3d->cam.p_x;
+    ray->map_y = cub3d->cam.p_y;
+    ray->side_dist_x = 0;
+    ray->side_dist_y = 0;
+    ray->perp_wall_dist = 0;
+    ray->step_x = 0;
+    ray->step_y = 0;
+    ray->hit = 0;
+    ray->side = 0;
+    ray->line_height = 0;
+    ray->draw_start = 0;
+    ray->draw_end = 0;
+}
+
+void    set_side_dist(t_ray *ray, t_cub3d *cub3d)
+{
+    if (ray->ray_dir_x < 0)
+    {
+        ray->step_x = -1;
+        ray->side_dist_x = (cub3d->cam.p_x - ray->map_x) * fabs(1 / ray->ray_dir_x);
+    }
+    else
+    {
+        ray->step_x = 1;
+        ray->side_dist_x = (ray->map_x + 1.0 - cub3d->cam.p_x) * fabs(1 / ray->ray_dir_x);
+    }
+    if (ray->ray_dir_y < 0)
+    {
+        ray->step_y = -1;
+        ray->side_dist_y = (cub3d->cam.p_y - ray->map_y) * fabs(1 / ray->ray_dir_y);
+    }
+    else
+    {
+        ray->step_y = 1;
+        ray->side_dist_y = (ray->map_y + 1.0 - cub3d->cam.p_y) * fabs(1 / ray->ray_dir_y);
+    }
+}
+
+void    set_perp_wall_dist_line_height_draw_start_end(t_ray *ray, t_cub3d *cub3d)
+{
+    if (ray->side == 0)
+        ray->perp_wall_dist = (ray->map_x - cub3d->cam.p_x + (1 - ray->step_x) / 2) / ray->ray_dir_x;
+    else
+        ray->perp_wall_dist = (ray->map_y - cub3d->cam.p_y + (1 - ray->step_y) / 2) / ray->ray_dir_y;
+    ray->line_height = SCREEN_HEIGHT / ray->perp_wall_dist;
+    ray->draw_start = -ray->line_height / 2 + SCREEN_HEIGHT / 2;
+    if (ray->draw_start < 0)
+        ray->draw_start = 0;
+    ray->draw_end = ray->line_height / 2 + SCREEN_HEIGHT / 2;
+    if (ray->draw_end >= SCREEN_HEIGHT)
+        ray->draw_end = SCREEN_HEIGHT - 1;
+}
+
 void draw_rays_3d(t_cub3d *cub3d)
 {
+    t_ray ray;
     int x;
 
     x = 0;
     while (x < SCREEN_WIDTH)
     {
-        double ray_dir_x = cos(atan2(cub3d->cam.pd_y, cub3d->cam.pd_x) + cub3d->cam.fov * (2 * x / (double)SCREEN_WIDTH - 1));
-        double ray_dir_y = sin(atan2(cub3d->cam.pd_y, cub3d->cam.pd_x) + cub3d->cam.fov * (2 * x / (double)SCREEN_WIDTH - 1));
-
-        int map_x = (int)cub3d->cam.p_x;
-        int map_y = (int)cub3d->cam.p_y;
-
-        double side_dist_x;
-        double side_dist_y;
-
-        double perp_wall_dist;
-
-        int step_x;
-        int step_y;
-        int hit = 0;
-        int side;
-
-        if (ray_dir_x < 0) {
-            step_x = -1;
-            side_dist_x = (cub3d->cam.p_x - map_x) * fabs(1 / ray_dir_x);
-        } else {
-            step_x = 1;
-            side_dist_x = (map_x + 1.0 - cub3d->cam.p_x) * fabs(1 / ray_dir_x);
-        }
-        if (ray_dir_y < 0) {
-            step_y = -1;
-            side_dist_y = (cub3d->cam.p_y - map_y) * fabs(1 / ray_dir_y);
-        } else {
-            step_y = 1;
-            side_dist_y = (map_y + 1.0 - cub3d->cam.p_y) * fabs(1 / ray_dir_y);
-        }
-
-        while (hit == 0) {
-            if (side_dist_x < side_dist_y) {
-                side_dist_x += fabs(1 / ray_dir_x);
-                map_x += step_x;
-                side = 0;
+        init_ray(&ray, cub3d, x);
+        set_side_dist(&ray, cub3d);
+        while (ray.hit == 0) {
+            if (ray.side_dist_x < ray.side_dist_y) {
+                ray.side_dist_x += fabs(1 / ray.ray_dir_x);
+                ray.map_x += ray.step_x;
+                ray.side = 0;
             } else {
-                side_dist_y += fabs(1 / ray_dir_y);
-                map_y += step_y;
-                side = 1;
+                ray.side_dist_y += fabs(1 / ray.ray_dir_y);
+                ray.map_y += ray.step_y;
+                ray.side = 1;
             }
-            if (cub3d->config->map[map_y][map_x] > 0 && cub3d->config->map[map_y][map_x] < 2)
-                hit = 1;
+            if (cub3d->config->map[ray.map_y][ray.map_x] > 0 && cub3d->config->map[ray.map_y][ray.map_x] < 2)
+                ray.hit = 1;
         }
-
-        if (side == 0)
-            perp_wall_dist = (map_x - cub3d->cam.p_x + (1 - step_x) / 2) / ray_dir_x;
-        else
-            perp_wall_dist = (map_y - cub3d->cam.p_y + (1 - step_y) / 2) / ray_dir_y;
-
-        double line_height = SCREEN_HEIGHT / perp_wall_dist;
-        int draw_start = -line_height / 2 + SCREEN_HEIGHT / 2;
-        if (draw_start < 0)
-            draw_start = 0;
-        int draw_end = line_height / 2 + SCREEN_HEIGHT / 2;
-        if (draw_end >= SCREEN_HEIGHT)
-            draw_end = SCREEN_HEIGHT - 1;
-
+        set_perp_wall_dist_line_height_draw_start_end(&ray, cub3d);
         double wall_x;
-        if (side == 0)
-            wall_x = cub3d->cam.p_y + perp_wall_dist * ray_dir_y;
+        if (ray.side == 0)
+            wall_x = cub3d->cam.p_y + ray.perp_wall_dist * ray.ray_dir_y;
         else
-            wall_x = cub3d->cam.p_x + perp_wall_dist * ray_dir_x;
+            wall_x = cub3d->cam.p_x + ray.perp_wall_dist * ray.ray_dir_x;
         wall_x -= floor(wall_x);
         int tex_x = (int)(wall_x * (double)cub3d->xpm.tex_w);
-        if (side == 0 && ray_dir_x > 0)
+        if (ray.side == 0 && ray.ray_dir_x > 0)
             tex_x = cub3d->xpm.tex_w - tex_x - 1;
-        if (side == 1 && ray_dir_y < 0)
+        if (ray.side == 1 && ray.ray_dir_y < 0)
             tex_x = cub3d->xpm.tex_w - tex_x - 1;
 
-        double step = 1.0 * cub3d->xpm.tex_h / line_height;
-        double tex_pos = (draw_start - SCREEN_HEIGHT / 2 + line_height / 2) * step;
+        double step = 1.0 * cub3d->xpm.tex_h / ray.line_height;
+        double tex_pos = (ray.draw_start - SCREEN_HEIGHT / 2 + ray.line_height / 2) * step;
 
-        if (side == 1 && ray_dir_y > 0)
-            render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.s_tex_adrr, tex_x);
-        else if (side == 1 && ray_dir_y < 0)
-            render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.n_tex_adrr, tex_x);
-        else if (side == 0 && ray_dir_x > 0)
-            render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.e_tex_adrr, tex_x);
+        if (ray.side == 1 && ray.ray_dir_y > 0)
+            render_texture_line(ray.draw_start, ray.draw_end, x, tex_pos, step, cub3d, cub3d->xpm.s_tex_adrr, tex_x);
+        else if (ray.side == 1 && ray.ray_dir_y < 0)
+            render_texture_line(ray.draw_start, ray.draw_end, x, tex_pos, step, cub3d, cub3d->xpm.n_tex_adrr, tex_x);
+        else if (ray.side == 0 && ray.ray_dir_x > 0)
+            render_texture_line(ray.draw_start, ray.draw_end, x, tex_pos, step, cub3d, cub3d->xpm.e_tex_adrr, tex_x);
         else
-            render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.w_tex_adrr, tex_x);
+            render_texture_line(ray.draw_start, ray.draw_end, x, tex_pos, step, cub3d, cub3d->xpm.w_tex_adrr, tex_x);
         x++;
     }
 }

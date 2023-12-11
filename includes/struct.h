@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rsl <rsl@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:25:27 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/11 11:35:47 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/11 14:11:30 by rsl              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,5 +115,23 @@ typedef struct s_line
 	int				e2;
 	t_point			temp;
 }					t_line;
+
+typedef struct s_ray
+{
+	double			ray_dir_x;
+	double			ray_dir_y;
+	int				map_x;
+	int				map_y;
+	double			side_dist_x;
+	double			side_dist_y;
+	double			perp_wall_dist;
+	int				step_x;
+	int				step_y;
+	int				hit;
+	int				side;
+	double			line_height;
+	int				draw_start;
+	int				draw_end;
+}					t_ray;
 
 #endif
