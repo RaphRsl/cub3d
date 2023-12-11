@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 15:50:40 by rroussel          #+#    #+#             */
-/*   Updated: 2023/12/11 15:55:28 by rroussel         ###   ########.fr       */
+/*   Updated: 2023/12/11 16:51:04 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,9 @@ void	render_texture_tree(t_ray ray, t_cub3d *cub3d, int x)
 	else if (ray.side == 1 && ray.ray_dir_y < 0)
 		render_texture_line(ray, x, cub3d, cub3d->xpm.n_tex_adrr);
 	else if (ray.side == 0 && ray.ray_dir_x > 0)
-		render_texture_line(ray, x, cub3d, cub3d->xpm.e_tex_adrr);
-	else
 		render_texture_line(ray, x, cub3d, cub3d->xpm.w_tex_adrr);
+	else
+		render_texture_line(ray, x, cub3d, cub3d->xpm.e_tex_adrr);
 }
 
 void	ray_side_map(t_ray *ray, t_cub3d *cub3d)

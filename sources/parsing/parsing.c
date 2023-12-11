@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:17:19 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/11 16:38:11 by rroussel         ###   ########.fr       */
+/*   Updated: 2023/12/11 16:58:11 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,8 @@ t_configuration	*ft_configuration(char *file_path)
 	file_len = find_file_len(file_path);
 	fd_ptr = open(file_path, O_RDONLY);
 	if (fd_ptr < 0)
-		return (ft_putstr_fd("Error\n", 2), ft_putstr_fd(file_path, 2),ft_putstr_fd(" : file does not exist\n", 2),
+		return (ft_putstr_fd("Error\n", 2), ft_putstr_fd(file_path, 2), \
+			ft_putstr_fd(" : file does not exist\n", 2),
 			NULL);
 	return (parse_map(fd_ptr, file_len));
 }
