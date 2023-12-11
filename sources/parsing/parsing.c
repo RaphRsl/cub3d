@@ -6,7 +6,7 @@
 /*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:17:19 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/11 15:56:23 by rroussel         ###   ########.fr       */
+/*   Updated: 2023/12/11 16:38:11 by rroussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_configuration	*fill_config_arg(char **file, int i)
 			if (!fill_map(file[i], &config))
 				return (free_config(config), NULL);
 			if (file[i + 1] && file[i + 1][0] == '\n')
-				return (ft_printf("Error\nMap is not at the EOF.\n"), \
+				return (ft_putstr_fd("Error\nMap is not at the EOF.\n", 2), \
 					free_config(config), NULL);
 		}
 	}
@@ -70,14 +70,14 @@ char	**file_in_tab(int fd, int row, int i, int len)
 	column = 0;
 	tab = malloc((len + 1) * sizeof(char *));
 	if (!tab)
-		return (ft_printf("Error\nMalloc\n"), NULL);
+		return (ft_putstr_fd("Error\nMalloc\n", 2), NULL);
 	line = get_next_line(fd);
 	while (line != NULL)
 	{
 		tab[row] = malloc_good_size(line, i, column);
 		if (!tab[row])
 			return (ft_free_arrays_i(tab, row),
-				ft_printf("Error\nMalloc\n"), NULL);
+				ft_putstr_fd("Error\nMalloc\n", 2), NULL);
 		i = 0;
 		column = 0;
 		row++;
@@ -117,7 +117,7 @@ t_configuration	*ft_configuration(char *file_path)
 	file_len = find_file_len(file_path);
 	fd_ptr = open(file_path, O_RDONLY);
 	if (fd_ptr < 0)
-		return (ft_printf("Error\n%s : file does not exist\n", file_path),
+		return (ft_putstr_fd("Error\n", 2), ft_putstr_fd(file_path, 2),ft_putstr_fd(" : file does not exist\n", 2),
 			NULL);
 	return (parse_map(fd_ptr, file_len));
 }

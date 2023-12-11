@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 09:33:31 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/11 09:38:10 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/11 16:36:15 by rroussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	fill_element_quater(char *line, t_configuration **config, int *i)
 	if (ft_strncmp(&line[*i], "WE ", 3) == 0)
 	{
 		if ((*config)->we_tex)
-			return (ft_printf("Error\nWE key find multiple time\n"), 0);
+			return (ft_putstr_fd("Error\nWE key find multiple time\n", 2), 0);
 		*i += 2;
 		skip_whitespaces(line, i);
 		(*config)->we_tex = ft_strdup(&line[*i]);
@@ -26,7 +26,7 @@ int	fill_element_quater(char *line, t_configuration **config, int *i)
 	}
 	else
 	{
-		ft_printf("Error\nWrong key find in file\n");
+		ft_putstr_fd("Error\nWrong key find in file\n", 2);
 		return (0);
 	}
 	return (1);

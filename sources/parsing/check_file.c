@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:19:56 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/11 09:36:29 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/11 16:34:53 by rroussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,21 +15,23 @@
 int	check_missing_argument(t_configuration *config)
 {
 	if (!config->ea_tex)
-		return (ft_printf("Error\nMissing texture element\n"), 0);
+		return (ft_putstr_fd("Error\nMissing texture element\n", 2), 0);
 	if (!config->no_tex)
-		return (ft_printf("Error\nMissing texture element\n"), 0);
+		return (ft_putstr_fd("Error\nMissing texture element\n", 2), 0);
 	if (!config->so_tex)
-		return (ft_printf("Error\nMissing texture element\n"), 0);
+		return (ft_putstr_fd("Error\nMissing texture element\n", 2), 0);
 	if (!config->we_tex)
-		return (ft_printf("Error\nMissing texture element\n"), 0);
+		return (ft_putstr_fd("Error\nMissing texture element\n", 2), 0);
 	if (config->fl_color[0] < 0 && config->fl_color[1] < 0
 		&& config->fl_color[2] < 0)
-		return (ft_printf("Error\nF : Missing element or negative value\n"), 0);
+		return (ft_putstr_fd("Error\nF : Missing element or negative \
+		value\n", 2), 0);
 	if (config->c_color[0] < 0 && config->c_color[1] < 0
 		&& config->c_color[2] < 0)
-		return (ft_printf("Error\nC : Missing element or negative value\n"), 0);
+		return (ft_putstr_fd("Error\nC : Missing element or negative \
+		value\n", 2), 0);
 	if (!config->map)
-		return (ft_printf("Error\nMap Missing\n"), 0);
+		return (ft_putstr_fd("Error\nMap Missing\n", 2), 0);
 	return (1);
 }
 
@@ -41,9 +43,9 @@ int	check_floor_ceiling_color(t_configuration *config)
 	while (i < 3)
 	{
 		if (config->fl_color[i] < 0 || config->fl_color[i] > 255)
-			return (ft_printf("Error\nWrong floor color format\n"), 0);
+			return (ft_putstr_fd("Error\nWrong floor color format\n", 2), 0);
 		if (config->c_color[i] < 0 || config->c_color[i] > 255)
-			return (ft_printf("Error\nWrong ceiling color format\n"), 0);
+			return (ft_putstr_fd("Error\nWrong ceiling color format\n", 2), 0);
 		i++;
 	}
 	return (1);
@@ -55,19 +57,19 @@ int	check_xpm_file(t_configuration *config)
 
 	fd = open(config->ea_tex, O_RDONLY);
 	if (fd < 0)
-		return (ft_printf("Error\nEA texture file does not exist\n"), 0);
+		return (ft_putstr_fd("Error\nEA texture file does not exist\n", 2), 0);
 	close(fd);
 	fd = open(config->no_tex, O_RDONLY);
 	if (fd < 0)
-		return (ft_printf("Error\nNO texture file does not exist\n"), 0);
+		return (ft_putstr_fd("Error\nNO texture file does not exist\n", 2), 0);
 	close(fd);
 	fd = open(config->so_tex, O_RDONLY);
 	if (fd < 0)
-		return (ft_printf("Error\nSO texture file does not exist\n"), 0);
+		return (ft_putstr_fd("Error\nSO texture file does not exist\n", 2), 0);
 	close(fd);
 	fd = open(config->we_tex, O_RDONLY);
 	if (fd < 0)
-		return (ft_printf("Error\nWE texture file does not exist\n"), 0);
+		return (ft_putstr_fd("Error\nWE texture file does not exist\n", 2), 0);
 	close(fd);
 	return (1);
 }
