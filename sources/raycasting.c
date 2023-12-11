@@ -6,39 +6,40 @@
 /*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:56:46 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/11 15:07:22 by rroussel         ###   ########.fr       */
+/*   Updated: 2023/12/11 15:35:21 by rroussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
 
-void render_texture_line(int draw_start, int draw_end, int x, double tex_pos, double step, t_cub3d *cub3d, void *texture, int tex_x)
+void	render_texture_line(t_ray ray, int x, t_cub3d *c, void *texture)
 {
-    int y = 0;
-    int *color = NULL;
-    
-    while (y < SCREEN_HEIGHT)
-    {
-        if (y < SCREEN_HEIGHT / 2)
-            cub3d->img.addr[y * SCREEN_WIDTH + x] = cub3d->config->c_color[0] << 16 | cub3d->config->c_color[1] << 8 | cub3d->config->c_color[2];
-        else
-            cub3d->img.addr[y * SCREEN_WIDTH + x] = cub3d->config->fl_color[0] << 16 | cub3d->config->fl_color[1] << 8 | cub3d->config->fl_color[2];
-        y++;
-    }
-    y = draw_start;
-    while (y < draw_end && y < SCREEN_HEIGHT)
-    {
-        int tex_y = (int)tex_pos & (cub3d->xpm.tex_h - 1);
-        if (tex_y < 0)
-            tex_y = 0;
-        if (tex_y >= cub3d->xpm.tex_h)
-            tex_y = cub3d->xpm.tex_h - 1;
-        color = (int *)texture;
-        cub3d->img.addr[y * SCREEN_WIDTH + x] = color[tex_y * cub3d->xpm.tex_w + tex_x];
-        tex_pos += step;
-        y++;
-    }
+	int	y;
+
+	y = -1;
+	while (++y < SCREEN_HEIGHT)
+	{
+		if (y < SCREEN_HEIGHT / 2)
+			c->img.addr[y * SCREEN_WIDTH + x] = c->config->c_color[0] \
+			<< 16 | c->config->c_color[1] << 8 | c->config->c_color[2];
+		else
+			c->img.addr[y * SCREEN_WIDTH + x] = c->config->fl_color[0] \
+			<< 16 | c->config->fl_color[1] << 8 | c->config->fl_color[2];
+	}
+	y = ray.draw_start - 1;
+	while (++y < ray.draw_end && y < SCREEN_HEIGHT)
+	{
+		ray.tex_y = (int)ray.tex_pos & (c->xpm.tex_h - 1);
+		if (ray.tex_y < 0)
+			ray.tex_y = 0;
+		if (ray.tex_y >= c->xpm.tex_h)
+			ray.tex_y = c->xpm.tex_h - 1;
+		ray.color = (int *)texture;
+		c->img.addr[y * SCREEN_WIDTH + x] = ray.color[ray.tex_y * \
+		c->xpm.tex_w + ray.tex_x];
+		ray.tex_pos += ray.step;
+	}
 }
 
 
@@ -58,6 +59,12 @@ void    init_ray(t_ray *ray, t_cub3d *cub3d, int x)
     ray->line_height = 0;
     ray->draw_start = 0;
     ray->draw_end = 0;
+	ray->color = NULL;
+	ray->wall_x = 0;
+	ray->tex_x = 0;
+	ray->tex_y = 0;
+	ray->step = 0;
+	ray->tex_pos = 0;
 }
 
 void    set_side_dist(t_ray *ray, t_cub3d *cub3d)
@@ -107,6 +114,21 @@ void    set_ray_variables(t_ray *ray, t_cub3d *cub3d)
         ray->tex_x = cub3d->xpm.tex_w - ray->tex_x - 1;
     if (ray->side == 1 && ray->ray_dir_y < 0)
         ray->tex_x = cub3d->xpm.tex_w - ray->tex_x - 1;
+    ray->step = 1.0 * cub3d->xpm.tex_h / ray->line_height;
+    ray->tex_pos = (ray->draw_start - SCREEN_HEIGHT / 2 + ray->line_height / 2) * ray->step;
+    
+}
+
+void    render_texture_tree(t_ray ray, t_cub3d *cub3d, int x)
+{
+        if (ray.side == 1 && ray.ray_dir_y > 0)
+            render_texture_line(ray, x, cub3d, cub3d->xpm.s_tex_adrr);
+        else if (ray.side == 1 && ray.ray_dir_y < 0)
+            render_texture_line(ray, x, cub3d, cub3d->xpm.n_tex_adrr);
+        else if (ray.side == 0 && ray.ray_dir_x > 0)
+            render_texture_line(ray, x, cub3d, cub3d->xpm.e_tex_adrr);
+        else
+            render_texture_line(ray, x, cub3d, cub3d->xpm.w_tex_adrr);
 }
 
 void draw_rays_3d(t_cub3d *cub3d)
@@ -129,27 +151,12 @@ void draw_rays_3d(t_cub3d *cub3d)
                 ray.map_y += ray.step_y;
                 ray.side = 1;
             }
-            if (cub3d->config->map[ray.map_y][ray.map_x] > 0 && cub3d->config->map[ray.map_y][ray.map_x] < 2)
+            if (cub3d->config->map[ray.map_y][ray.map_x] > 0\
+            && cub3d->config->map[ray.map_y][ray.map_x] < 2)
                 ray.hit = 1;
         }
         set_ray_variables(&ray, cub3d);
-        // int tex_x = (int)(ray.wall_x * (double)cub3d->xpm.tex_w);
-        // if (ray.side == 0 && ray.ray_dir_x > 0)
-        //     tex_x = cub3d->xpm.tex_w - tex_x - 1;
-        // if (ray.side == 1 && ray.ray_dir_y < 0)
-        //     tex_x = cub3d->xpm.tex_w - tex_x - 1;
-
-        double step = 1.0 * cub3d->xpm.tex_h / ray.line_height;
-        double tex_pos = (ray.draw_start - SCREEN_HEIGHT / 2 + ray.line_height / 2) * step;
-
-        if (ray.side == 1 && ray.ray_dir_y > 0)
-            render_texture_line(ray.draw_start, ray.draw_end, x, tex_pos, step, cub3d, cub3d->xpm.s_tex_adrr, ray.tex_x);
-        else if (ray.side == 1 && ray.ray_dir_y < 0)
-            render_texture_line(ray.draw_start, ray.draw_end, x, tex_pos, step, cub3d, cub3d->xpm.n_tex_adrr, ray.tex_x);
-        else if (ray.side == 0 && ray.ray_dir_x > 0)
-            render_texture_line(ray.draw_start, ray.draw_end, x, tex_pos, step, cub3d, cub3d->xpm.e_tex_adrr, ray.tex_x);
-        else
-            render_texture_line(ray.draw_start, ray.draw_end, x, tex_pos, step, cub3d, cub3d->xpm.w_tex_adrr, ray.tex_x);
+        render_texture_tree(ray, cub3d, x);
         x++;
     }
 }

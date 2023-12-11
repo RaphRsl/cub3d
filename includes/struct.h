@@ -6,7 +6,7 @@
 /*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:25:27 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/11 15:06:29 by rroussel         ###   ########.fr       */
+/*   Updated: 2023/12/11 15:31:38 by rroussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,10 @@ typedef struct s_ray
 	int				draw_end;
 	double			wall_x;
 	int				tex_x;
+	int				tex_y;
+	double			step;
+	double			tex_pos;
+	int				*color;
 }					t_ray;
 
 #endif
