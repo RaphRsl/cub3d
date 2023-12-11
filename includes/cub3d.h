@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:20:26 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/11 15:53:27 by rroussel         ###   ########.fr       */
+/*   Updated: 2023/12/11 16:09:05 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,8 @@ int				deal_mouse(int x, int y, t_cub3d *cub3d);
 void			free_config(t_configuration *config);
 
 // Camera functions
-void			rotate_left(t_camera *cam);
-void			rotate_right(t_camera *cam);
+void			rotate_left(t_camera *cam, float rot_speed);
+void			rotate_right(t_camera *cam, float rot_speed);
 void			move_to_the_right(t_cub3d *cub3d);
 void			move_to_the_left(t_cub3d *cub3d);
 void			move_forward(t_cub3d *cub3d);
