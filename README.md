@@ -45,3 +45,7 @@ Tests a realiser pour le parsing et les leaks :
 Problemes de malloc :
 
 --> A verifier, si gnl a un petit buffer (50000), un leak apparait venant de la fonctin file_in_line, leak seulement observe avec la big map. Ce leak disparait lorsque le buffer est augmente (500000)
+
+A MODIFIER SELON LE SUJET
+- ajouter un make bonus, les bonus ne doivent pas etre presents pour la version de base du projet
+- wasd servent a se deplacer, pas changer de point de vue avec a et d
