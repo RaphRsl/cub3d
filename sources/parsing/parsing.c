@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tomteixeira <tomteixeira@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:17:19 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/11 09:36:11 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/11 10:33:16 by tomteixeira      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ t_configuration	*fill_config_arg(char **file, int i)
 			if (!fill_map(file[i], &config))
 				return (free_config(config), NULL);
 			if (file[i + 1] && file[i + 1][0] == '\n')
-				break ;
+				return (ft_printf("Error\nMap is not at the EOF.\n"),
+						free_config(config), NULL);
 		}
 	}
 	if (!check_arguments(config))
