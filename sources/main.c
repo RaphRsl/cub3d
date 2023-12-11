@@ -6,7 +6,7 @@
 /*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:12:55 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/11 09:48:40 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/11 11:37:01 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ int	main(int argc, char **argv)
 		return (end_program(&cub3d));
 	mlx_loop_hook(cub3d.mlx, &ft_render_game, &cub3d);
 	mlx_hook(cub3d.win, ON_DESTROY, ON_DESTROY, end_program, &cub3d);
-	mlx_hook(cub3d.win, KEYPRESS, KEYPRESSMASK, deal_key, &cub3d);
-	mlx_hook(cub3d.win, MOTIONNOTIFY, POINTERMOTIONMASK, deal_mouse, &cub3d);
+	mlx_hook(cub3d.win, KEYPRESS, 1L << 0, deal_key, &cub3d);
+	mlx_hook(cub3d.win, MOTIONNOTIFY, 1L << 6, deal_mouse, &cub3d);
 	mlx_loop(cub3d.mlx);
 	return (0);
 }
