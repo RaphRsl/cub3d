@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 16:14:36 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/08 16:24:55 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/11 15:46:59 by rroussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	print_direction_line_of_player(t_cub3d *cub3d)
 	t_point	direction;
 
 	player.x = SCREEN_WIDTH / 8 + 5;
-	player.y = SCREEN_HEIGHT / 8 + 5;
+	player.y = S_HEIGHT / 8 + 5;
 	player.color = 0x00FF0000;
 	direction.x = player.x + (cub3d->cam.pd_x * 10);
 	direction.y = player.y + (cub3d->cam.pd_y * 10);
@@ -55,7 +55,7 @@ void	init_minimap(t_minimap *m, t_cub3d *cub3d)
 {
 	m->bs = 10;
 	m->player_screen_x = SCREEN_WIDTH / 8;
-	m->player_screen_y = SCREEN_HEIGHT / 8;
+	m->player_screen_y = S_HEIGHT / 8;
 	m->start_x = m->player_screen_x - 15 * m->bs;
 	m->end_x = m->player_screen_x + 15 * m->bs;
 	m->start_y = m->player_screen_y - 10 * m->bs;
@@ -91,7 +91,7 @@ void	ft_print_map(t_cub3d *cub3d)
 		m.scr_y += m.bs;
 	}
 	m.scr_x = SCREEN_WIDTH / 8;
-	m.scr_y = SCREEN_HEIGHT / 8;
+	m.scr_y = S_HEIGHT / 8;
 	print_a_square(m, 0xFF0000, cub3d);
 	print_direction_line_of_player(cub3d);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomteixeira <tomteixeira@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:17:19 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/11 10:33:16 by tomteixeira      ###   ########.fr       */
+/*   Updated: 2023/12/11 15:56:23 by rroussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ t_configuration	*fill_config_arg(char **file, int i)
 			if (!fill_map(file[i], &config))
 				return (free_config(config), NULL);
 			if (file[i + 1] && file[i + 1][0] == '\n')
-				return (ft_printf("Error\nMap is not at the EOF.\n"),
-						free_config(config), NULL);
+				return (ft_printf("Error\nMap is not at the EOF.\n"), \
+					free_config(config), NULL);
 		}
 	}
 	if (!check_arguments(config))
@@ -121,50 +121,3 @@ t_configuration	*ft_configuration(char *file_path)
 			NULL);
 	return (parse_map(fd_ptr, file_len));
 }
-
-// t_configuration	*parse_map(int fd)
-// {
-// 	char			*l_file;
-// 	char			**file;
-// 	t_configuration	*config;
-
-// 	l_file = file_in_line(fd);
-// 	if (!l_file)
-// 		return (close(fd), ft_printf("Error\nFile empty\n"), NULL);
-// 	close(fd);
-// 	file = ft_split(l_file, '\n');
-// 	if (!file)
-// 		return (free(l_file), ft_printf("Error\nMalloc"), NULL);
-// 	free(l_file);
-// 	config = fill_config_arg(file);
-// 	return (ft_free_arrays_i(file, -1), config);
-// }
-
-// char	*file_in_line(int fd)
-// {
-// 	char	*buffer;
-// 	char	*file_buffer;
-// 	char	*l_file;
-
-// 	l_file = NULL;
-// 	buffer = get_next_line(fd);
-// 	if (!buffer)
-// 		return (NULL);
-// 	while (buffer)
-// 	{
-// 		file_buffer = NULL;
-// 		file_buffer = ft_strdup(l_file);
-// 		if (l_file)
-// 			free(l_file);
-// 		l_file = NULL;
-// 		l_file = ft_strjoin(file_buffer, buffer);
-// 		if (!l_file)
-// 			return (free(buffer), NULL);
-// 		free(buffer);
-// 		free(file_buffer);
-// 		buffer = get_next_line(fd);
-// 		if (!buffer)
-// 			break ;
-// 	}
-// 	return (free(buffer), l_file);
-// }

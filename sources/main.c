@@ -6,7 +6,7 @@
 /*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:12:55 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/11 15:40:34 by rroussel         ###   ########.fr       */
+/*   Updated: 2023/12/11 15:57:17 by rroussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	init_cam_settings(t_cub3d *cub3d)
 	cub3d->cam.plane_x = cos(fov_rad / 2);
 	cub3d->cam.plane_y = sin(fov_rad / 2);
 	cub3d->cam.pd_x = cos(cub3d->cam.pa) * 5;
-	cub3d->cam.pd_y = sin(cub3d->cam.pa) * 5;	
+	cub3d->cam.pd_y = sin(cub3d->cam.pa) * 5;
 	cub3d->cam.move_speed = 0.05;
 	cub3d->cam.rot_speed = 0.05;
 	cub3d->cam.x_mouse = 0;

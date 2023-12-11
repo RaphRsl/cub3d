@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 09:48:05 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/11 09:48:46 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/11 15:46:59 by rroussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,10 @@ int	init_mlx_settings(t_cub3d *cub3d)
 	if (!cub3d->mlx)
 		return (ft_printf("Error\nMlx init\n"), 0);
 	cub3d->win = mlx_new_window(cub3d->mlx, SCREEN_WIDTH,
-			SCREEN_HEIGHT, "Cub3D");
+			S_HEIGHT, "Cub3D");
 	if (!cub3d->win)
 		return (ft_printf("Error\nMlx new window\n"), 0);
-	cub3d->img.mlx = mlx_new_image(cub3d->mlx, SCREEN_WIDTH, SCREEN_HEIGHT);
+	cub3d->img.mlx = mlx_new_image(cub3d->mlx, SCREEN_WIDTH, S_HEIGHT);
 	if (!cub3d->img.mlx)
 		return (ft_printf("Error\nMlx image\n"), 0);
 	cub3d->img.addr = (int *)mlx_get_data_addr(cub3d->img.mlx,

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+         #
+#    By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/01 16:32:28 by toteixei          #+#    #+#              #
-#    Updated: 2023/12/11 09:49:02 by toteixei         ###   ########.fr        #
+#    Updated: 2023/12/11 15:54:45 by rroussel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,12 @@ COLOUR_CYAN=\033[0;36m
 COLOUR_END=\033[0m
 
 NAME 		= 	cub3d
-SRCS 		=	sources/main.c sources/game.c sources/deal_key.c \
-				sources/camera_movement.c sources/raycasting.c \
+SRCS 		=	sources/main.c \
+				sources/game.c \
+				sources/deal_key.c \
+				sources/camera_movement.c \
+				sources/raycasting.c \
+				sources/raycasting_utils.c \
 				sources/parsing/parsing.c \
 				sources/parsing/init_config_struct.c \
 				sources/parsing/fill_element.c \

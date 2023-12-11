@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:20:26 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/11 11:37:05 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/11 15:53:27 by rroussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # include "../mlx_linux/mlx.h"
 
 # define SCREEN_WIDTH 1500
-# define SCREEN_HEIGHT 900
+# define S_HEIGHT 900
 # define PI 3.1415926535
 # define MOTIONNOTIFY 6
 # define KEYPRESS 2
@@ -129,6 +129,10 @@ void			move_backward(t_cub3d *cub3d);
 int				is_wall(float x, float y, t_cub3d *cub3d);
 
 // Raycasting functions
+void			render_texture_tree(t_ray ray, t_cub3d *cub3d, int x);
+void			set_side_dist(t_ray *ray, t_cub3d *cub3d);
+void			set_ray_variables(t_ray *r, t_cub3d *c);
+void			ray_side_map(t_ray *ray, t_cub3d *cub3d);
 void			draw_rays_3d(t_cub3d *cub3d);
 
 // MLX functions

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   game.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/27 19:35:25 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/08 16:25:51 by toteixei         ###   ########.fr       */
+/*   Updated: 2023/12/11 15:46:59 by rroussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	img_pixel_put(int x, int y, unsigned int color, t_cub3d *cub3d)
 {
 	int	mypixel;
 
-	if (x >= SCREEN_WIDTH || y >= SCREEN_HEIGHT || x < 0 || y < 0)
+	if (x >= SCREEN_WIDTH || y >= S_HEIGHT || x < 0 || y < 0)
 		return ;
 	mypixel = (y * SCREEN_WIDTH) + x;
 	if (cub3d->img.bpp != 32)
