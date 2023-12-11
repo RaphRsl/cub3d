@@ -3,34 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   fill_element.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tomteixeira <tomteixeira@student.42.fr>    +#+  +:+       +#+        */
+/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:25:49 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/10 17:40:22 by tomteixeira      ###   ########.fr       */
+/*   Updated: 2023/12/11 09:38:05 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/cub3d.h"
-
-int	fill_element_quater(char *line, t_configuration **config, int *i)
-{
-	if (ft_strncmp(&line[*i], "WE ", 3) == 0)
-	{
-		if ((*config)->we_tex)
-			return (ft_printf("Error\nWE key find multiple time\n"), 0);
-		*i += 2;
-		skip_whitespaces(line, i);
-		(*config)->we_tex = ft_strdup(&line[*i]);
-		if (!(*config)->we_tex)
-			return (0);
-	}
-	else
-	{
-		ft_printf("Error\nWrong key find in file\n");
-		return (0);
-	}
-	return (1);
-}
 
 int	fill_element_ter(char *line, t_configuration **config, int *i)
 {

@@ -6,7 +6,7 @@
 /*   By: rsl <rsl@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:20:26 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/10 22:14:46 by rsl              ###   ########.fr       */
+/*   Updated: 2023/12/11 10:08:44 by rsl              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,15 @@ enum {
 // };
 
 int             main(int argc, char **argv);
+int				init_textures_bis(t_cub3d *cub3d);
+int				init_textures(t_cub3d *cub3d);
+void			init_cub3d(t_cub3d *cub3d);
+int				init_mlx_settings(t_cub3d *cub3d);
 
 //Parsing functions
 t_configuration *ft_configuration(char *file_path);
 t_configuration	*parse_map(int fd, int len);
-t_configuration	*fill_config_arg(char **file);
+t_configuration	*fill_config_arg(char **file, int i);
 int				parse_line(char *line, t_configuration **config);
 t_configuration *init_config_struct(void);
 int				fill_map(char *line, t_configuration **config);
@@ -99,6 +103,9 @@ int				**duplicate_map(t_configuration *config);
 int				find_player(t_configuration *config);
 int				realloc_map(t_configuration **config);
 int				check_map_limits(t_configuration *config, int i, int j, int **map);
+char			*malloc_good_size(char *line, int i, int column);
+int				find_file_len(char *path);
+int				fill_element_quater(char *line, t_configuration **config, int *i);
 
 
 //Game functions
