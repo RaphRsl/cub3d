@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:25:27 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/11 15:31:38 by rroussel         ###   ########.fr       */
+/*   Updated: 2023/12/11 16:11:07 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_camera
 	float	plane_y;
 	float	move_speed;
 	float	rot_speed;
+	float	rot_mouse;
 	int		x_mouse;
 }					t_camera;
 

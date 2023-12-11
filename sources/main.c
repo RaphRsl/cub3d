@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:12:55 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/11 15:57:17 by rroussel         ###   ########.fr       */
+/*   Updated: 2023/12/11 16:09:59 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	init_cam_settings(t_cub3d *cub3d)
 
 	cub3d->cam.p_x = cub3d->config->player_x + 0.5;
 	cub3d->cam.p_y = cub3d->config->player_y + 0.5;
-	cub3d->cam.fov = M_PI / 4;
+	cub3d->cam.fov = M_PI / 5;
 	if (cub3d->config->orientation == 'E')
 		cub3d->cam.pa = 0;
 	else if (cub3d->config->orientation == 'W')
@@ -33,7 +33,8 @@ void	init_cam_settings(t_cub3d *cub3d)
 	cub3d->cam.pd_x = cos(cub3d->cam.pa) * 5;
 	cub3d->cam.pd_y = sin(cub3d->cam.pa) * 5;
 	cub3d->cam.move_speed = 0.05;
-	cub3d->cam.rot_speed = 0.05;
+	cub3d->cam.rot_mouse = 0.02;
+	cub3d->cam.rot_speed = 0.06;
 	cub3d->cam.x_mouse = 0;
 }
 
