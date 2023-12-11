@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rsl <rsl@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/25 12:25:27 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/11 14:11:30 by rsl              ###   ########.fr       */
+/*   Updated: 2023/12/11 15:06:29 by rroussel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,8 @@ typedef struct s_ray
 	double			line_height;
 	int				draw_start;
 	int				draw_end;
+	double			wall_x;
+	int				tex_x;
 }					t_ray;
 
 #endif
