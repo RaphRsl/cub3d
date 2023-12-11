@@ -6,7 +6,7 @@
 /*   By: rsl <rsl@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 16:56:46 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/11 12:57:17 by rsl              ###   ########.fr       */
+/*   Updated: 2023/12/11 13:23:25 by rsl              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,26 +40,18 @@ void render_texture_line(int draw_start, int draw_end, int x, double tex_pos, do
     }
 }
 
-void draw_rays_3d(t_cub3d *cub3d) {
-    float pos_x = cub3d->cam.p_x;
-    float pos_y = cub3d->cam.p_y;
-    float dir_x = cub3d->cam.pd_x;
-    float dir_y = cub3d->cam.pd_y;
-    int w = SCREEN_WIDTH;
-    double fov = cub3d->cam.fov;
+void draw_rays_3d(t_cub3d *cub3d)
+{
+    int x;
 
-    for (int x = 0; x < w; x++) {
-        double camera_x = 2 * x / (double)w - 1;
-        double ray_angle = atan2(dir_y, dir_x) + fov * (camera_x);
+    x = 0;
+    while (x < SCREEN_WIDTH)
+    {
+        double ray_dir_x = cos(atan2(cub3d->cam.pd_y, cub3d->cam.pd_x) + cub3d->cam.fov * (2 * x / (double)SCREEN_WIDTH - 1));
+        double ray_dir_y = sin(atan2(cub3d->cam.pd_y, cub3d->cam.pd_x) + cub3d->cam.fov * (2 * x / (double)SCREEN_WIDTH - 1));
 
-        double ray_dir_x = cos(ray_angle);
-        double ray_dir_y = sin(ray_angle);
-
-        int map_x = (int)pos_x;
-        int map_y = (int)pos_y;
-
-        double delta_dist_x = fabs(1 / ray_dir_x);
-        double delta_dist_y = fabs(1 / ray_dir_y);
+        int map_x = (int)cub3d->cam.p_x;
+        int map_y = (int)cub3d->cam.p_y;
 
         double side_dist_x;
         double side_dist_y;
@@ -73,26 +65,26 @@ void draw_rays_3d(t_cub3d *cub3d) {
 
         if (ray_dir_x < 0) {
             step_x = -1;
-            side_dist_x = (pos_x - map_x) * delta_dist_x;
+            side_dist_x = (cub3d->cam.p_x - map_x) * fabs(1 / ray_dir_x);
         } else {
             step_x = 1;
-            side_dist_x = (map_x + 1.0 - pos_x) * delta_dist_x;
+            side_dist_x = (map_x + 1.0 - cub3d->cam.p_x) * fabs(1 / ray_dir_x);
         }
         if (ray_dir_y < 0) {
             step_y = -1;
-            side_dist_y = (pos_y - map_y) * delta_dist_y;
+            side_dist_y = (cub3d->cam.p_y - map_y) * fabs(1 / ray_dir_y);
         } else {
             step_y = 1;
-            side_dist_y = (map_y + 1.0 - pos_y) * delta_dist_y;
+            side_dist_y = (map_y + 1.0 - cub3d->cam.p_y) * fabs(1 / ray_dir_y);
         }
 
         while (hit == 0) {
             if (side_dist_x < side_dist_y) {
-                side_dist_x += delta_dist_x;
+                side_dist_x += fabs(1 / ray_dir_x);
                 map_x += step_x;
                 side = 0;
             } else {
-                side_dist_y += delta_dist_y;
+                side_dist_y += fabs(1 / ray_dir_y);
                 map_y += step_y;
                 side = 1;
             }
@@ -101,9 +93,9 @@ void draw_rays_3d(t_cub3d *cub3d) {
         }
 
         if (side == 0)
-            perp_wall_dist = (map_x - pos_x + (1 - step_x) / 2) / ray_dir_x;
+            perp_wall_dist = (map_x - cub3d->cam.p_x + (1 - step_x) / 2) / ray_dir_x;
         else
-            perp_wall_dist = (map_y - pos_y + (1 - step_y) / 2) / ray_dir_y;
+            perp_wall_dist = (map_y - cub3d->cam.p_y + (1 - step_y) / 2) / ray_dir_y;
 
         double line_height = SCREEN_HEIGHT / perp_wall_dist;
         int draw_start = -line_height / 2 + SCREEN_HEIGHT / 2;
@@ -115,9 +107,9 @@ void draw_rays_3d(t_cub3d *cub3d) {
 
         double wall_x;
         if (side == 0)
-            wall_x = pos_y + perp_wall_dist * ray_dir_y;
+            wall_x = cub3d->cam.p_y + perp_wall_dist * ray_dir_y;
         else
-            wall_x = pos_x + perp_wall_dist * ray_dir_x;
+            wall_x = cub3d->cam.p_x + perp_wall_dist * ray_dir_x;
         wall_x -= floor(wall_x);
         int tex_x = (int)(wall_x * (double)cub3d->xpm.tex_w);
         if (side == 0 && ray_dir_x > 0)
@@ -136,5 +128,6 @@ void draw_rays_3d(t_cub3d *cub3d) {
             render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.e_tex_adrr, tex_x);
         else
             render_texture_line(draw_start, draw_end, x, tex_pos, step, cub3d, cub3d->xpm.w_tex_adrr, tex_x);
+        x++;
     }
 }
