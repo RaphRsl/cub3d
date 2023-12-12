@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fill_element.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rroussel <rroussel@student.42.fr>          +#+  +:+       +#+        */
+/*   By: toteixei <toteixei@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/05 15:25:49 by toteixei          #+#    #+#             */
-/*   Updated: 2023/12/11 16:35:43 by rroussel         ###   ########.fr       */
+/*   Updated: 2023/12/12 16:56:35 by toteixei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	fill_map_line(char *line, t_configuration **config, int i, int j)
 	if (j < (*config)->n_column)
 	{
 		while (j < (*config)->n_column)
-			(*config)->map[(*config)->n_rows][j++] = 9;
+			(*config)->map[(*config)->n_rows][j++] = 1;
 	}
 	return (1);
 }
